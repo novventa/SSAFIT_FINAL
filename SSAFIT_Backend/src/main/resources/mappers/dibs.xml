@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafit.model.DibsDao">
+	<select id="selectAll" resultType="Dibs">
+		SELECT *
+		FROM dibs;
+	</select>
+	
+	<select id="selectDibs" parameterType="Dibs" resultType="Dibs">
+		SELECT *
+		FROM dibs
+		WHERE videoId = #{videoId} AND nickname = #{nickname};
+	</select>
+	
+	<insert id="insertDibs" parameterType="Dibs">
+		INSERT INTO dibs(videoId, nickname)
+		VALUES(#{videoId}, #{nickname});
+	</insert>
+	
+	<delete id="deleteDibs" parameterType="Dibs">
+		DELETE
+		FROM dibs
+		WHERE videoId = #{videoId} AND nickname = #{nickname};
+	</delete>
+	
+</mapper>
