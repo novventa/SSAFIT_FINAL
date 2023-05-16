@@ -5,6 +5,8 @@ public class Video {
 	private int idx;
 	private String videoId;
 	private String part;
+	private String title;
+	private String channelName;
 	private int viewCnt;
 	private int likeCnt;
 	
@@ -52,6 +54,21 @@ public class Video {
 		this.part = part;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
 	
 	
 }

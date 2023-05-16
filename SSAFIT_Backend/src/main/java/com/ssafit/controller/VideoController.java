@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafit.model.dto.Video;
-import com.ssafit.model.service.ReviewService;
 import com.ssafit.model.service.VideoService;
 
 @RestController
@@ -23,9 +22,6 @@ public class VideoController {
 
 	@Autowired
 	VideoService videoService;
-	
-	@Autowired
-	ReviewService reviewService;
 
 	@GetMapping("/list")
 	public ResponseEntity<?> list() {
@@ -42,7 +38,8 @@ public class VideoController {
 
 		if (video == null)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-
+		
+		
 		return new ResponseEntity<Video>(video, HttpStatus.OK);
 	}
 
