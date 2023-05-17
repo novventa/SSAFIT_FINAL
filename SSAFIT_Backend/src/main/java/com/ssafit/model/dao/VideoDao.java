@@ -12,15 +12,15 @@ public interface VideoDao {
 
 	public List<Video> selectAll();
 
-	public Video selectOne(int idx);
+	public Video selectVideo(int idx);
 
-	public int insert(Video video);
+	public int insertVideo(Video video);
 
 	public int updateViewCnt(int idx);
 
 	public int updateLikeCnt(int idx);
 
-	public int delete(int idx);
+	public int deleteVideo(int idx);
 
 	public List<Video> search(VideoSearchCondition condition);
 

@@ -10,9 +10,9 @@ import com.ssafit.model.dto.Review;
 public interface ReviewDao {
 
 	public List<Review> selectAll(int videoId);
-	public Review selectOne(int idx);
-	public int insert(Review review);
-	public int update(Review review);
-	public int delete(int idx);
+	public Review selectReview(int idx);
+	public int insertReview(Review review);
+	public int updateReview(Review review);
+	public int deleteReview(int idx);
 	
 }

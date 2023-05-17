@@ -22,17 +22,17 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public Video getVideo(int idx) {
 		videoDao.updateViewCnt(idx);
-		return videoDao.selectOne(idx);
+		return videoDao.selectVideo(idx);
 	}
 
 	@Override
 	public int addVideo(Video video) {
-		return videoDao.insert(video);
+		return videoDao.insertVideo(video);
 	}
 
 	@Override
 	public int removeVideo(int idx) {
-		return videoDao.delete(idx);
+		return videoDao.deleteVideo(idx);
 	}
 
 	@Override

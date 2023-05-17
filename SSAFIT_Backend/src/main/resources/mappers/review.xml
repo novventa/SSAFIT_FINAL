@@ -10,27 +10,27 @@
 	</select>
 	
 	<!-- 리뷰 하나 조회 -->
-	<select id="selectOne" parameterType="int" resultType="Review">
+	<select id="selectReview" parameterType="int" resultType="Review">
 		SELECT *
 		FROM review
 		WHERE idx = #{idx}
 	</select>
 	
 	<!-- 리뷰 등록 -->
-	<insert id="insert" parameterType="Review" keyProperty="idx" useGeneratedKeys="true">
+	<insert id="insertReview" parameterType="Review" keyProperty="idx" useGeneratedKeys="true">
 		INSERT INTO review(videoId,content,nickname,parent)
 		VALUES (#{videoId},#{content},#{nickname},#{parent})
 	</insert>
 	
 	<!-- 리뷰 수정 -->
-	<update id="update" parameterType="Review">
+	<update id="updateReview" parameterType="Review">
 		UPDATE review
 		SET content = #{content}, modDate = now()
 		WHERE idx = #{idx}
 	</update>
 
 	<!-- 리뷰 삭제 -->
-	<delete id="delete" parameterType="int">
+	<delete id="deleteReview" parameterType="int">
 		DELETE
 		FROM review
 		WHERE idx = #{idx}
