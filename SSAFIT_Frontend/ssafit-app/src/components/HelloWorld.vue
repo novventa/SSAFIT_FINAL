@@ -1,151 +1,99 @@
 <template>
-  <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
+  <v-main>
+    <section>
+      <v-parallax src="@/assets/img/Main.jpg" height="600">
+        <v-layout column align-center justify-center class="white--text">
+          <h1
+            class="white--text mb-2 display-1 text-xs-center"
+            style="font-weight: 900; text-shadow: 3px 2px #000000"
           >
-            {{ next.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
+            모두의 운동 사이트 SSAFIT
+          </h1>
+          <div
+            class="white--text subheading mb-3 text-xs-center"
+            style="font-weight: 900; text-shadow: 2px 2px #000000"
           >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
+            당신이 필요한 모든 운동 정보
+          </div>
+          <v-btn class="blue lighten-2 mt-5" dark large href="/pre-made-themes">
+            서비스 사용하기
+          </v-btn>
+        </v-layout>
+      </v-parallax>
+    </section>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-container>
+    <section>
+      <v-layout column wrap class="my-5" align-center>
+        <v-flex xs12 sm4 class="my-3">
+          <div class="text-xs-center">
+            <h2 class="headline">설명1</h2>
+            <span class="subheading"> 내용1 </span>
+          </div>
+        </v-flex>
+        <v-flex xs12>
+          <v-container grid-list-xl>
+            <v-layout row wrap align-center>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                  <v-card-text class="text-xs-center">
+                    <!-- <v-icon x-large class="blue--text text--lighten-2"
+                      >public</v-icon
+                    > -->
+                  </v-card-text>
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline text-xs-center">운동 영상 찾기</div>
+                  </v-card-title>
+                  <v-card-text> 서비스 설명1 </v-card-text>
+                </v-card>
+              </v-flex>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                  <v-card-text class="text-xs-center">
+                    <!-- <v-icon x-large class="blue--text text--lighten-2"
+                      >flash_on</v-icon
+                    > -->
+                  </v-card-text>
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline">운동 메이트 찾기</div>
+                  </v-card-title>
+                  <v-card-text> 서비스 설명2 </v-card-text>
+                </v-card>
+              </v-flex>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                  <v-card-text class="text-xs-center">
+                    <!-- <v-icon x-large class="blue--text text--lighten-2"
+                      >share</v-icon
+                    > -->
+                  </v-card-text>
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline text-xs-center">운동 루틴 관리</div>
+                  </v-card-title>
+                  <v-card-text> 서비스 설명3 </v-card-text>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+      </v-layout>
+    </section>
+  </v-main>
 </template>
 
 <script>
-  export default {
-    name: 'HelloWorld',
+export default {
+  name: "App",
+  data: function () {
+    return {};
+  },
 
-    data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
-      ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
-    }),
-  }
+  computed: {
+    imgHeight: function () {
+      var offset = 320;
+      return this.pageHeight - offset;
+    },
+  },
+};
 </script>
+
+<style></style>
