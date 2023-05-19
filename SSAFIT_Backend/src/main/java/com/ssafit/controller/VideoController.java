@@ -23,7 +23,17 @@ public class VideoController {
 	@Autowired
 	VideoService videoService;
 
-	@GetMapping()
+	@PostMapping("add")
+	public ResponseEntity<Integer> videoAdd(Video video) {
+		int result = videoService.addVideo(video);
+		
+		if (result == 0)
+			return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("list")
 	public ResponseEntity<?> videoList() {
 		List<Video> list = videoService.findAllVideos();
 		if (list == null || list.size() == 0)
@@ -32,7 +42,7 @@ public class VideoController {
 		return new ResponseEntity<List<Video>>(list, HttpStatus.OK);
 	}
 
-	@GetMapping("{idx}")
+	@GetMapping("details/{idx}")
 	public ResponseEntity<?> videoDetails(@PathVariable int idx) {
 		Video video = videoService.findVideo(idx);
 
@@ -43,17 +53,17 @@ public class VideoController {
 		return new ResponseEntity<Video>(video, HttpStatus.OK);
 	}
 
-	@PostMapping()
-	public ResponseEntity<Integer> videoAdd(Video video) {
-		int result = videoService.addVideo(video);
-
+	@PutMapping("modify-like/{idx}")
+	public ResponseEntity<Integer> likeCntModify(@PathVariable int idx) {
+		int result = videoService.modifyLikeCnt(idx);
+		
 		if (result == 0)
 			return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
-
+		
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
-	@DeleteMapping("{idx}")
+	@DeleteMapping("remove/{idx}")
 	public ResponseEntity<Integer> videoRemove(@PathVariable int idx) {
 		int result = videoService.removeVideo(idx);
 
@@ -63,14 +73,5 @@ public class VideoController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
-	@PutMapping("{idx}")
-	public ResponseEntity<Integer> likeCntModify(@PathVariable int idx) {
-		int result = videoService.addLikeCnt(idx);
-
-		if (result == 0)
-			return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
-
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
 
 }

@@ -24,10 +24,20 @@ public class CalendarController {
 	@Autowired
 	CalendarService calendarService;
 	
-	@GetMapping()
-	public ResponseEntity<?> allCalendar(String nickname){
+	@PostMapping("add")
+	public ResponseEntity<?> calendarAdd(Calendar calendar){
+		int result = calendarService.addCalendar(calendar);
 		
-		List<Calendar> list = calendarService.findAllCalendars(nickname);
+		if(result == 0)
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		
+		return new ResponseEntity<Integer> (result,HttpStatus.OK);
+	}
+	
+	@GetMapping("list")
+	public ResponseEntity<?> calendarList(int idx){
+		
+		List<Calendar> list = calendarService.findAllCalendars(idx);
 	
 		if(list==null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -35,10 +45,10 @@ public class CalendarController {
 		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
 	}
 	
-	@GetMapping("{nickname}/{date}")
-	public ResponseEntity<?> getCalendarByDate(@PathVariable String nickname, @PathVariable Date date){
+	@GetMapping("date-list/{idx}/{date}")
+	public ResponseEntity<?> calendarDetails(@PathVariable int idx, @PathVariable Date date){
 		
-		List<Calendar> list = calendarService.findCalendarByDate(nickname, date);
+		List<Calendar> list = calendarService.findCalendarByDate(idx, date);
 		
 		if(list==null || list.size()==0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -46,18 +56,9 @@ public class CalendarController {
 		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
 	}
 	
-	@PostMapping()
-	public ResponseEntity<?> addCalendar(Calendar calendar){
-		int result = calendarService.addCalendar(calendar);
-		
-		if(result == 0)
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	
-		return new ResponseEntity<Integer> (result,HttpStatus.OK);
-	}
-	
-	@PutMapping("{idx}")
-	public ResponseEntity<?> modifyCalendar(@PathVariable int idx, Calendar calendar){
+	@PutMapping("modify/{idx}")
+	public ResponseEntity<?> calendarModify(@PathVariable int idx, Calendar calendar){
 		int result = calendarService.modifyCalendar(calendar);
 		
 		if(result == 0)
@@ -66,8 +67,8 @@ public class CalendarController {
 		return new ResponseEntity<Integer> (result,HttpStatus.OK);
 	}
 	
-	@DeleteMapping("{idx}")
-	public ResponseEntity<?> deleteCalendar(@PathVariable int idx){
+	@DeleteMapping("remove/{idx}")
+	public ResponseEntity<?> calendarRemove(@PathVariable int idx){
 		int result = calendarService.removeCalendar(idx);
 		
 		if(result == 0)

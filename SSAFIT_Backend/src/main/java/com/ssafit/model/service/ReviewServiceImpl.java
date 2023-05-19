@@ -15,8 +15,8 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewDao reviewDao;
 	
 	@Override
-	public List<Review> findAllReviews(int videoId) {
-		return reviewDao.selectAll(videoId);
+	public List<Review> findAllReviews(int videoIdx) {
+		return reviewDao.selectAll(videoIdx);
 	}
 
 	@Override

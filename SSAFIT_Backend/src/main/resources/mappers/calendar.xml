@@ -5,20 +5,20 @@
 	<select id="selectAll" resultType="Calendar">
 		SELECT *
 		FROM calendar
-		WHERE nickname = #{nickname}
+		WHERE userIdx = #{userIdx}
 	</select>
 
 	<!-- 상세 일정 조회 -->
 	<select id="selectDate" parameterType="Date" resultType="Calendar">
 		SELECT *
 		FROM calendar
-		WHERE nickname = #{nickname}, date = #{date}
+		WHERE userIdx = #{userIdx}, date = #{date}
 	</select>
 
 	<!-- 일정 추가  -->
 	<insert id="insertCalendar" parameterType="Calendar" keyProperty="idx" useGeneratedKeys="true">
-		INSERT INTO calendar (nickname,date,content,done)
-		VALUES (#{nickname},#{date},#{content},#{done})
+		INSERT INTO calendar (userIdx,date,content,done)
+		VALUES (#{userIdx},#{date},#{content},#{done})
 	</insert>
 
 	<!-- 일정 업데이트 -->

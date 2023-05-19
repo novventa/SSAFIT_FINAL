@@ -6,10 +6,10 @@ import java.util.List;
 import com.ssafit.model.dto.Calendar;
 
 public interface CalendarDao {
-
-	public List<Calendar> selectDate(String nickname, Date date);
 	
-	public List<Calendar> selectAll(String nickname);
+	public List<Calendar> selectAll(int idx);
+
+	public List<Calendar> selectDate(int idx, Date date);
 	
 	public int insertCalendar(Calendar calendar);
 	

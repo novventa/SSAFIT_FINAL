@@ -16,13 +16,13 @@ public class CalendarServiceImpl implements CalendarService {
 	CalendarDao calendarDao;
 	
 	@Override
-	public List<Calendar> findCalendarByDate(String nickname, Date date) {
-		return calendarDao.selectDate(nickname, date);
+	public List<Calendar> findCalendarByDate(int idx, Date date) {
+		return calendarDao.selectDate(idx, date);
 	}
 
 	@Override
-	public List<Calendar> findAllCalendars(String nickname) {
-		return calendarDao.selectAll(nickname);
+	public List<Calendar> findAllCalendars(int idx) {
+		return calendarDao.selectAll(idx);
 	}
 
 	@Override

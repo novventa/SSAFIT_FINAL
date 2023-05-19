@@ -27,15 +27,7 @@ public class ReviewController {
 	@Autowired
 	VideoService videoService;
 	
-	@GetMapping("{vidIdx}")
-	public ResponseEntity<?> reviewList(@PathVariable int vidIdx) {
-		
-		List<Review> list = reviewService.findAllReviews(vidIdx);
-
-		return new ResponseEntity<List<Review>>(list, HttpStatus.OK);
-	}
-	
-	@PostMapping("{vidIdx}")
+	@PostMapping("add/{vidIdx}")
 	public ResponseEntity<?> reviewAdd(@PathVariable int vidIdx, Review review){
 		int result = reviewService.addReview(review);
 		
@@ -45,7 +37,16 @@ public class ReviewController {
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
 	}
 	
-	@PutMapping("{revIdx}")
+	@GetMapping("list/{vidIdx}")
+	public ResponseEntity<?> reviewList(@PathVariable int vidIdx) {
+		
+		List<Review> list = reviewService.findAllReviews(vidIdx);
+
+		return new ResponseEntity<List<Review>>(list, HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("modify/{revIdx}")
 	public ResponseEntity<?> reviewModify(@PathVariable int revIdx, Review review){
 		int result = reviewService.modifyReview(review);
 		
@@ -55,7 +56,7 @@ public class ReviewController {
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
 	}
 	
-	@DeleteMapping("{revIdx}")
+	@DeleteMapping("remove/{revIdx}")
 	public ResponseEntity<?> reviewRemove(@PathVariable int revIdx){
 		int result = reviewService.removeReview(revIdx);
 		

@@ -7,7 +7,7 @@
 		FROM video
 	</select>
 
-	<!-- 상세 영 조회 -->
+	<!-- 상세 영상	 조회 -->
 	<select id="selectVideo" parameterType="int" resultType="Video">
 		SELECT *
 		FROM video
@@ -16,8 +16,8 @@
 
 	<!-- 비디오 추가  -->
 	<insert id="insertVideo" parameterType="Video" keyProperty="idx" useGeneratedKeys="true">
-		INSERT INTO video (videoId)
-		VALUES (#{videoId})
+		INSERT INTO video (videoId, title, channelName, part)
+		VALUES (#{videoId}, #{title}, #{channelName}, #{part})
 	</insert>
 
 	<!-- 조회수 업데이트 -->

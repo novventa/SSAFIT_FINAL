@@ -36,7 +36,7 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public int addLikeCnt(int idx) {
+	public int modifyLikeCnt(int idx) {
 		return videoDao.updateLikeCnt(idx);
 	}
 
