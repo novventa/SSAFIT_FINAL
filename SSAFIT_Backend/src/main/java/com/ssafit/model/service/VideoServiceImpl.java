@@ -15,12 +15,12 @@ public class VideoServiceImpl implements VideoService {
 	VideoDao videoDao;
 	
 	@Override
-	public List<Video> getAllVideos() {
+	public List<Video> findAllVideos() {
 		return videoDao.selectAll();
 	}
 
 	@Override
-	public Video getVideo(int idx) {
+	public Video findVideo(int idx) {
 		videoDao.updateViewCnt(idx);
 		return videoDao.selectVideo(idx);
 	}

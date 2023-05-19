@@ -15,12 +15,12 @@ public class ReviewServiceImpl implements ReviewService {
 	private ReviewDao reviewDao;
 	
 	@Override
-	public List<Review> getAllReviews(int videoId) {
+	public List<Review> findAllReviews(int videoId) {
 		return reviewDao.selectAll(videoId);
 	}
 
 	@Override
-	public int writeReview(Review review) {
+	public int addReview(Review review) {
 		return reviewDao.insertReview(review);
 	}
 
@@ -35,7 +35,7 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public Review getReview(int idx) {
+	public Review findReview(int idx) {
 		return reviewDao.selectReview(idx);
 	}
 
