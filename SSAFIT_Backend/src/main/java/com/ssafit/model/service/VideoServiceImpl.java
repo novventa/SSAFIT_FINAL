@@ -1,5 +1,6 @@
 package com.ssafit.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public List<Video> findAllVideos(VideoSearchCondition condition) {
 		return videoDao.selectAll(condition);
+	}
+	
+	@Override
+	public List<Video> findAllVideosByPart(List<String> parts) {
+		//??
 	}
 
 	@Override

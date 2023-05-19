@@ -7,6 +7,8 @@ import com.ssafit.model.dto.VideoSearchCondition;
 
 public interface VideoService {
 
+	public List<Video> findAllVideosByPart(List<String> parts);
+	
 	public List<Video> findAllVideos(VideoSearchCondition condition);
 	
 	public Video findVideo(int idx);
