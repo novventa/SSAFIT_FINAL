@@ -10,7 +10,7 @@ import com.ssafit.model.dto.VideoSearchCondition;
 @Repository
 public interface VideoDao {
 
-	public List<Video> selectAll();
+	public List<Video> selectAll(VideoSearchCondition condition);
 
 	public Video selectVideo(int idx);
 

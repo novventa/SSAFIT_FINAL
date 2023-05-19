@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafit.model.dao.VideoDao;
 import com.ssafit.model.dto.Video;
+import com.ssafit.model.dto.VideoSearchCondition;
 
 @Service
 public class VideoServiceImpl implements VideoService {
@@ -15,8 +16,8 @@ public class VideoServiceImpl implements VideoService {
 	VideoDao videoDao;
 	
 	@Override
-	public List<Video> findAllVideos() {
-		return videoDao.selectAll();
+	public List<Video> findAllVideos(VideoSearchCondition condition) {
+		return videoDao.selectAll(condition);
 	}
 
 	@Override

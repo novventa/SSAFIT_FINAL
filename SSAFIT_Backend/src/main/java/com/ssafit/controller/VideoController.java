@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafit.model.dto.Video;
+import com.ssafit.model.dto.VideoSearchCondition;
 import com.ssafit.model.service.VideoService;
 
 @RestController
@@ -34,8 +35,8 @@ public class VideoController {
 	}
 	
 	@GetMapping("list")
-	public ResponseEntity<?> videoList() {
-		List<Video> list = videoService.findAllVideos();
+	public ResponseEntity<?> videoList(VideoSearchCondition condition) {
+		List<Video> list = videoService.findAllVideos(condition);
 		if (list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 
