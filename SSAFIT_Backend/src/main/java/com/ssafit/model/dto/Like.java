@@ -8,6 +8,11 @@ public class Like {
 	public Like() {
 	}
 
+	public Like(int videoIdx, int userIdx) {
+		this.videoIdx = videoIdx;
+		this.userIdx = userIdx;
+	}
+
 	public int getIdx() {
 		return idx;
 	}

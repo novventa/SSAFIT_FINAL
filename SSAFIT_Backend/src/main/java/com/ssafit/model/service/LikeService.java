@@ -5,8 +5,11 @@ import java.util.List;
 import com.ssafit.model.dto.Like;
 
 public interface LikeService {
-	List<Like> findAllLikes(int idx);
+	
+	List<Like> findAllLikesByUser(int userIdx);
 
+	List<Like> findAllLikesByVideo(int videoIdx);
+	
 	Like findLike(Like like);
 	
 	int addLike(Like like);

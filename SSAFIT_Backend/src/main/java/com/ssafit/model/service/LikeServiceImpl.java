@@ -12,27 +12,30 @@ import com.ssafit.model.dto.Like;
 public class LikeServiceImpl implements LikeService {
 
 	@Autowired
-	LikeDao dibsDao;
+	LikeDao likeDao;
 	
 	@Override
-	public List<Like> getLikeList(String nickname) {
-		return dibsDao.selectAll(nickname);
+	public List<Like> findAllLikesByUser(int userIdx) {
+		return likeDao.selectAllByUser(userIdx);
+	}
+	@Override
+	public List<Like> findAllLikesByVideo(int videoIdx) {
+		return likeDao.selectAllByVideo(videoIdx);
 	}
 	
 	@Override
-	public Like getLike(Like like) {
-		return dibsDao.selectLike(like);
+	public Like findLike(Like like) {
+		return likeDao.selectLike(like);
 	}
 
 	@Override
 	public int addLike(Like like) {
-		return dibsDao.insertLike(like);
+		return likeDao.insertLike(like);
 	}
 
 	@Override
 	public int removeLike(int idx) {
-		return dibsDao.deleteLike(idx);
+		return likeDao.deleteLike(idx);
 	}
-
 
 }

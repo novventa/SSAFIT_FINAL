@@ -8,6 +8,11 @@ public class Follow {
 	public Follow() {
 	}
 
+	public Follow(int myIdx, int yourIdx) {
+		this.myIdx = myIdx;
+		this.yourIdx = yourIdx;
+	}
+
 	public int getIdx() {
 		return idx;
 	}

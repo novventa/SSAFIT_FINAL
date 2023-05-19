@@ -8,7 +8,9 @@ import com.ssafit.model.dto.Like;
 
 @Repository
 public interface LikeDao {
-	List<Like> selectAll(String nickname);
+	List<Like> selectAllByUser(int userIdx);
+	
+	List<Like> selectAllByVideo(int videoIdx);	
 	
 	Like selectLike(Like like);
 	

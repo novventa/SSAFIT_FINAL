@@ -5,9 +5,9 @@ import java.util.List;
 import com.ssafit.model.dto.Follow;
 
 public interface FollowService {
-	List<Follow> getFollowList(String nickname);
+	List<Follow> findAllFollows(int myIdx);
 	
-	Follow getFollow(Follow follow);
+	Follow findFollow(Follow follow);
 	
 	int addFollow(Follow follow);
 	

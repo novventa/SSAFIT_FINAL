@@ -31,6 +31,34 @@ public class LikeController {
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 	
+	@GetMapping("{userIdx}")
+	public ResponseEntity<?> likeListByUser(@PathVariable int userIdx) {
+		List<Like> list = likeService.findAllLikesByUser(userIdx);
+		if(list == null) {
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<List<Like>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("{videoIdx}")
+	public ResponseEntity<?> likeListByVideo(@PathVariable int videoIdx) {
+		List<Like> list = likeService.findAllLikesByVideo(videoIdx);
+		if(list == null) {
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<List<Like>>(list, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("{userIdx}/{videoIdx}")
+	public ResponseEntity<?> likeDetails(@PathVariable int videoIdx, @PathVariable int userIdx) {
+		Like like = likeService.findLike(new Like(videoIdx, userIdx));
+		if(like == null) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT); 
+		}
+		return new ResponseEntity<Like>(like, HttpStatus.OK);
+	}
+	
 	@DeleteMapping("{idx}")
 	public ResponseEntity<?> likeRemove(@PathVariable int idx) {
 		int result = likeService.removeLike(idx);
@@ -38,24 +66,5 @@ public class LikeController {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
-	
-	@GetMapping("{myIdx}")
-	public ResponseEntity<?> likeList(@PathVariable int myIdx) {
-		List<Like> list = likeService.findAllLikes(myIdx);
-		if(list == null) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<List<Like>>(list, HttpStatus.OK);
-	}
-	
-	@GetMapping("{userIdx}/{videoIdx}")
-	public ResponseEntity<?> likeDetails(@PathVariable int videoIdx, @PathVariable int userIdx) {
-		Like tmpLike = new Like();
-		tmpLike.set
-		Like Like = LikeService.findLike();
-		if(Like == null) {
-			
-		}
 	}
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.ssafit.model.dto.Follow;
 
 public interface FollowDao {
-	List<Follow> sellectAll(String nickname);
+	List<Follow> sellectAll(int myIdx);
 	
 	Follow selectFollow(Follow follow);
 	

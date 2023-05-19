@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafit.model.dao.LikeDao">
-	<select id="selectAll" parameterType="String" resultType="Like">
+	<select id="selectAllByUser" parameterType="int" resultType="Like">
 		SELECT *
 		FROM like
-		WHERE nickname = #{nickname};
+		WHERE userIdx = #{userIdx};
+	</select>
+	
+	<select id="selectAllByVideo" parameterType="int" resultType="Like">
+		SELECT *
+		FROM like
+		WHERE videoIdx = #{videoIdx};
 	</select>
 	
 	<select id="selectLike" parameterType="Like" resultType="Like">
 		SELECT *
 		FROM like
-		WHERE videoId = #{videoId} AND nickname = #{nickname};
+		WHERE userIdx = #{userIdx} AND videoIdx = #{videoIdx};
 	</select>
 	
 	<insert id="insertLike" parameterType="Like">
-		INSERT INTO like(videoId, nickname)
-		VALUES(#{videoId}, #{nickname});
+		INSERT INTO like(videoIdx, userIdx)
+		VALUES(#{videoIdx}, #{userIdx});
 	</insert>
 	
-	<delete id="deleteLike" parameterType="Like">
+	<delete id="deleteLike" parameterType="int">
 		DELETE
 		FROM like
-		WHERE videoId = #{videoId} AND nickname = #{nickname};
+		WHERE idx = #{idx};
 	</delete>
 	
 </mapper>
