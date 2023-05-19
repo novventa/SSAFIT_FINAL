@@ -1,11 +1,11 @@
 package com.ssafit.model.dto;
 
-public class Dibs {
+public class Like {
 	private int idx;
 	private String videoId;
 	private String nickname;
 	
-	public Dibs() {
+	public Like() {
 	}
 
 	public int getIdx() {

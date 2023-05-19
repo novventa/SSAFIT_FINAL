@@ -35,7 +35,7 @@ CREATE TABLE `review`(
 
 -- 유저, 비디오, 리뷰, 캘린더, 찜, 팔로워,
 
-CREATE TABLE `dibs`(
+CREATE TABLE `like`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
     `videoId` VARCHAR(40) NOT NULL,
     `nickname` VARCHAR(20) NOT NULL,

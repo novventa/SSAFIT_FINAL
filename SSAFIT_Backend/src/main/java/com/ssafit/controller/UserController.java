@@ -33,9 +33,9 @@ public class UserController {
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping("{id}")
-	public ResponseEntity<?> withdraw(@PathVariable String id) {
-		int result = userService.withdraw(id);
+	@DeleteMapping("{idx}")
+	public ResponseEntity<?> withdraw(@PathVariable int idx) {
+		int result = userService.withdraw(idx);
 		if(result == 0) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
