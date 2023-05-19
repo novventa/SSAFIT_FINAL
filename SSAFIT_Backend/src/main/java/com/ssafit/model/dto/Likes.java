@@ -1,18 +1,18 @@
 package com.ssafit.model.dto;
 
-public class Like {
+public class Likes {
 	private int idx;
 	private int videoIdx;
 	private int userIdx;
 	
-	public Like() {
+	public Likes() {
 	}
 
-	public Like(int videoIdx, int userIdx) {
+	public Likes(int videoIdx, int userIdx) {
 		this.videoIdx = videoIdx;
 		this.userIdx = userIdx;
 	}
-
+	
 	public int getIdx() {
 		return idx;
 	}
@@ -35,6 +35,11 @@ public class Like {
 
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
+	}
+
+	@Override
+	public String toString() {
+		return "Like [idx=" + idx + ", videoIdx=" + videoIdx + ", userIdx=" + userIdx + "]";
 	}
 
 }

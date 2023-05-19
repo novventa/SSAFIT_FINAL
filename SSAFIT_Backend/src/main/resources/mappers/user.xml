@@ -5,6 +5,13 @@
 		SELECT *
 		FROM user;
 	</select>
+	
+	<select id="selectId" parameterType="User" resultType="String">
+		SELECT id
+		FROM user
+		WHERE email = #{email} AND nickname = #{nickname};
+	</select>
+	
 	<select id="selectUserById" resultType="User" parameterType="String">
 		SELECT *
 		FROM user
@@ -37,6 +44,6 @@
 	<update id="updateUser" parameterType="User">
 		UPDATE user
 		SET nickname = #{nickname}, password = #{password}, email = #{email}, image = #{image}
-		WHERE id = #{id};
+		WHERE idx = #{idx};
 	</update>
 </mapper>

@@ -53,16 +53,6 @@ public class VideoController {
 		return new ResponseEntity<Video>(video, HttpStatus.OK);
 	}
 
-	@PutMapping("modify-like/{idx}")
-	public ResponseEntity<Integer> likeCntModify(@PathVariable int idx) {
-		int result = videoService.modifyLikeCnt(idx);
-		
-		if (result == 0)
-			return new ResponseEntity<Integer>(result, HttpStatus.BAD_REQUEST);
-		
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
-	}
-
 	@DeleteMapping("remove/{idx}")
 	public ResponseEntity<Integer> videoRemove(@PathVariable int idx) {
 		int result = videoService.removeVideo(idx);

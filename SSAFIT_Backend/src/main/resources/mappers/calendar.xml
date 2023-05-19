@@ -22,13 +22,13 @@
 	</insert>
 
 	<!-- 일정 업데이트 -->
-	<update id="updateCalendar" parameterType="int">
-		UPDATE calendar SET content = #{content}
+	<update id="updateCalendar" parameterType="Calendar">
+		UPDATE calendar SET content = #{content}, date = #{date}
 		WHERE idx = #{idx}
 	</update>
 
 	<!-- 일정 삭제 -->
-	<delete id="deletCalendar" parameterType="int">
+	<delete id="deleteCalendar" parameterType="int">
 		DELETE
 		FROM calendar
 		WHERE idx = #{idx}

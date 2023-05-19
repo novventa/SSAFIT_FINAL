@@ -10,6 +10,8 @@ import com.ssafit.model.dto.User;
 public interface UserDao {
 	List<User> selectAll();
 
+	String selectId(User user);
+	
 	User selectUserByIdx(int idx);
 
 	User selectUserById(String id);

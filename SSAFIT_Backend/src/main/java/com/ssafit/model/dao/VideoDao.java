@@ -17,9 +17,7 @@ public interface VideoDao {
 	public int insertVideo(Video video);
 
 	public int updateViewCnt(int idx);
-
-	public int updateLikeCnt(int idx);
-
+	
 	public int deleteVideo(int idx);
 
 	public List<Video> search(VideoSearchCondition condition);

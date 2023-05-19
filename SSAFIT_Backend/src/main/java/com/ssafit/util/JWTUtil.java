@@ -17,7 +17,7 @@ public class JWTUtil {
 		return str.split("[\\\"]")[3];
 	}
 	
-	public String createToken(String claimId,String data) throws Exception{
+	public String createToken(String claimId, String data) throws Exception{
 		return Jwts.builder()
 				.setHeaderParam("alg", "HS256")
 				.setHeaderParam("typ", "JWT")

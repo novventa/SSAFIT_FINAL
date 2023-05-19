@@ -1,6 +1,5 @@
 package com.ssafit.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +33,10 @@ public class CalendarController {
 		return new ResponseEntity<Integer> (result,HttpStatus.OK);
 	}
 	
-	@GetMapping("list")
-	public ResponseEntity<?> calendarList(int idx){
+	@GetMapping("list/{userIdx}")
+	public ResponseEntity<?> calendarList(@PathVariable int userIdx){
 		
-		List<Calendar> list = calendarService.findAllCalendars(idx);
+		List<Calendar> list = calendarService.findAllCalendars(userIdx);
 	
 		if(list==null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -45,20 +44,19 @@ public class CalendarController {
 		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
 	}
 	
-	@GetMapping("date-list/{idx}/{date}")
-	public ResponseEntity<?> calendarDetails(@PathVariable int idx, @PathVariable Date date){
-		
-		List<Calendar> list = calendarService.findCalendarByDate(idx, date);
-		
-		if(list==null || list.size()==0)
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		
-		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
-	}
+//	@GetMapping("date-list/{idx}/{date}")
+//	public ResponseEntity<?> calendarDetails(@PathVariable int idx, @PathVariable String date){
+//		
+//		List<Calendar> list = calendarService.findCalendarByDate(idx, date);
+//		
+//		if(list==null || list.size()==0)
+//			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+//		
+//		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
+//	}
 	
-	
-	@PutMapping("modify/{idx}")
-	public ResponseEntity<?> calendarModify(@PathVariable int idx, Calendar calendar){
+	@PutMapping("modify")
+	public ResponseEntity<?> calendarModify(Calendar calendar){
 		int result = calendarService.modifyCalendar(calendar);
 		
 		if(result == 0)

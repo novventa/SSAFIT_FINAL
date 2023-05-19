@@ -22,7 +22,7 @@ public class FollowController {
 	@Autowired
 	FollowService followService;
 	
-	@PostMapping()
+	@PostMapping("add")
 	public ResponseEntity<?> followAdd(Follow follow) {
 		int result = followService.addFollow(follow);
 		if(result == 0) {
@@ -31,7 +31,7 @@ public class FollowController {
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("{myIdx}")
+	@GetMapping("list/{myIdx}")
 	public ResponseEntity<?> followList(@PathVariable int myIdx) {
 		List<Follow> list = followService.findAllFollows(myIdx);
 		if(list == null) {
@@ -40,7 +40,7 @@ public class FollowController {
 		return new ResponseEntity<List<Follow>>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping("{myIdx}/{yourIdx}")
+	@GetMapping("details/{myIdx}/{yourIdx}")
 	public ResponseEntity<?> followDetails(@PathVariable int myIdx, @PathVariable int yourIdx) {
 		Follow follow = followService.findFollow(new Follow(myIdx, yourIdx));
 		if(follow == null) {
@@ -49,7 +49,7 @@ public class FollowController {
 		return new ResponseEntity<Follow>(follow, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("{idx}")
+	@DeleteMapping("remove/{idx}")
 	public ResponseEntity<?> followRemove(@PathVariable int idx) {
 		int result = followService.removeFollow(idx);
 		if(result == 0) {

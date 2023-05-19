@@ -72,4 +72,10 @@ public class Review {
 		this.modDate = modDate;
 	}
 
+	@Override
+	public String toString() {
+		return "Review [idx=" + idx + ", videoIdx=" + videoIdx + ", content=" + content + ", userIdx=" + userIdx
+				+ ", parent=" + parent + ", regDate=" + regDate + ", modDate=" + modDate + "]";
+	}
+
 }

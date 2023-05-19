@@ -1,12 +1,10 @@
 package com.ssafit.model.dto;
 
-import java.time.LocalDateTime;
-
 public class Calendar {
 
 	private int idx;
 	private int userIdx;
-	private LocalDateTime date;
+	private String date;
 	private String content;
 	private boolean done;
 	
@@ -30,11 +28,11 @@ public class Calendar {
 		this.userIdx = userIdx;
 	}
 
-	public LocalDateTime getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

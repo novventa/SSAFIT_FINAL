@@ -23,10 +23,10 @@ public class WebConfig implements WebMvcConfigurer {
 	@Autowired
 	private JWTInterceptor jwtInterceptor;
 	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/api-user");
-	}
+	//	@Override
+	//	public void addInterceptors(InterceptorRegistry registry) {
+	//		registry.addInterceptor(jwtInterceptor).addPathPatterns("/**").excludePathPatterns("/api-user");
+	//	}
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {

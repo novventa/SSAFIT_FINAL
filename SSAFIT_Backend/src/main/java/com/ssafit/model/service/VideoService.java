@@ -14,6 +14,4 @@ public interface VideoService {
 	
 	public int removeVideo(int idx);
 	
-	public int modifyLikeCnt(int idx);
-	
 }

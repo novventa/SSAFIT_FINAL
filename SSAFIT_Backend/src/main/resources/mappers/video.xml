@@ -26,12 +26,6 @@
 		WHERE idx = #{idx}
 	</update>
 
-	<!-- 좋아요 수 업데이트 -->
-	<update id="updateLikeCnt" parameterType="int">
-		UPDATE video SET likeCnt = likeCnt+1
-		WHERE idx = #{idx}
-	</update>
-
 	<!-- 비디오 삭제 -->
 	<delete id="deleteVideo" parameterType="int">
 		DELETE

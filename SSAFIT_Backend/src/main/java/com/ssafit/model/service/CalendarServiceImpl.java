@@ -1,6 +1,5 @@
 package com.ssafit.model.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ public class CalendarServiceImpl implements CalendarService {
 	CalendarDao calendarDao;
 	
 	@Override
-	public List<Calendar> findCalendarByDate(int idx, Date date) {
+	public List<Calendar> findCalendarByDate(int idx, String date) {
 		return calendarDao.selectDate(idx, date);
 	}
 

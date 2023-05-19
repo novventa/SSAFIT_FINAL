@@ -7,6 +7,8 @@ import com.ssafit.model.dto.User;
 
 public interface UserService {
 	
+	String findId(User user);
+	
 	List<User> findAllUsers();
 	
 	User findUser(int idx);
