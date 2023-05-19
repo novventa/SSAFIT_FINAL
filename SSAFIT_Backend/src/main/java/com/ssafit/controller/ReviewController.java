@@ -27,17 +27,17 @@ public class ReviewController {
 	@Autowired
 	VideoService videoService;
 	
-	@GetMapping("/{vidIdx}")
-	public ResponseEntity<?> selectedVideo(@PathVariable int vidIdx) {
+	@GetMapping("{vidIdx}")
+	public ResponseEntity<?> reviewList(@PathVariable int vidIdx) {
 		
-		List<Review> list = reviewService.getAllReviews(vidIdx);
+		List<Review> list = reviewService.findAllReviews(vidIdx);
 
 		return new ResponseEntity<List<Review>>(list, HttpStatus.OK);
 	}
 	
-	@PostMapping("/{vidIdx}")
-	public ResponseEntity<?> write(@PathVariable int vidIdx, Review review){
-		int result = reviewService.writeReview(review);
+	@PostMapping("{vidIdx}")
+	public ResponseEntity<?> reviewAdd(@PathVariable int vidIdx, Review review){
+		int result = reviewService.addReview(review);
 		
 		if(result == 0)
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -45,8 +45,8 @@ public class ReviewController {
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
 	}
 	
-	@PutMapping("/{vidIdx}/{revIdx}")
-	public ResponseEntity<?> modify(@PathVariable int vidIdx, @PathVariable int revIdx, Review review){
+	@PutMapping("{revIdx}")
+	public ResponseEntity<?> reviewModify(@PathVariable int revIdx, Review review){
 		int result = reviewService.modifyReview(review);
 		
 		if(result == 0)
@@ -55,8 +55,8 @@ public class ReviewController {
 		return new ResponseEntity<Integer>(result,HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{vidIdx}/{revIdx}")
-	public ResponseEntity<?> modify(@PathVariable int vidIdx, @PathVariable int revIdx){
+	@DeleteMapping("{revIdx}")
+	public ResponseEntity<?> reviewRemove(@PathVariable int revIdx){
 		int result = reviewService.removeReview(revIdx);
 		
 		if(result == 0)

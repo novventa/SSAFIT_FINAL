@@ -24,10 +24,10 @@ public class CalendarController {
 	@Autowired
 	CalendarService calendarService;
 	
-	@GetMapping("/all")
+	@GetMapping()
 	public ResponseEntity<?> allCalendar(String nickname){
 		
-		List<Calendar> list = calendarService.getAllCalendar(nickname);
+		List<Calendar> list = calendarService.findAllCalendars(nickname);
 	
 		if(list==null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -35,10 +35,10 @@ public class CalendarController {
 		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
 	}
 	
-	@GetMapping("/{nickname}/{date}")
+	@GetMapping("{nickname}/{date}")
 	public ResponseEntity<?> getCalendarByDate(@PathVariable String nickname, @PathVariable Date date){
 		
-		List<Calendar> list = calendarService.getCalendarByDate(nickname, date);
+		List<Calendar> list = calendarService.findCalendarByDate(nickname, date);
 		
 		if(list==null || list.size()==0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -46,7 +46,7 @@ public class CalendarController {
 		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
 	}
 	
-	@PostMapping("/add")
+	@PostMapping()
 	public ResponseEntity<?> addCalendar(Calendar calendar){
 		int result = calendarService.addCalendar(calendar);
 		
@@ -56,7 +56,7 @@ public class CalendarController {
 		return new ResponseEntity<Integer> (result,HttpStatus.OK);
 	}
 	
-	@PutMapping("/{idx}")
+	@PutMapping("{idx}")
 	public ResponseEntity<?> modifyCalendar(@PathVariable int idx, Calendar calendar){
 		int result = calendarService.modifyCalendar(calendar);
 		
@@ -66,7 +66,7 @@ public class CalendarController {
 		return new ResponseEntity<Integer> (result,HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{idx}")
+	@DeleteMapping("{idx}")
 	public ResponseEntity<?> deleteCalendar(@PathVariable int idx){
 		int result = calendarService.removeCalendar(idx);
 		
