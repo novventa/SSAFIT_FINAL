@@ -25,8 +25,8 @@ public class UserController {
 	UserService userService;
 	
 	@PostMapping()
-	public ResponseEntity<?> signup(User user) throws DuplicatedException {
-		int result = userService.signUp(user);
+	public ResponseEntity<?> userAdd(User user) throws DuplicatedException {
+		int result = userService.addUser(user);
 		if(result == 0) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
@@ -34,8 +34,8 @@ public class UserController {
 	}
 	
 	@DeleteMapping("{idx}")
-	public ResponseEntity<?> withdraw(@PathVariable int idx) {
-		int result = userService.withdraw(idx);
+	public ResponseEntity<?> userRemove(@PathVariable int idx) {
+		int result = userService.removeUser(idx);
 		if(result == 0) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
@@ -43,8 +43,8 @@ public class UserController {
 	}
 	
 	@GetMapping()
-	public ResponseEntity<?> getUserList() {
-		List<User> list = userService.getUserList();
+	public ResponseEntity<?> userList() {
+		List<User> list = userService.findAllUsers();
 		if(list == null) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
@@ -65,9 +65,9 @@ public class UserController {
 //		
 //	}
 	
-	@GetMapping("{id}")
-	public ResponseEntity<?> mypage(@PathVariable String id) {
-		User user = userService.getUser(id);
+	@GetMapping("{idx}")
+	public ResponseEntity<?> userDetails(@PathVariable int idx) {
+		User user = userService.findUser(idx);
 		if(user == null) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
@@ -75,8 +75,8 @@ public class UserController {
 	}
 	
 	@PutMapping()
-	public ResponseEntity<?> modify(User user) throws DuplicatedException {
-		int result = userService.modify(user);
+	public ResponseEntity<?> userModify(User user) throws DuplicatedException {
+		int result = userService.modifyUser(user);
 		if(result == 0) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}

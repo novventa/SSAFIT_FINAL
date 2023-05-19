@@ -16,17 +16,17 @@ public class UserServiceImpl implements UserService {
 	UserDao userDao;
 	
 	@Override
-	public List<User> getUserList() {
+	public List<User> findAllUsers() {
 		return userDao.selectAll();
 	}
 
 	@Override
-	public User getUser(String id) {
-		return userDao.selectUserById(id);
+	public User findUser(int idx) {
+		return userDao.selectUserByIdx(idx);
 	}
 	
 	@Override
-	public int signUp(User user) throws DuplicatedException {
+	public int addUser(User user) throws DuplicatedException {
 		if(isIdExist(user.getId())) {
 			throw new DuplicatedException("이미 사용중인 아이디입니다.");
 		}
@@ -49,13 +49,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int modify(User user) throws DuplicatedException {
+	public int modifyUser(User user) throws DuplicatedException {
 		return userDao.updateUser(user);
 	}
 
 	@Override
-	public int withdraw(String id) {
-		return userDao.deleteUser(id);
+	public int removeUser(int idx) {
+		return userDao.deleteUser(idx);
 	}
 
 	@Override

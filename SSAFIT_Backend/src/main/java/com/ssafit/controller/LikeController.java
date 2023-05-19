@@ -23,7 +23,7 @@ public class LikeController {
 	LikeService likeService;
 	
 	@PostMapping()
-	public ResponseEntity<?> addLike(Like like) {
+	public ResponseEntity<?> likeAdd(Like like) {
 		int result = likeService.addLike(like);
 		if(result == 0) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -31,8 +31,8 @@ public class LikeController {
 		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping()
-	public ResponseEntity<?> removeLike(int idx) {
+	@DeleteMapping("#{idx}")
+	public ResponseEntity<?> likeRemove(@PathVariable int idx) {
 		int result = likeService.removeLike(idx);
 		if(result == 0) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
@@ -40,21 +40,22 @@ public class LikeController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("{nickname}")
-	public ResponseEntity<?> getLikeList(@PathVariable String nickname) {
-		List<Like> list = likeService.getLikeList(nickname);
+	
+	@GetMapping("{myIdx}")
+	public ResponseEntity<?> likeList(@PathVariable int myIdx) {
+		List<Like> list = likeService.getLikeList(myIdx);
 		if(list == null) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<List<Like>>(list, HttpStatus.OK);
 	}
-//	@GetMapping("{videoId}")
-//	public ResponseEntity<?> getLike(@PathVariable String videoId) {
-//		Like Like;
-//		Like.setNickname(nickname);
-//		Like Like = LikeService.getLike();
-//		if(Like == null) {
-//			
-//		}
-//	}
+	@GetMapping("{videoId}")
+	public ResponseEntity<?> getLike(@PathVariable String videoId) {
+		Like Like;
+		Like.setNickname(nickname);
+		Like Like = LikeService.getLike();
+		if(Like == null) {
+			
+		}
+	}
 }

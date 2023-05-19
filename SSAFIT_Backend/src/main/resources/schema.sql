@@ -23,39 +23,39 @@ CREATE TABLE `video`(
 
 CREATE TABLE `review`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
-    `videoId` VARCHAR(40) NOT NULL,
+    `videoIdx` INT NOT NULL,
     `content` TEXT NOT NULL,
-    `nickname` VARCHAR(20) NOT NULL,
+    `userIdx` INT NOT NULL,
     `parent` INT NOT NULL,
     `regDate` DATETIME NOT NULL DEFAULT now(),
     `modDate` DATETIME NOT NULL DEFAULT now(),
-    FOREIGN KEY(`videoId`) REFERENCES `video`(`videoId`),
-    FOREIGN KEY(`nickname`) REFERENCES `user`(`nickname`)
+    FOREIGN KEY(`videoIdx`) REFERENCES `video`(`idx`) ON DELETE CASCADE,
+    FOREIGN KEY(`userIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE
 );
 
 -- 유저, 비디오, 리뷰, 캘린더, 찜, 팔로워,
 
 CREATE TABLE `like`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
-    `videoId` VARCHAR(40) NOT NULL,
-    `nickname` VARCHAR(20) NOT NULL,
-    FOREIGN KEY(`videoId`) REFERENCES `video`(`videoId`),
-    FOREIGN KEY(`nickname`) REFERENCES `user`(`nickname`)
+    `videoIdx` INT NOT NULL,
+    `userIdx` INT NOT NULL,
+    FOREIGN KEY(`videoIdx`) REFERENCES `video`(`idx`) ON DELETE CASCADE,
+    FOREIGN KEY(`userIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE
 );
 
 CREATE TABLE `follow`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
-    `myNickname` VARCHAR(20) NOT NULL,
-    `nickname` VARCHAR(20) NOT NULL,
-    FOREIGN KEY(`nickname`) REFERENCES `user`(`nickname`),
-    FOREIGN KEY(`myNickname`) REFERENCES `user`(`nickname`)
+    `myIdx` INT NOT NULL,
+    `yourIdx` INT NOT NULL,
+    FOREIGN KEY(`yourIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE,
+    FOREIGN KEY(`myIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE
 );
 
 CREATE TABLE `calendar`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
-    `nickname` VARCHAR(20) NOT NULL,
+    `userIdx` INT NOT NULL,
     `date` DATE NOT NULL,
     `content` TEXT NOT NULL,
     `done` BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY(`nickname`) REFERENCES `user`(`nickname`)
+    FOREIGN KEY(`userIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE
 );

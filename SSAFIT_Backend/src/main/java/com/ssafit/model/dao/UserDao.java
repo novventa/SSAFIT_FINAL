@@ -10,6 +10,8 @@ import com.ssafit.model.dto.User;
 public interface UserDao {
 	List<User> selectAll();
 
+	User selectUserByIdx(int idx);
+
 	User selectUserById(String id);
 
 	User selectUserByEmail(String email);
@@ -18,7 +20,7 @@ public interface UserDao {
 
 	int insertUser(User user);
 
-	int deleteUser(String id);
+	int deleteUser(int idx);
 
 	int updateUser(User user);
 

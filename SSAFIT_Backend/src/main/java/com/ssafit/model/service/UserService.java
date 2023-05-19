@@ -7,17 +7,17 @@ import com.ssafit.model.dto.User;
 
 public interface UserService {
 	
-	List<User> getUserList();
+	List<User> findAllUsers();
 	
-	User getUser(String id);
+	User findUser(int idx);
 
-	int signUp(User user) throws DuplicatedException;
+	int addUser(User user) throws DuplicatedException;
 
 	User login(String id, String password);
 
-	int modify(User user) throws DuplicatedException;
+	int modifyUser(User user) throws DuplicatedException;
 
-	int withdraw(String id);
+	int removeUser(int idx);
 
 	boolean isIdExist(String id);
 
