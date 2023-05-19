@@ -2,8 +2,8 @@ package com.ssafit.model.dto;
 
 public class Like {
 	private int idx;
-	private String videoId;
-	private String nickname;
+	private int videoIdx;
+	private int userIdx;
 	
 	public Like() {
 	}
@@ -16,21 +16,20 @@ public class Like {
 		this.idx = idx;
 	}
 
-	public String getVideoId() {
-		return videoId;
+	public int getVideoIdx() {
+		return videoIdx;
 	}
 
-	public void setVideoId(String videoId) {
-		this.videoId = videoId;
+	public void setVideoIdx(int videoIdx) {
+		this.videoIdx = videoIdx;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public int getUserIdx() {
+		return userIdx;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
 	}
-	
-	
+
 }

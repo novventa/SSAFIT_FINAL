@@ -46,7 +46,7 @@ public class ReviewController {
 	}
 	
 	@PutMapping("/{vidIdx}/{revIdx}")
-	public ResponseEntity<?> modify(@PathVariable int vidIdx, @PathVariable int revIdx,Review review){
+	public ResponseEntity<?> modify(@PathVariable int vidIdx, @PathVariable int revIdx, Review review){
 		int result = reviewService.modifyReview(review);
 		
 		if(result == 0)

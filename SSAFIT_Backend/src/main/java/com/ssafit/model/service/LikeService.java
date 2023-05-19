@@ -5,9 +5,9 @@ import java.util.List;
 import com.ssafit.model.dto.Like;
 
 public interface LikeService {
-	List<Like> getLikeList(String nickname);
+	List<Like> findAllLikes(int idx);
 
-	Like getLike(Like like);
+	Like findLike(Like like);
 	
 	int addLike(Like like);
 

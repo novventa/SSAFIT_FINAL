@@ -2,8 +2,8 @@ package com.ssafit.model.dto;
 
 public class Follow {
 	private int idx;
-	private String myNickname;
-	private String nickname;
+	private int myIdx;
+	private int yourIdx;
 	
 	public Follow() {
 	}
@@ -16,21 +16,20 @@ public class Follow {
 		this.idx = idx;
 	}
 
-	public String getMyNickname() {
-		return myNickname;
+	public int getMyIdx() {
+		return myIdx;
 	}
 
-	public void setMyNickname(String myNickname) {
-		this.myNickname = myNickname;
+	public void setMyIdx(int myIdx) {
+		this.myIdx = myIdx;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public int getYourIdx() {
+		return yourIdx;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setYourIdx(int yourIdx) {
+		this.yourIdx = yourIdx;
 	}
-	
 	
 }

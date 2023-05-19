@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 public class Review {
 	
 	private int idx;
-	private String videoId;
+	private int videoIdx;
 	private String content;
-	private String nickname;
+	private int userIdx;
 	private int parent;
 	private LocalDateTime regDate;
 	private LocalDateTime modDate;
@@ -24,12 +24,12 @@ public class Review {
 		this.idx = idx;
 	}
 
-	public String getVideoId() {
-		return videoId;
+	public int getVideoIdx() {
+		return videoIdx;
 	}
 
-	public void setVideoId(String videoId) {
-		this.videoId = videoId;
+	public void setVideoIdx(int videoIdx) {
+		this.videoIdx = videoIdx;
 	}
 
 	public String getContent() {
@@ -40,12 +40,12 @@ public class Review {
 		this.content = content;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public int getUserIdx() {
+		return userIdx;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
 	}
 
 	public int getParent() {
@@ -71,6 +71,5 @@ public class Review {
 	public void setModDate(LocalDateTime modDate) {
 		this.modDate = modDate;
 	}
-	
 
 }

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Calendar {
 
 	private int idx;
-	private String nickname;
+	private int userIdx;
 	private LocalDateTime date;
 	private String content;
 	private boolean done;
@@ -22,12 +22,12 @@ public class Calendar {
 		this.idx = idx;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public int getUserIdx() {
+		return userIdx;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
 	}
 
 	public LocalDateTime getDate() {
