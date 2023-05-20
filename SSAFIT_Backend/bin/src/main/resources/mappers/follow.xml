@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafit.model.dao.FollowDao">
+	<select id="sellectAll" parameterType="int" resultType="Follow">
+		SELECT *
+		FROM follow
+		WHERE myIdx = #{myIdx};
+	</select>
+	
+	<select id="selectFollow" parameterType="Follow" resultType="Follow">
+		SELECT *
+		FROM follow
+		WHERE myIdx = #{myIdx} AND yourIdx = #{yourIdx};
+	</select>
+	
+	<insert id="insertFollow" parameterType="Follow">
+		INSERT INTO follow(myIdx, yourIdx)
+		VALUES(#{myIdx}, #{yourIdx});
+	</insert>
+	
+	<delete id="deleteFollow" parameterType="int">
+		DELETE
+		FROM follow
+		WHERE idx = #{idx};
+	</delete>
+	
+</mapper>

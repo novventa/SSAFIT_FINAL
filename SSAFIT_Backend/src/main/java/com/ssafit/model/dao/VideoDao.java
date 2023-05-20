@@ -11,6 +11,8 @@ import com.ssafit.model.dto.VideoSearchCondition;
 public interface VideoDao {
 
 	public List<Video> selectAll(VideoSearchCondition condition);
+	
+	public List<Video> selectAllByPart(List<String> parts);
 
 	public Video selectVideo(int idx);
 

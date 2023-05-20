@@ -1,6 +1,7 @@
 package com.ssafit.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,8 +10,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafit.model.dto.Video;
@@ -44,7 +46,7 @@ public class VideoController {
 	}
 
 	@GetMapping("list-part")
-	public ResponseEntity<?> videoListByPart(List<String> parts) {
+	public ResponseEntity<?> videoListByPart(@RequestParam("parts") List<String> parts) {
 		List<Video> list = videoService.findAllVideosByPart(parts);
 		if (list == null || list.size() == 0)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -58,7 +60,6 @@ public class VideoController {
 
 		if (video == null)
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		
 		
 		return new ResponseEntity<Video>(video, HttpStatus.OK);
 	}

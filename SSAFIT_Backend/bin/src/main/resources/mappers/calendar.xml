@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafit.model.dao.CalendarDao">
+	<!-- 전체 일정 조회 -->
+	<select id="selectAll" resultType="Calendar">
+		SELECT *
+		FROM calendar
+		WHERE userIdx = #{userIdx}
+	</select>
+
+	<!-- 상세 일정 조회 -->
+	<select id="selectDate" parameterType="Date" resultType="Calendar">
+		SELECT *
+		FROM calendar
+		WHERE userIdx = #{userIdx}, date = #{date}
+	</select>
+
+	<!-- 일정 추가  -->
+	<insert id="insertCalendar" parameterType="Calendar" keyProperty="idx" useGeneratedKeys="true">
+		INSERT INTO calendar (userIdx,date,content,done)
+		VALUES (#{userIdx},#{date},#{content},#{done})
+	</insert>
+
+	<!-- 일정 업데이트 -->
+	<update id="updateCalendar" parameterType="Calendar">
+		UPDATE calendar SET content = #{content}, date = #{date}
+		WHERE idx = #{idx}
+	</update>
+
+	<!-- 일정 삭제 -->
+	<delete id="deleteCalendar" parameterType="int">
+		DELETE
+		FROM calendar
+		WHERE idx = #{idx}
+	</delete>
+
+</mapper>
