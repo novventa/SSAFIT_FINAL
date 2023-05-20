@@ -12,7 +12,20 @@
 			ORDER BY ${orderBy} ${orderByDir}
 		</if>
 	</select>
-
+	
+	<select id="selectAllByPart" parameterType="List" resultType="Video">
+		SELECT *
+		FROM video
+		<if test="parts.size() != 0">
+		WHERE
+       	part IN
+        <foreach collection="parts" item="part" separator="," open="(" close=")">
+            #{part}
+        </foreach>
+        </if>
+       	ORDER BY viewCnt DESC
+	</select>
+	
 	<!-- 상세 영상	 조회 -->
 	<select id="selectVideo" parameterType="int" resultType="Video">
 		SELECT *
