@@ -91,21 +91,26 @@ public class UserController {
 	return new ResponseEntity<Void>(HttpStatus.OK);
 }
 	
-//	@PostMapping("/login")
-//	public ResponseEntity<Map<String, Object>> login(String id, String password) throws JWTTokenException{
-//		HttpStatus status = null;
-//		
-//		HashMap<String, Object> result = new HashMap<>();
-//			User user = userService.login(id, password);
-//			if(user != null) {
-//				result.put("access-token", jwtUtil.createToken("userIdx", String.valueOf(user.getIdx())));
-//				status = HttpStatus.ACCEPTED;
-//			}else {
-//				throw new JWTTokenException();
-//			}
-//			status = HttpStatus.INTERNAL_SERVER_ERROR;
-//		return new ResponseEntity<Map<String,Object>>(result, status);
-//	}
+	@PostMapping("/login")
+	public ResponseEntity<Map<String, Object>> login(String id, String password){
+		HttpStatus status = null;
+		HashMap<String, Object> result = new HashMap<>();
+		User user = userService.login(id, password);
+		if(user != null) {
+			try {
+				result.put("access-token", jwtUtil.createToken("idx", String.valueOf(user.getIdx())));
+			} catch (Exception e) {
+				result.put("message", FAIL);
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+			status = HttpStatus.ACCEPTED;
+		}else {
+			result.put("message", FAIL);
+			status = HttpStatus.NO_CONTENT;
+		}
+		status = HttpStatus.INTERNAL_SERVER_ERROR;
+		return new ResponseEntity<Map<String,Object>>(result, status);
+	}
 	
 	
 //	@GetMapping()
