@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.ssafit.interceptor.JWTInterceptor;
+//import com.ssafit.interceptor.JWTInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -20,21 +20,21 @@ public class WebConfig implements WebMvcConfigurer {
 				.addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/");
 	}
 
-	@Autowired
-	private JWTInterceptor jwtInterceptor;
+//	@Autowired
+//	private JWTInterceptor jwtInterceptor;
 	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtInterceptor)
-		.addPathPatterns("/**")
-		.excludePathPatterns("/api-user/add",
-				"/api-user/check/**",
-				"/api-user/login",
-				"/api-user/modify",
-				"/swagger-resources/**",
-				"/swagger-ui/**",
-				"/v2/api-docs");
-	}
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(jwtInterceptor)
+//		.addPathPatterns("/**")
+//		.excludePathPatterns("/api-user/add",
+//				"/api-user/check/**",
+//				"/api-user/login",
+//				"/api-user/modify",
+//				"/swagger-resources/**",
+//				"/swagger-ui/**",
+//				"/v2/api-docs");
+//	}
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
