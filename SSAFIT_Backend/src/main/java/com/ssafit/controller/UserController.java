@@ -106,7 +106,7 @@ public class UserController {
 		return new ResponseEntity<String>(id, HttpStatus.OK);
 	}
 
-	@GetMapping("id-check/{id}")
+	@GetMapping("check/id/{id}")
 	public ResponseEntity<Void> idCheck(@PathVariable String id) throws DuplicatedException {
 		if (userService.isIdExist(id)) {
 			throw new DuplicatedException("이미 사용중인 id입니다.");
@@ -114,7 +114,7 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@GetMapping("email-check/{email}")
+	@GetMapping("check/email/{email}")
 	public ResponseEntity<Void> emailCheck(@PathVariable String email) throws DuplicatedException {
 		if (userService.isEmailExist(email)) {
 			throw new DuplicatedException("이미 사용중인 이메일입니다.");
@@ -122,7 +122,7 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@GetMapping("nickname-check/{nickname}")
+	@GetMapping("check/nickname/{nickname}")
 	public ResponseEntity<Void> nicknameCheck(@PathVariable String nickname) throws DuplicatedException {
 		if (userService.isNicknameExist(nickname)) {
 			throw new DuplicatedException("이미 사용중인 닉네임입니다.");
@@ -137,14 +137,12 @@ public class UserController {
 		User user = userService.login(id, password);
 		if (user != null) {
 			try {
-				result.put("access-token", jwtUtil.createToken("idx", String.valueOf(user.getIdx())));
+				result.put("access-token", jwtUtil.createToken("userIdx", String.valueOf(user.getIdx())));
 			} catch (Exception e) {
-				result.put("message", FAIL);
 				status = HttpStatus.INTERNAL_SERVER_ERROR;
 			}
 			status = HttpStatus.ACCEPTED;
 		} else {
-			result.put("message", FAIL);
 			status = HttpStatus.NO_CONTENT;
 		}
 		status = HttpStatus.INTERNAL_SERVER_ERROR;
