@@ -2,7 +2,7 @@ package com.ssafit.model.service;
 
 import java.util.List;
 
-import com.ssafit.exception.DuplicatedException;
+import com.ssafit.exception.CustomException;
 import com.ssafit.model.dto.User;
 
 public interface UserService {
@@ -13,11 +13,11 @@ public interface UserService {
 	
 	User findUser(int idx);
 
-	int addUser(User user) throws DuplicatedException;
+	int addUser(User user) throws CustomException;
 
-	User login(String id, String password);
+	User login(String id, String password) throws CustomException;
 
-	int modifyUser(User user) throws DuplicatedException;
+	int modifyUser(User user) throws CustomException;
 
 	int removeUser(int idx);
 

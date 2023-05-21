@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafit.exception.CustomException;
 import com.ssafit.model.dao.VideoDao;
+import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.dto.Video;
 import com.ssafit.model.dto.VideoSearchCondition;
 
@@ -26,9 +28,13 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public Video findVideo(int idx) {
+	public Video findVideo(int idx) throws CustomException {
+		Video video = videoDao.selectVideo(idx);
+		if(video == null) {
+			throw new CustomException(ErrorCode.VIDEO_NOT_FOUND);
+		}
 		videoDao.updateViewCnt(idx);
-		return videoDao.selectVideo(idx);
+		return video;
 	}
 
 	@Override

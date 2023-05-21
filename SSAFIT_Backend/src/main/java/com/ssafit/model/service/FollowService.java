@@ -7,7 +7,7 @@ import com.ssafit.model.dto.Follow;
 public interface FollowService {
 	List<Follow> findAllFollows(int myIdx);
 	
-	Follow findFollow(Follow follow);
+	Follow findFollow(int idx);
 	
 	int addFollow(Follow follow);
 	

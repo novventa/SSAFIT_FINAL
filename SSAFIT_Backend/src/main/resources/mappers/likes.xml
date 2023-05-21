@@ -15,10 +15,10 @@
 		WHERE videoIdx = #{videoIdx};
 	</select>
 
-	<select id="selectLikes" parameterType="Likes" resultType="Likes">
+	<select id="selectLikes" parameterType="int" resultType="Likes">
 		SELECT *
 		FROM likes
-		WHERE userIdx = #{userIdx} AND videoIdx = #{videoIdx};
+		WHERE idx = #{idx};
 	</select>
 
 	<insert id="insertLikes" parameterType="Likes" keyProperty="idx"

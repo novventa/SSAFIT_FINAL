@@ -22,27 +22,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafit.exception.CustomException;
 import com.ssafit.exception.DuplicatedException;
-//import com.ssafit.exception.JWTTokenException;
+import com.ssafit.exception.JWTTokenException;
+import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.dto.User;
 import com.ssafit.model.service.UserService;
-//import com.ssafit.util.JWTUtil;
+import com.ssafit.util.JWTUtil;
 
 @RestController
 @RequestMapping("/api-user")
 public class UserController {
 
+	private static final String SUCCESS = "success";
+	
 	@Autowired
 	UserService userService;
 
-//	@Autowired
-//	JWTUtil jwtUtil;
+	@Autowired
+	JWTUtil jwtUtil;
 
 	@Value("${part.upload.path}")
 	private String uploadPath;
 
 	@PostMapping("add")
-	public ResponseEntity<?> userAdd(User user, MultipartFile file) throws DuplicatedException {
+	public ResponseEntity<?> userAdd(User user, MultipartFile file) throws CustomException{
 
 		if (!file.isEmpty() && file.getContentType().startsWith("image")) {
 			String originalFileName = file.getOriginalFilename();
@@ -72,33 +76,30 @@ public class UserController {
 
 		}
 
-		int result = userService.addUser(user);
-		if (result == 0) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<Integer>(result, HttpStatus.CREATED);
+		userService.addUser(user);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("remove/{idx}")
-	public ResponseEntity<?> userRemove(@PathVariable int idx) {
+	public ResponseEntity<?> userRemove(@PathVariable int idx) throws CustomException {
 		int result = userService.removeUser(idx);
 		if (result == 0) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 
 	@GetMapping("list")
-	public ResponseEntity<?> userList() {
+	public ResponseEntity<?> userList() throws CustomException {
 		List<User> list = userService.findAllUsers();
 		if (list == null) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
 	}
 
 	@GetMapping("searchId")
-	public ResponseEntity<?> idFind(User user) {
+	public ResponseEntity<?> idFind(User user) throws CustomException {
 		String id = userService.findId(user);
 		if (id == null) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
@@ -107,47 +108,42 @@ public class UserController {
 	}
 
 	@GetMapping("check/id/{id}")
-	public ResponseEntity<Void> idCheck(@PathVariable String id) throws DuplicatedException {
+	public ResponseEntity<Void> idCheck(@PathVariable String id) throws CustomException {
 		if (userService.isIdExist(id)) {
-			throw new DuplicatedException("이미 사용중인 id입니다.");
+			throw new CustomException(ErrorCode.DUPLICATED_ID);
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@GetMapping("check/email/{email}")
-	public ResponseEntity<Void> emailCheck(@PathVariable String email) throws DuplicatedException {
+	public ResponseEntity<Void> emailCheck(@PathVariable String email) throws CustomException {
 		if (userService.isEmailExist(email)) {
-			throw new DuplicatedException("이미 사용중인 이메일입니다.");
+			throw new CustomException(ErrorCode.DUPLICATED_EMAIL);
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 	@GetMapping("check/nickname/{nickname}")
-	public ResponseEntity<Void> nicknameCheck(@PathVariable String nickname) throws DuplicatedException {
+	public ResponseEntity<Void> nicknameCheck(@PathVariable String nickname) throws CustomException {
 		if (userService.isNicknameExist(nickname)) {
-			throw new DuplicatedException("이미 사용중인 닉네임입니다.");
+			throw new CustomException(ErrorCode.DUPLICATED_NICKNAME);
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-//	@PostMapping("/login")
-//	public ResponseEntity<Map<String, Object>> login(String id, String password) {
-//		HttpStatus status = null;
-//		HashMap<String, Object> result = new HashMap<>();
-//		User user = userService.login(id, password);
-//		if (user != null) {
-//			try {
-//				result.put("access-token", jwtUtil.createToken("userIdx", String.valueOf(user.getIdx())));
-//			} catch (Exception e) {
-//				status = HttpStatus.INTERNAL_SERVER_ERROR;
-//			}
-//			status = HttpStatus.ACCEPTED;
-//		} else {
-//			status = HttpStatus.NO_CONTENT;
-//		}
-//		status = HttpStatus.INTERNAL_SERVER_ERROR;
-//		return new ResponseEntity<Map<String, Object>>(result, status);
-//	}
+	@PostMapping("/login")
+	public ResponseEntity<Map<String, Object>> login(String id, String password) throws CustomException {
+		HttpStatus status = null;
+		HashMap<String, Object> result = new HashMap<>();
+		User user = userService.login(id, password);
+		try {
+			result.put("access-token", jwtUtil.createToken("userIdx", String.valueOf(user.getIdx())));
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(result, status);
+	}
 
 //	@GetMapping()
 //	public ResponseEntity<Void> logout(HttpSession session) {
@@ -157,16 +153,16 @@ public class UserController {
 //	}
 
 	@GetMapping("details/{idx}")
-	public ResponseEntity<?> userDetails(@PathVariable int idx) {
+	public ResponseEntity<?> userDetails(@PathVariable int idx) throws CustomException {
 		User user = userService.findUser(idx);
 		if (user == null) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			throw new CustomException(ErrorCode.USER_NOT_FOUND);
 		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
 	@PutMapping("modify")
-	public ResponseEntity<?> userModify(User user, MultipartFile file) throws DuplicatedException {
+	public ResponseEntity<?> userModify(User user, MultipartFile file) throws CustomException {
 		if (!file.isEmpty() && file.getContentType().startsWith("image")) {
 			String originalFileName = file.getOriginalFilename();
 			UUID uuid = UUID.randomUUID();
@@ -191,11 +187,8 @@ public class UserController {
 			}
 		}
 
-		int result = userService.modifyUser(user);
-		if (result == 0) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+		userService.modifyUser(user);
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
-
+	
 }

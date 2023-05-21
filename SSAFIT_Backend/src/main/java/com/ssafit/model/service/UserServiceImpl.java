@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafit.exception.CustomException;
 import com.ssafit.exception.DuplicatedException;
 import com.ssafit.model.dao.UserDao;
+import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.dto.User;
 
 @Service
@@ -31,30 +33,42 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public int addUser(User user) throws DuplicatedException {
+	public int addUser(User user) throws CustomException {
 		if(isIdExist(user.getId())) {
-			throw new DuplicatedException("이미 사용중인 아이디입니다.");
+			throw new CustomException(ErrorCode.DUPLICATED_ID);
 		}
 		if(isEmailExist(user.getEmail())) {
-			throw new DuplicatedException("이미 사용중인 이메일입니다.");
+			throw new CustomException(ErrorCode.DUPLICATED_EMAIL);
 		}
 		if(isNicknameExist(user.getNickname())) {
-			throw new DuplicatedException("이미 사용중인 닉네임입니다.");
+			throw new CustomException(ErrorCode.DUPLICATED_NICKNAME);
 		}
 		return userDao.insertUser(user);
 	}
 
 	@Override
-	public User login(String id, String password) {
+	public User login(String id, String password) throws CustomException {
 		User user = userDao.selectUserById(id);
-		if(user != null && user.getPassword().equals(password)) {
+		if(user == null) {
+			throw new CustomException(ErrorCode.USER_NOT_FOUND);
+		}
+		if(user.getPassword().equals(password)) {
 			return user;
 		}
-		return null;
+		throw new CustomException(ErrorCode.WRONG_PASSWORD);
 	}
 
 	@Override
-	public int modifyUser(User user) throws DuplicatedException {
+	public int modifyUser(User user) throws CustomException{
+		User origin = userDao.selectUserByIdx(user.getIdx());
+		User tmpUser = userDao.selectUserByEmail(user.getEmail());
+		if(tmpUser != null && tmpUser.getIdx() != origin.getIdx()) {
+			throw new CustomException(ErrorCode.DUPLICATED_EMAIL);
+		}
+		tmpUser = userDao.selectUserByNickname(user.getNickname());
+		if(tmpUser != null && tmpUser.getIdx() != origin.getIdx()) {
+			throw new CustomException(ErrorCode.DUPLICATED_NICKNAME);
+		}
 		return userDao.updateUser(user);
 	}
 

@@ -2,6 +2,7 @@ package com.ssafit.model.service;
 
 import java.util.List;
 
+import com.ssafit.exception.CustomException;
 import com.ssafit.model.dto.Review;
 
 public interface ReviewService {
@@ -14,6 +15,6 @@ public interface ReviewService {
 	
 	public int removeReview(int idx);
 	
-	public Review findReview(int idx);
+	public Review findReview(int idx) throws CustomException;
 	
 }

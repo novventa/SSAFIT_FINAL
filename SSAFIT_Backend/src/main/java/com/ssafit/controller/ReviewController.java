@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafit.exception.CustomException;
+import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.dto.Review;
 import com.ssafit.model.service.ReviewService;
 import com.ssafit.model.service.VideoService;
@@ -21,6 +23,8 @@ import com.ssafit.model.service.VideoService;
 @RequestMapping("api-review")
 public class ReviewController {
 
+	private static final String SUCCESS = "success";
+
 	@Autowired
 	ReviewService reviewService;
 	
@@ -28,42 +32,47 @@ public class ReviewController {
 	VideoService videoService;
 	
 	@PostMapping("add")
-	public ResponseEntity<?> reviewAdd(Review review){
+	public ResponseEntity<?> reviewAdd(Review review) throws CustomException{
 		int result = reviewService.addReview(review);
 		
-		if(result == 0)
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		
-		return new ResponseEntity<Integer>(result,HttpStatus.OK);
+		if(result == 0) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
 	@GetMapping("list/{videoIdx}")
-	public ResponseEntity<?> reviewList(@PathVariable int videoIdx) {
+	public ResponseEntity<?> reviewList(@PathVariable int videoIdx) throws CustomException {
 		
 		List<Review> list = reviewService.findAllReviews(videoIdx);
-
+		if(list == null) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		if(list.size() == 0) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
 		return new ResponseEntity<List<Review>>(list, HttpStatus.OK);
 	}
 	
 	
 	@PutMapping("modify")
-	public ResponseEntity<?> reviewModify(Review review){
+	public ResponseEntity<?> reviewModify(Review review) throws CustomException{
 		int result = reviewService.modifyReview(review);
 		
-		if(result == 0)
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		
-		return new ResponseEntity<Integer>(result,HttpStatus.OK);
+		if(result == 0) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
 	@DeleteMapping("remove/{idx}")
-	public ResponseEntity<?> reviewRemove(@PathVariable int idx){
+	public ResponseEntity<?> reviewRemove(@PathVariable int idx) throws CustomException{
 		int result = reviewService.removeReview(idx);
 		
-		if(result == 0)
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		
-		return new ResponseEntity<Integer>(result,HttpStatus.OK);
+		if(result == 0) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	
 }

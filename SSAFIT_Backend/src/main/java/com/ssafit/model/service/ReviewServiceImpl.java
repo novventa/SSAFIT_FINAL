@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafit.exception.CustomException;
 import com.ssafit.model.dao.ReviewDao;
+import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.dto.Review;
 
 @Service
@@ -35,8 +37,12 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public Review findReview(int idx) {
-		return reviewDao.selectReview(idx);
+	public Review findReview(int idx) throws CustomException {
+		Review review = reviewDao.selectReview(idx);
+		if(review == null) {
+			throw new CustomException(ErrorCode.REVIEW_NOT_FOUND);
+		}
+		return review;
 	}
 
 }

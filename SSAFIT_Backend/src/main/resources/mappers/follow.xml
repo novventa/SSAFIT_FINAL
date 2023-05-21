@@ -7,10 +7,10 @@
 		WHERE myIdx = #{myIdx};
 	</select>
 	
-	<select id="selectFollow" parameterType="Follow" resultType="Follow">
+	<select id="selectFollow" parameterType="int" resultType="Follow">
 		SELECT *
 		FROM follow
-		WHERE myIdx = #{myIdx} AND yourIdx = #{yourIdx};
+		WHERE idx = #{idx};
 	</select>
 	
 	<insert id="insertFollow" parameterType="Follow">

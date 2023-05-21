@@ -13,37 +13,45 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafit.exception.CustomException;
 import com.ssafit.model.dto.Calendar;
+import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.service.CalendarService;
 
 @RestController
 @RequestMapping("/api-calendar")
 public class CalendarController {
-	
+
+	private static final String SUCCESS = "success";
+
 	@Autowired
 	CalendarService calendarService;
-	
+
 	@PostMapping("add")
-	public ResponseEntity<?> calendarAdd(Calendar calendar){
+	public ResponseEntity<?> calendarAdd(Calendar calendar) throws CustomException {
 		int result = calendarService.addCalendar(calendar);
-		
-		if(result == 0)
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		
-		return new ResponseEntity<Integer> (result,HttpStatus.OK);
+
+		if (result == 0) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("list/{userIdx}")
-	public ResponseEntity<?> calendarList(@PathVariable int userIdx){
-		
+	public ResponseEntity<?> calendarList(@PathVariable int userIdx) throws CustomException {
+
 		List<Calendar> list = calendarService.findAllCalendars(userIdx);
-	
-		if(list==null || list.size() == 0)
+
+		if (list == null) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+
+		if (list.size() == 0) {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		
-		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
+		}
+		return new ResponseEntity<List<Calendar>>(list, HttpStatus.OK);
 	}
-	
+
 //	@GetMapping("date-list/{idx}/{date}")
 //	public ResponseEntity<?> calendarDetails(@PathVariable int idx, @PathVariable String date){
 //		
@@ -54,25 +62,25 @@ public class CalendarController {
 //		
 //		return new ResponseEntity<List<Calendar>> (list,HttpStatus.OK);
 //	}
-	
+
 	@PutMapping("modify")
-	public ResponseEntity<?> calendarModify(Calendar calendar){
+	public ResponseEntity<?> calendarModify(Calendar calendar) throws CustomException {
 		int result = calendarService.modifyCalendar(calendar);
-		
-		if(result == 0)
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-	
-		return new ResponseEntity<Integer> (result,HttpStatus.OK);
+
+		if (result == 0) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("remove/{idx}")
-	public ResponseEntity<?> calendarRemove(@PathVariable int idx){
+	public ResponseEntity<?> calendarRemove(@PathVariable int idx) throws CustomException {
 		int result = calendarService.removeCalendar(idx);
-		
-		if(result == 0)
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-	
-		return new ResponseEntity<Integer> (result,HttpStatus.OK);
+
+		if (result == 0) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
-	
+
 }

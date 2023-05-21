@@ -20,8 +20,8 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public Follow findFollow(Follow follow) {
-		return followDao.selectFollow(follow);
+	public Follow findFollow(int idx) {
+		return followDao.selectFollow(idx);
 	}
 
 	@Override

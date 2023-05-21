@@ -10,7 +10,7 @@ import com.ssafit.model.dto.Follow;
 public interface FollowDao {
 	List<Follow> sellectAll(int myIdx);
 	
-	Follow selectFollow(Follow follow);
+	Follow selectFollow(int idx);
 	
 	int insertFollow(Follow follow);
 	
