@@ -45,4 +45,9 @@ public class ReviewServiceImpl implements ReviewService {
 		return review;
 	}
 
+	@Override
+	public List<Review> findAllReviewsByUserIdx(int userIdx) {
+		return reviewDao.selectAllByUserIdx(userIdx);
+	}
+
 }

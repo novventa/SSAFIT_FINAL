@@ -11,6 +11,8 @@ public interface ReviewDao {
 
 	public List<Review> selectAll(int videoIdx);
 	
+	public List<Review> selectAllByUserIdx(int userIdx);
+	
 	public Review selectReview(int idx);
 	
 	public int insertReview(Review review);

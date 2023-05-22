@@ -8,7 +8,7 @@ public class Review {
 	private int videoIdx;
 	private String content;
 	private int userIdx;
-	private int parent;
+	private int parent = 0;
 	private LocalDateTime regDate;
 	private LocalDateTime modDate;
 	

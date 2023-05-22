@@ -8,6 +8,12 @@
 		FROM review
 		WHERE videoIdx = #{videoIdx}
 	</select>
+	
+	<select id="selectAllByUserIdx" parameterType="int" resultType="Review">
+		SELECT *
+		FROM review
+		WHERE userIdx = #{userIdx};
+	</select>
 
 	<!-- 리뷰 하나 조회 -->
 	<select id="selectReview" parameterType="int" resultType="Review">

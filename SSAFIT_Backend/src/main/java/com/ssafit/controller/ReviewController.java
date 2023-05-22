@@ -54,6 +54,19 @@ public class ReviewController {
 		return new ResponseEntity<List<Review>>(list, HttpStatus.OK);
 	}
 	
+	@GetMapping("list-user/{userIdx}")
+	public ResponseEntity<?> reviewListByUserIdx(@PathVariable int userIdx) throws CustomException {
+		
+		List<Review> list = reviewService.findAllReviewsByUserIdx(userIdx);
+		if(list == null) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		if(list.size() == 0) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Review>>(list, HttpStatus.OK);
+	}
+	
 	
 	@PutMapping("modify")
 	public ResponseEntity<?> reviewModify(Review review) throws CustomException{

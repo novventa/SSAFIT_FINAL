@@ -9,6 +9,8 @@ public interface ReviewService {
 
 	public List<Review> findAllReviews(int videoIdx);
 	
+	public List<Review> findAllReviewsByUserIdx(int userIdx);
+	
 	public int addReview(Review review);
 	
 	public int modifyReview(Review review);
