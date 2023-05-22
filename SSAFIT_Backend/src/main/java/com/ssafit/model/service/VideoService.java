@@ -14,8 +14,10 @@ public interface VideoService {
 	
 	public Video findVideo(int idx) throws CustomException;
 	
-	public int addVideo(Video video);
+	public Video findVideoByVideoId(String videoId);
 	
-	public int removeVideo(int idx);
+	public int addVideo(Video video) throws CustomException;
+	
+	public int removeVideo(int idx) throws CustomException;
 	
 }

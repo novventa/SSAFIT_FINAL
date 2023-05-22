@@ -38,12 +38,22 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	@Override
-	public int addVideo(Video video) {
+	public Video findVideoByVideoId(String videoId){
+		return videoDao.selectVideoByVideoId(videoId);
+	}
+	
+	@Override
+	public int addVideo(Video video) throws CustomException {
+		Video tmpVideo = videoDao.selectVideoByVideoId(video.getVideoId());
+		if(tmpVideo != null) {
+			throw new CustomException(ErrorCode.DUPLICATED_VIDEOID);
+		}
 		return videoDao.insertVideo(video);
 	}
 
 	@Override
-	public int removeVideo(int idx) {
+	public int removeVideo(int idx) throws CustomException {
+		findVideo(idx);
 		return videoDao.deleteVideo(idx);
 	}
 

@@ -33,6 +33,12 @@
 		WHERE idx = #{idx}
 	</select>
 
+	<select id="selectVideoByVideoId" parameterType="String" resultType="Video">
+		SELECT *
+		FROM video
+		WHERE videoId = #{videoId};
+	</select>
+
 	<!-- 비디오 추가  -->
 	<insert id="insertVideo" parameterType="Video" keyProperty="idx" useGeneratedKeys="true">
 		INSERT INTO video (videoId, title, channelName, part)

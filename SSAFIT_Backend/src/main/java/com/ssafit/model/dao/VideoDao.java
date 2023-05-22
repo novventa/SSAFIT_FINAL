@@ -15,6 +15,8 @@ public interface VideoDao {
 	public List<Video> selectAllByPart(List<String> parts);
 
 	public Video selectVideo(int idx);
+	
+	public Video selectVideoByVideoId(String videoId);
 
 	public int insertVideo(Video video);
 
