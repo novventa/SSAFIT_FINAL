@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafit.exception.CustomException;
-import com.ssafit.exception.DuplicatedException;
 import com.ssafit.exception.JWTTokenException;
 import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.dto.User;
@@ -48,7 +47,7 @@ public class UserController {
 	@PostMapping("add")
 	public ResponseEntity<?> userAdd(User user, MultipartFile file) throws CustomException{
 
-		if (!file.isEmpty() && file.getContentType().startsWith("image")) {
+		if (file != null && !file.isEmpty() && file.getContentType().startsWith("image")) {
 			String originalFileName = file.getOriginalFilename();
 
 			UUID uuid = UUID.randomUUID();
@@ -64,10 +63,10 @@ public class UserController {
 				uploadPathFolder.mkdirs();
 
 			Path savePath = Paths.get(saveName);
-
+			user.setImage(uuid + "_" + fileName);
+			userService.addUser(user);
 			try {
 				file.transferTo(savePath);
-				user.setImage(uuid + "_" + fileName);
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -75,8 +74,9 @@ public class UserController {
 			}
 
 		}
-
-		userService.addUser(user);
+		else {
+			userService.addUser(user);			
+		}
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.CREATED);
 	}
 
@@ -163,7 +163,7 @@ public class UserController {
 
 	@PutMapping("modify")
 	public ResponseEntity<?> userModify(User user, MultipartFile file) throws CustomException {
-		if (!file.isEmpty() && file.getContentType().startsWith("image")) {
+		if (file != null && !file.isEmpty() && file.getContentType().startsWith("image")) {
 			String originalFileName = file.getOriginalFilename();
 			UUID uuid = UUID.randomUUID();
 			String fileName = originalFileName.substring(originalFileName.lastIndexOf("//") + 1);
@@ -176,18 +176,19 @@ public class UserController {
 			}
 
 			Path savePath = Paths.get(saveName);
-
+			user.setImage(uuid + "_" + fileName);
+			userService.modifyUser(user);
 			try {
 				file.transferTo(savePath);
-				user.setImage(uuid + "_" + fileName);
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-
-		userService.modifyUser(user);
+		else {
+			userService.modifyUser(user);
+		}
 		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 	

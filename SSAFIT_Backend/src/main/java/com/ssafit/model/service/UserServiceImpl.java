@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafit.exception.CustomException;
-import com.ssafit.exception.DuplicatedException;
 import com.ssafit.model.dao.UserDao;
 import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.dto.User;
