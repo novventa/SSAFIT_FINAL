@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -116,9 +118,9 @@ public class UserController {
 	
 	@GetMapping("confirm")
 	public ResponseEntity<?> userConfirm(User user) throws CustomException {
-		boolean check = userService.confirmUser(user);
-		if(check) {
-			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		User tmpUser = userService.confirmUser(user);
+		if(tmpUser != null) {
+			return new ResponseEntity<User>(tmpUser, HttpStatus.OK);
 		}
 		throw new CustomException(ErrorCode.FAIL_CERTIFICATION);
 	}
@@ -131,17 +133,17 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@GetMapping("check/email/{email}")
-	public ResponseEntity<Void> emailCheck(@PathVariable String email) throws CustomException {
-		if (userService.isEmailExist(email)) {
+	@GetMapping("check/email/{email}/{idx}")
+	public ResponseEntity<Void> emailCheck(@PathVariable(required = false) Integer idx, @PathVariable String email) throws CustomException {
+		if (userService.isEmailExist(email) && idx != null && !userService.findUser(idx).getEmail().equals(email)) {
 			throw new CustomException(ErrorCode.DUPLICATED_EMAIL);
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@GetMapping("check/nickname/{nickname}")
-	public ResponseEntity<Void> nicknameCheck(@PathVariable String nickname) throws CustomException {
-		if (userService.isNicknameExist(nickname)) {
+	@GetMapping("check/nickname/{nickname}/{idx}")
+	public ResponseEntity<Void> nicknameCheck(@PathVariable(required = false) Integer idx, @PathVariable String nickname) throws CustomException {
+		if (userService.isNicknameExist(nickname) && idx != null && !userService.findUser(idx).getNickname().equals(nickname)) {
 			throw new CustomException(ErrorCode.DUPLICATED_NICKNAME);
 		}
 		return new ResponseEntity<Void>(HttpStatus.OK);
@@ -153,7 +155,7 @@ public class UserController {
 		HashMap<String, Object> result = new HashMap<>();
 		User user = userService.login(id, password);
 		try {
-			result.put("access-token", jwtUtil.createToken("userIdx", String.valueOf(user.getIdx())));
+			result.put("access-token", jwtUtil.createToken("id", user.getId()));
 			result.put("user", user);
 			status = HttpStatus.OK;
 		} catch (Exception e) {

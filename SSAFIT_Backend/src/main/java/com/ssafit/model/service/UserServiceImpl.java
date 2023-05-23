@@ -104,12 +104,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean confirmUser(User user) {
-		User tmpUser = userDao.selectUserForReset(user);
-		if(tmpUser == null) {
-			return false;
-		}
-		return true;
+	public User confirmUser(User user) {
+		return userDao.selectUserForReset(user);
+
 	}
 
 }

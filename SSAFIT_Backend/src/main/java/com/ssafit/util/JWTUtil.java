@@ -4,6 +4,7 @@ import java.util.Base64;
 
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -26,9 +27,10 @@ public class JWTUtil {
 				.compact();
 	}
 	
-	public void valid(String token) throws Exception {
-		Jwts.parser()
+	public Claims valid(String token) throws Exception {
+		return Jwts.parser()
 		.setSigningKey(SALT.getBytes("UTF-8"))
-		.parseClaimsJws(token);
+		.parseClaimsJws(token)
+		.getBody();
 	}
 }

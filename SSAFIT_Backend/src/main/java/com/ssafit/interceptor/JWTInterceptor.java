@@ -10,10 +10,12 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import com.ssafit.exception.JWTTokenException;
 import com.ssafit.util.JWTUtil;
 
+import io.jsonwebtoken.Claims;
+
 @Component
 public class JWTInterceptor implements HandlerInterceptor {
 	
-	private static final String HEADER_AUTH = "access-token";
+	private static final String HEADER_AUTH = "token";
 	
 	@Autowired
 	private JWTUtil jwtUtil;
@@ -21,7 +23,6 @@ public class JWTInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
 		if(request.getMethod().equals("OPTIONS")) {
 			return true;
 		}

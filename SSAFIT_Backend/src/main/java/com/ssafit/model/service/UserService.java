@@ -13,7 +13,7 @@ public interface UserService {
 	
 	User findUser(int idx);
 	
-	boolean confirmUser(User user);
+	User confirmUser(User user);
 
 	int addUser(User user) throws CustomException;
 
