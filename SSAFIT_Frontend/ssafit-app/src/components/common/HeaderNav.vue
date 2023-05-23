@@ -1,30 +1,40 @@
 <template>
-  <v-toolbar class="white">
-    <v-app-bar-nav-icon
-      ><img src="@/assets/logo.png" alt="logo" height="25px" width="25px"
-    /></v-app-bar-nav-icon>
-    <v-toolbar-title class="mx-0">SSAFIT</v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-toolbar-items>
-      <v-btn>로그인</v-btn>
-      <v-btn class="orange darken-1">회원가입</v-btn>
-    </v-toolbar-items>
-  </v-toolbar>
+  <div>
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>SSAFIT</v-toolbar-title>
+    </v-app-bar>
+
+    <v-navigation-drawer v-model="drawer" fixed temporary>
+      <v-list>
+        <v-list-item @click="navigateTo('/login')">
+          <v-list-item-icon>
+            <v-icon>mdi-login</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>로그인</v-list-item-title>
+        </v-list-item>
+        <v-list-item @click="navigateTo('/register')">
+          <v-list-item-icon>
+            <v-icon>mdi-account-plus</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>회원가입</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "App",
-  data: function () {
-    return {};
-  },
-  computed: {
-    imgHeight: function () {
-      var offset = 320;
-      return this.pageHeight - offset;
+  data: () => ({ drawer: null }),
+  methods: {
+    navigateTo(route) {
+      // Perform navigation to the specified route
+      // You can use Vue Router or any other navigation method of your choice
+      console.log(`Navigating to: ${route}`);
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style></style>

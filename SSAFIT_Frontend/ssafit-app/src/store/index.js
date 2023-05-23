@@ -11,13 +11,24 @@ const REST_API = `http://localhost:9999`;
 export default new Vuex.Store({
   state: {
     user: {},
+    videos: [],
+    video: {},
+    reviews: [],
   },
   getters: {
   },
   mutations: {
     LOGIN(state, payload) {
       state.user = payload;
-    }
+    },
+        SEARCH_VIDEO(state, videos) {
+      state.videos = videos;
+      console.log(videos);
+    },
+    CLICK_VIDEO(state, video) {
+      state.video = video;
+      console.log(video);
+    },
   },
   actions: {
     login({ commit }, user) {
@@ -38,6 +49,37 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err);
         })
+    },
+     searchVideo({ commit }, payload) {
+      console.log(payload);
+
+      const URL = `${REST_API}/api-video/list`;
+      axios({
+        url: URL,
+        method: "GET",
+        params: payload,
+      })
+        .then((res) => {
+          console.log(res.data);
+          commit("SEARCH_VIDEO", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // payload : 비디오 객체가 들어온다
+    clickVideo({ commit }, video) {
+      const URL = `${REST_API}/api-video/details/${video.idx}`;
+      axios({
+        url: URL,
+        method: "GET",
+      })
+        .then((res) => {
+          commit("CLICK_VIDEO", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   modules: {

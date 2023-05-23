@@ -1,15 +1,15 @@
 <template>
-  <landing-page />
+  <main-page></main-page>
 </template>
 
 <script>
-import LandingPage from "../components/LandingPage";
+import MainPage from "@/components/MainPage.vue";
 
 export default {
   name: "HomeView",
 
   components: {
-    LandingPage,
+    MainPage,
   },
 };
 </script>
