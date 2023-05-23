@@ -98,6 +98,7 @@ export default {
                 ]
             })
                 .then(() => {
+                    this.$router.push("/");
                 })
                 .catch((err) => {
                     console.log(err);
@@ -108,7 +109,7 @@ export default {
         },
         checkNickname() {
             const REST_API = `http://localhost:9999`;
-            const API_URL = `${REST_API}/api-user/check/nickname/${this.nickname}/${this.idx}`;
+            const API_URL = `${REST_API}/api-user/check/nickname/${this.nickname}${this.idx}`;
             axios({
                 url: API_URL,
                 method: "GET",
@@ -123,7 +124,7 @@ export default {
         },
         checkEmail() {
             const REST_API = `http://localhost:9999`;
-            const API_URL = `${REST_API}/api-user/check/email/${this.email}/${this.idx}`;
+            const API_URL = `${REST_API}/api-user/check/email/${this.email}${this.idx}`;
             axios({
                 url: API_URL,
                 method: "GET",

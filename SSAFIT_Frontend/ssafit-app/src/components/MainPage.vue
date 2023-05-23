@@ -2,14 +2,6 @@
   <v-main>
     <v-container>
       <!-- 상단에 항상 표시되는 1주일 달력 -->
-      <v-calendar
-        v-model="selectedDate"
-        :events="events"
-        :week-days="7"
-        :type="type"
-        :weekday-format="format"
-        color="primary"
-      ></v-calendar>
 
       <!-- Main content -->
       <h3>조회수순</h3>

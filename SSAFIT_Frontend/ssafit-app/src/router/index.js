@@ -11,6 +11,7 @@ import LoginUser from "../components/user/LoginUser.vue"
 import FindId from "../components/user/FindId.vue"
 import ResetPassword from "../components/user/ResetPassword.vue"
 import ModifyInfo from "../components/user/ModifyInfo.vue"
+import MyPage from "../components/user/MyPage.vue"
 
 Vue.use(VueRouter);
 
@@ -63,6 +64,11 @@ const routes = [
         path: "modifyInfo",
         name: "modifyInfo",
         component: ModifyInfo,
+      },
+      {
+        path: "myPage",
+        name: "myPage",
+        component: MyPage,
       }
     ]
   }

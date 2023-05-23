@@ -18,7 +18,7 @@
                         <span class="headline">비밀번호 변경</span>
                     </v-card-title>
                     <label for="password">비밀번호 : </label>
-                    <input type="password" id="password" v-model="password"><br/>
+                    <input type="password" id="password" v-model="password"><br />
                     <button @click="resetPassword">변경하기</button>
                 </v-card>
             </v-dialog>
@@ -37,7 +37,6 @@ export default {
             email: '',
             nickname: '',
             password: '',
-            image: 'none',
             dialog: false,
         }
     },
@@ -53,19 +52,43 @@ export default {
                 url: API_URL,
                 method: "GET",
                 params: user,
+                headers: {
+                "token": sessionStorage.getItem("access-token"),
+            },
             })
                 .then((res) => {
                     this.idx = res.data.idx;
-                    this.id = res.data.id;
-                    this.email = res.data.email;
-                    this.nickname = res.data.nickname;
                     alert("본인 인증되었습니다.");
                     this.dialog = true;
                 })
                 .catch((err) => {
                     console.log(err);
                 })
+        },
+        resetPassword() {
+            let user = {
+                idx: this.idx,
+                password: this.password,
+            }
+            const API_URL = `http://localhost:9999/api-user/modifyPassword`;
+            axios({
+                url: API_URL,
+                method: "PUT",
+                params: user,
+                headers: {
+                "token": sessionStorage.getItem("access-token"),
+            },
+            })
+                .then(() => {
+                    alert("비밀번호가 변경되었습니다.");
+                    this.dialog = false;
+                    this.$router.push("login");
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         }
+
     }
 }
 </script>

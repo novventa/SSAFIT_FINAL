@@ -21,7 +21,7 @@ export default new Vuex.Store({
     LOGIN(state, payload) {
       state.user = payload;
     },
-        SEARCH_VIDEO(state, videos) {
+    SEARCH_VIDEO(state, videos) {
       state.videos = videos;
       console.log(videos);
     },
@@ -50,7 +50,7 @@ export default new Vuex.Store({
           console.log(err);
         })
     },
-     searchVideo({ commit }, payload) {
+    searchVideo({ commit }, payload) {
       console.log(payload);
 
       const URL = `${REST_API}/api-video/list`;
@@ -58,6 +58,9 @@ export default new Vuex.Store({
         url: URL,
         method: "GET",
         params: payload,
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
       })
         .then((res) => {
           console.log(res.data);
@@ -73,6 +76,9 @@ export default new Vuex.Store({
       axios({
         url: URL,
         method: "GET",
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
       })
         .then((res) => {
           commit("CLICK_VIDEO", res.data);
