@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,8 +48,12 @@ public class UserController {
 	private String uploadPath;
 
 	@PostMapping("add")
-	public ResponseEntity<?> userAdd(User user, MultipartFile file) throws CustomException{
-
+	public ResponseEntity<?> userAdd(@RequestParam int idx, @RequestParam String id, @RequestParam String password,
+			@RequestParam String email, @RequestParam String nickname, @RequestParam String image,
+			 MultipartFile file) throws CustomException{
+		
+		User user = new User(idx, id, password, nickname, email, image);
+		
 		if (file != null && !file.isEmpty() && file.getContentType().startsWith("image")) {
 			String originalFileName = file.getOriginalFilename();
 
@@ -106,6 +113,15 @@ public class UserController {
 		}
 		return new ResponseEntity<String>(id, HttpStatus.OK);
 	}
+	
+	@GetMapping("confirm")
+	public ResponseEntity<?> userConfirm(User user) throws CustomException {
+		boolean check = userService.confirmUser(user);
+		if(check) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		throw new CustomException(ErrorCode.FAIL_CERTIFICATION);
+	}
 
 	@GetMapping("check/id/{id}")
 	public ResponseEntity<Void> idCheck(@PathVariable String id) throws CustomException {
@@ -138,6 +154,7 @@ public class UserController {
 		User user = userService.login(id, password);
 		try {
 			result.put("access-token", jwtUtil.createToken("userIdx", String.valueOf(user.getIdx())));
+			result.put("user", user);
 			status = HttpStatus.OK;
 		} catch (Exception e) {
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -162,7 +179,10 @@ public class UserController {
 	}
 
 	@PutMapping("modify")
-	public ResponseEntity<?> userModify(User user, MultipartFile file) throws CustomException {
+	public ResponseEntity<?> userModify(@RequestParam int idx, @RequestParam String id, @RequestParam String password,
+			@RequestParam String email, @RequestParam String nickname, @RequestParam String image,
+			MultipartFile file) throws CustomException {
+		User user = new User(idx, id, password, nickname, email, image);
 		if (file != null && !file.isEmpty() && file.getContentType().startsWith("image")) {
 			String originalFileName = file.getOriginalFilename();
 			UUID uuid = UUID.randomUUID();

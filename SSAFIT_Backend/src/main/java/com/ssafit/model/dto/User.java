@@ -11,6 +11,17 @@ public class User {
 	public User() {
 	}
 
+	
+	public User(int idx, String id, String password, String nickname, String email, String image) {
+		this.idx = idx;
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.email = email;
+		this.image = image;
+	}
+
+
 	public int getIdx() {
 		return idx;
 	}

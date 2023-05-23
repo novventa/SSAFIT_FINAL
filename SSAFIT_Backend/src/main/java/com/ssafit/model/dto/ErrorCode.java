@@ -4,6 +4,7 @@ public enum ErrorCode {
 
 	INVALID_PARAMETER(400, "입력되지 않은 값이 있습니다."),
 	WRONG_PASSWORD(400, "비밀번호가 일치하지 않습니다."),
+	FAIL_CERTIFICATION(400, "유저 확인에 실패하였습니다."),
 	
 	USER_NOT_FOUND(404, "존재하지 않는 계정입니다."),
     REVIEW_NOT_FOUND(404, "존재하지 않는 리뷰입니다."),

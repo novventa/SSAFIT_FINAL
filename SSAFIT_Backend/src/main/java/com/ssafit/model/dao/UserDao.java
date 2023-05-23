@@ -19,11 +19,13 @@ public interface UserDao {
 	User selectUserByEmail(String email);
 
 	User selectUserByNickname(String nickname);
+	
+	User selectUserForReset(User user);
 
 	int insertUser(User user);
 
 	int deleteUser(int idx);
-
+	
 	int updateUser(User user);
 
 }

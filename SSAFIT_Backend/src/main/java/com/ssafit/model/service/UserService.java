@@ -12,6 +12,8 @@ public interface UserService {
 	List<User> findAllUsers();
 	
 	User findUser(int idx);
+	
+	boolean confirmUser(User user);
 
 	int addUser(User user) throws CustomException;
 
