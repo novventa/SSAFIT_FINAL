@@ -14,5 +14,5 @@ public interface LikesService {
 	
 	int addLikes(Likes likes);
 
-	int removeLikes(int idx);
+	int removeLikes(Likes likes);
 }

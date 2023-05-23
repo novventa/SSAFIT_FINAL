@@ -34,8 +34,8 @@ public class LikesServiceImpl implements LikesService {
 	}
 
 	@Override
-	public int removeLikes(int idx) {
-		return likesDao.deleteLikes(idx);
+	public int removeLikes(Likes likes) {
+		return likesDao.deleteLikes(likes);
 	}
 
 }

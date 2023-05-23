@@ -16,5 +16,5 @@ public interface LikesDao {
 	
 	int insertLikes(Likes likes);
 	
-	int deleteLikes(int idx);
+	int deleteLikes(Likes likes);
 }

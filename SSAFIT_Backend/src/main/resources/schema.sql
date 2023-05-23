@@ -40,8 +40,10 @@ CREATE TABLE `review`(
 CREATE TABLE `likes`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
     `videoIdx` INT NOT NULL,
+    `videoId` VARCHAR(40) NOT NULL UNIQUE,
     `userIdx` INT NOT NULL,
     FOREIGN KEY(`videoIdx`) REFERENCES `video`(`idx`) ON DELETE CASCADE,
+	FOREIGN KEY(`videoId`) REFERENCES `video`(`videoId`) ON DELETE CASCADE,
     FOREIGN KEY(`userIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE
 );
 
@@ -49,7 +51,9 @@ CREATE TABLE `follow`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
     `myIdx` INT NOT NULL,
     `yourIdx` INT NOT NULL,
+    `yourNickname` VARCHAR(20) NOT NULL,
     FOREIGN KEY(`yourIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE,
+	FOREIGN KEY(`yourNickname`) REFERENCES `user`(`nickname`) ON DELETE CASCADE,
     FOREIGN KEY(`myIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE
 );
 

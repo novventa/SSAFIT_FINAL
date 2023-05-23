@@ -69,9 +69,9 @@ public class LikesController {
 		return new ResponseEntity<Likes>(like, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("remove/{idx}")
-	public ResponseEntity<?> likeRemove(@PathVariable int idx) throws CustomException {
-		int result = likesService.removeLikes(idx);
+	@DeleteMapping("remove")
+	public ResponseEntity<?> likeRemove(Likes likes) throws CustomException {
+		int result = likesService.removeLikes(likes);
 		if(result == 0) {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}

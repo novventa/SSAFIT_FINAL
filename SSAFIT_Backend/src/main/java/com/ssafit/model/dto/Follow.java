@@ -4,13 +4,9 @@ public class Follow {
 	private int idx;
 	private int myIdx;
 	private int yourIdx;
+	private String yourNickname;
 	
 	public Follow() {
-	}
-
-	public Follow(int myIdx, int yourIdx) {
-		this.myIdx = myIdx;
-		this.yourIdx = yourIdx;
 	}
 
 	public int getIdx() {
@@ -36,5 +32,13 @@ public class Follow {
 	public void setYourIdx(int yourIdx) {
 		this.yourIdx = yourIdx;
 	}
-	
+
+	public String getYourNickname() {
+		return yourNickname;
+	}
+
+	public void setYourNickname(String yourNickname) {
+		this.yourNickname = yourNickname;
+	}
+
 }

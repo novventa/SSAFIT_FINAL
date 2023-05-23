@@ -4,15 +4,11 @@ public class Likes {
 	private int idx;
 	private int videoIdx;
 	private int userIdx;
+	private String videoId;
 	
 	public Likes() {
 	}
 
-	public Likes(int videoIdx, int userIdx) {
-		this.videoIdx = videoIdx;
-		this.userIdx = userIdx;
-	}
-	
 	public int getIdx() {
 		return idx;
 	}
@@ -37,9 +33,12 @@ public class Likes {
 		this.userIdx = userIdx;
 	}
 
-	@Override
-	public String toString() {
-		return "Like [idx=" + idx + ", videoIdx=" + videoIdx + ", userIdx=" + userIdx + "]";
+	public String getVideoId() {
+		return videoId;
+	}
+
+	public void setVideoId(String videoId) {
+		this.videoId = videoId;
 	}
 
 }

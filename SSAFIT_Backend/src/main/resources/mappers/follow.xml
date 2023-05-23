@@ -14,8 +14,8 @@
 	</select>
 	
 	<insert id="insertFollow" parameterType="Follow">
-		INSERT INTO follow(myIdx, yourIdx)
-		VALUES(#{myIdx}, #{yourIdx});
+		INSERT INTO follow(myIdx, yourIdx, yourNickname)
+		VALUES(#{myIdx}, #{yourIdx}, #{yourNickname});
 	</insert>
 	
 	<delete id="deleteFollow" parameterType="int">
