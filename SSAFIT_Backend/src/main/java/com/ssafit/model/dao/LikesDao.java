@@ -12,7 +12,7 @@ public interface LikesDao {
 	
 	List<Likes> selectAllByVideo(int videoIdx);	
 	
-	Likes selectLikes(int idx);
+	Likes selectLikes(Likes likes);
 	
 	int insertLikes(Likes likes);
 	

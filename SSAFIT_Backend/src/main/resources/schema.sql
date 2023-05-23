@@ -40,7 +40,7 @@ CREATE TABLE `review`(
 CREATE TABLE `likes`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
     `videoIdx` INT NOT NULL,
-    `videoId` VARCHAR(40) NOT NULL UNIQUE,
+    `videoId` VARCHAR(40) NOT NULL,
     `userIdx` INT NOT NULL,
     FOREIGN KEY(`videoIdx`) REFERENCES `video`(`idx`) ON DELETE CASCADE,
 	FOREIGN KEY(`videoId`) REFERENCES `video`(`videoId`) ON DELETE CASCADE,

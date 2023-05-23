@@ -24,8 +24,8 @@ public class LikesServiceImpl implements LikesService {
 	}
 	
 	@Override
-	public Likes findLikes(int idx) {
-		return likesDao.selectLikes(idx);
+	public Likes findLikes(Likes likes) {
+		return likesDao.selectLikes(likes);
 	}
 
 	@Override

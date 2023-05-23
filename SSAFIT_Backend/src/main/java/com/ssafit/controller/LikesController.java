@@ -60,9 +60,9 @@ public class LikesController {
 	}
 	
 	
-	@GetMapping("details/{idx}")
-	public ResponseEntity<?> likeDetails(@PathVariable int idx) throws CustomException {
-		Likes like = likesService.findLikes(idx);
+	@GetMapping("details")
+	public ResponseEntity<?> likeDetails(Likes likes) throws CustomException {
+		Likes like = likesService.findLikes(likes);
 		if(like == null) {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}

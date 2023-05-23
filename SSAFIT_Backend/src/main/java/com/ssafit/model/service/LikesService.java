@@ -10,7 +10,7 @@ public interface LikesService {
 
 	List<Likes> findAllLikesByVideo(int videoIdx);
 	
-	Likes findLikes(int idx);
+	Likes findLikes(Likes likes);
 	
 	int addLikes(Likes likes);
 
