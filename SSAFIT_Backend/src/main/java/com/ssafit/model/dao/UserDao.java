@@ -27,5 +27,7 @@ public interface UserDao {
 	int deleteUser(int idx);
 	
 	int updateUser(User user);
+	
+	int updatePassword(User user);
 
 }

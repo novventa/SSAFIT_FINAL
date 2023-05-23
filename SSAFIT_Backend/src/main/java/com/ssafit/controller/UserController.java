@@ -133,7 +133,7 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@GetMapping("check/email/{email}/{idx}")
+	@GetMapping("check/email/{email}{idx}")
 	public ResponseEntity<Void> emailCheck(@PathVariable(required = false) Integer idx, @PathVariable String email) throws CustomException {
 		if (userService.isEmailExist(email) && idx != null && !userService.findUser(idx).getEmail().equals(email)) {
 			throw new CustomException(ErrorCode.DUPLICATED_EMAIL);
@@ -141,7 +141,7 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	@GetMapping("check/nickname/{nickname}/{idx}")
+	@GetMapping("check/nickname/{nickname}{idx}")
 	public ResponseEntity<Void> nicknameCheck(@PathVariable(required = false) Integer idx, @PathVariable String nickname) throws CustomException {
 		if (userService.isNicknameExist(nickname) && idx != null && !userService.findUser(idx).getNickname().equals(nickname)) {
 			throw new CustomException(ErrorCode.DUPLICATED_NICKNAME);
@@ -178,6 +178,18 @@ public class UserController {
 			throw new CustomException(ErrorCode.USER_NOT_FOUND);
 		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
+	
+	@PutMapping("modifyPassword")
+	public ResponseEntity<?> passwordModify(@RequestParam int idx, @RequestParam String password) throws CustomException {
+		User user = new User();
+		user.setIdx(idx);
+		user.setPassword(password);
+		int result = userService.modifyPassword(user);
+		if(result == 0) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 	}
 
 	@PutMapping("modify")

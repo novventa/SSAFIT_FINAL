@@ -20,6 +20,8 @@ public interface UserService {
 	User login(String id, String password) throws CustomException;
 
 	int modifyUser(User user) throws CustomException;
+	
+	int modifyPassword(User user);
 
 	int removeUser(int idx);
 

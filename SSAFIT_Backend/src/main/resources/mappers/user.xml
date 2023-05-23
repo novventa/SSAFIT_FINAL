@@ -51,4 +51,9 @@
 		SET nickname = #{nickname}, password = #{password}, email = #{email}, image = #{image}
 		WHERE idx = #{idx};
 	</update>
+	<update id="updatePassword" parameterType="User">
+		UPDATE user
+		SET password = #{password}
+		WHERE idx = #{idx};
+	</update>
 </mapper>
