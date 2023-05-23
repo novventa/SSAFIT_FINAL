@@ -26,10 +26,12 @@ CREATE TABLE `review`(
     `videoIdx` INT NOT NULL,
     `content` TEXT NOT NULL,
     `userIdx` INT NOT NULL,
+    `writer` VARCHAR(20) NOT NULL,
     `parent` INT DEFAULT 0,
     `regDate` DATETIME NOT NULL DEFAULT now(),
     `modDate` DATETIME NOT NULL DEFAULT now(),
     FOREIGN KEY(`videoIdx`) REFERENCES `video`(`idx`) ON DELETE CASCADE,
+    FOREIGN KEY(`writer`) REFERENCES `user`(`nickname`) ON DELETE CASCADE,
     FOREIGN KEY(`userIdx`) REFERENCES `user`(`idx`) ON DELETE CASCADE
 );
 

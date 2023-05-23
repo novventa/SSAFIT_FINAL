@@ -8,6 +8,7 @@ public class Review {
 	private int videoIdx;
 	private String content;
 	private int userIdx;
+	private String writer;
 	private int parent = 0;
 	private LocalDateTime regDate;
 	private LocalDateTime modDate;
@@ -48,6 +49,14 @@ public class Review {
 		this.userIdx = userIdx;
 	}
 
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+
 	public int getParent() {
 		return parent;
 	}
@@ -72,10 +81,5 @@ public class Review {
 		this.modDate = modDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Review [idx=" + idx + ", videoIdx=" + videoIdx + ", content=" + content + ", userIdx=" + userIdx
-				+ ", parent=" + parent + ", regDate=" + regDate + ", modDate=" + modDate + "]";
-	}
 
 }
