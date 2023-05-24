@@ -55,6 +55,9 @@ public class VideoController {
 
 	@GetMapping("list-part")
 	public ResponseEntity<?> videoListByPart(@RequestParam("parts") List<String> parts) throws CustomException {
+		if(parts.size() == 0) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
 		List<Video> list = videoService.findAllVideosByPart(parts);
 		if(list == null) {
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
