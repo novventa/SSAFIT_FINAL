@@ -13,6 +13,8 @@ public interface UserService {
 	
 	User findUser(int idx);
 	
+	List<User> findUsersByNickname(String nickname);
+	
 	User confirmUser(User user);
 
 	int addUser(User user) throws CustomException;

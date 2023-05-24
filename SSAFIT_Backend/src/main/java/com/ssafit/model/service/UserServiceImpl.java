@@ -113,5 +113,10 @@ public class UserServiceImpl implements UserService {
 	public int modifyPassword(User user) {
 		return userDao.updatePassword(user);
 	}
+
+	@Override
+	public List<User> findUsersByNickname(String nickname) {
+		return userDao.selectUsersByNickname(nickname);
+	}
 	
 }

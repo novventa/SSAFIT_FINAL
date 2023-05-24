@@ -37,6 +37,11 @@
 		FROM user
 		WHERE id = #{id} AND email = #{email} AND nickname = #{nickname};
 	</select>
+	<select id="selectUsersByNickname" resultType="User" parameterType="String">
+		SELECT *
+		FROM user
+		WHERE nickname LIKE concat('%', #{nickname}, '%');
+	</select>
 	<insert id="insertUser" parameterType="User">
 		INSERT INTO user(id, password, nickname, email, image)
 		VALUES(#{id}, #{password}, #{nickname}, #{email}, #{image})

@@ -23,18 +23,18 @@
 
 	<insert id="insertLikes" parameterType="Likes" keyProperty="idx"
 		useGeneratedKeys="true">
-		INSERT INTO likes (userIdx, videoIdx) VALUES
-		(#{userIdx}, #{videoIdx});
+		INSERT INTO likes (userIdx, videoIdx, videoId) VALUES
+		(#{userIdx}, #{videoIdx}, #{videoId});
 		UPDATE video
 		SET likeCnt = likeCnt+1
 		WHERE idx = #{videoIdx};
 	</insert>
 
-	<delete id="deleteLikes" parameterType="int">
+	<delete id="deleteLikes" parameterType="Likes">
 		DELETE
 		FROM likes
-		WHERE idx =
-		#{idx};
+		WHERE userIdx =
+		#{userIdx} AND videoIdx = #{videoIdx};
 		UPDATE video
 		SET likeCnt = likeCnt-1
 		WHERE idx = #{videoIdx};

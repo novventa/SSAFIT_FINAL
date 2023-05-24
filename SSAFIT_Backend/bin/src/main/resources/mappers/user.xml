@@ -32,6 +32,11 @@
 		FROM user
 		WHERE idx = #{idx};
 	</select>
+	<select id="selectUserForReset" resultType="User" parameterType="User">
+		SELECT *
+		FROM user
+		WHERE id = #{id} AND email = #{email} AND nickname = #{nickname};
+	</select>
 	<insert id="insertUser" parameterType="User">
 		INSERT INTO user(id, password, nickname, email, image)
 		VALUES(#{id}, #{password}, #{nickname}, #{email}, #{image})
@@ -44,6 +49,11 @@
 	<update id="updateUser" parameterType="User">
 		UPDATE user
 		SET nickname = #{nickname}, password = #{password}, email = #{email}, image = #{image}
+		WHERE idx = #{idx};
+	</update>
+	<update id="updatePassword" parameterType="User">
+		UPDATE user
+		SET password = #{password}
 		WHERE idx = #{idx};
 	</update>
 </mapper>

@@ -20,6 +20,8 @@ public interface UserDao {
 
 	User selectUserByNickname(String nickname);
 	
+	List<User> selectUsersByNickname(String nickname);
+	
 	User selectUserForReset(User user);
 
 	int insertUser(User user);

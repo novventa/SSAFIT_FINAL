@@ -8,6 +8,12 @@
 		FROM review
 		WHERE videoIdx = #{videoIdx}
 	</select>
+	
+	<select id="selectAllByUserIdx" parameterType="int" resultType="Review">
+		SELECT *
+		FROM review
+		WHERE userIdx = #{userIdx};
+	</select>
 
 	<!-- 리뷰 하나 조회 -->
 	<select id="selectReview" parameterType="int" resultType="Review">
@@ -19,8 +25,8 @@
 	<!-- 리뷰 등록 -->
 	<insert id="insertReview" parameterType="Review" keyProperty="idx"
 		useGeneratedKeys="true">
-		INSERT INTO review(videoIdx,content,userIdx,parent)
-		VALUES (#{videoIdx}, #{content}, #{userIdx}, #{parent})
+		INSERT INTO review(videoIdx,content,userIdx,parent,writer)
+		VALUES (#{videoIdx}, #{content}, #{userIdx}, #{parent}, #{writer})
 	</insert>
 
 	<!-- 리뷰 수정 -->

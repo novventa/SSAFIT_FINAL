@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafit.exception.CustomException;
 import com.ssafit.model.dto.ErrorCode;
 import com.ssafit.model.dto.Follow;
+import com.ssafit.model.dto.User;
 import com.ssafit.model.service.FollowService;
+import com.ssafit.model.service.UserService;
 
 @RestController
 @RequestMapping("/api-follow")
@@ -25,6 +27,21 @@ public class FollowController {
 	
 	@Autowired
 	FollowService followService;
+	
+	@Autowired
+	UserService userService;
+	
+	@GetMapping("find")
+	public ResponseEntity<?> followFind(String yourNickname) throws CustomException {
+		List<User> list = userService.findUsersByNickname(yourNickname);
+		if(list == null) {
+			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		else if(list.size() == 0) {
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<User>>(list, HttpStatus.OK);
+	}
 	
 	@PostMapping("add")
 	public ResponseEntity<?> followAdd(Follow follow) throws CustomException {
