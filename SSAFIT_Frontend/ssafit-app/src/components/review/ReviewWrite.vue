@@ -3,8 +3,7 @@
     <h2>리뷰 작성</h2>
     <form @submit.prevent="submitReview">
       <div>
-        <label for="writer">작성자:</label>
-        <input type="text" id="writer" v-model="writer" required />
+        <label for="writer">작성자 : {{ user.nickname }}</label>
       </div>
       <div>
         <label for="content">내용:</label>
@@ -17,24 +16,38 @@
 
 <script>
 import { mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   data() {
     return {
-      writer: "",
+      videoIdx: "",
       content: "",
+      userIdx: "",
+      writer: "",
+      parent: "",
     };
+  },
+  computed: {
+    ...mapState(["video", "user"]),
   },
   methods: {
     ...mapActions(["addReview"]),
     submitReview() {
+      if (!this.content) {
+        console.error("리뷰 내용을 입력해주세요.");
+        return;
+      }
+
       const review = {
-        writer: this.writer,
+        videoIdx: this.video.idx,
         content: this.content,
+        writer: this.user.nickname,
+        userIdx: this.user.idx,
       };
+
       this.addReview(review)
         .then(() => {
-          this.author = "";
           this.content = "";
         })
         .catch((error) => {

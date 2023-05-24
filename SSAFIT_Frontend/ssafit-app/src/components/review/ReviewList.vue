@@ -1,45 +1,101 @@
 <template>
   <div>
-    <div class="review-count">
-      <span class="count">{{ reviews.length }} 개의 리뷰</span>
-    </div>
-    <div v-for="review in reviews" :key="review.id" class="review-item">
-      <div class="review-details">
-        <div class="writer">{{ review.writer }}</div>
-        <div class="content">{{ review.content }}</div>
+    <div v-if="reviews.length > 0">
+      <div class="review-count">
+        <span class="count">{{ reviews.length }} 개의 리뷰</span>
       </div>
-      <div v-if="review.replies.length" class="replies">
-        <div v-for="reply in review.replies" :key="reply.id" class="reply">
-          <div class="reply-writer">{{ reply.writer }}</div>
-          <div class="reply-content">{{ reply.content }}</div>
+      <div v-for="review in reviews" :key="review.idx" class="review-item">
+        <div class="review-details">
+          <div class="writer">작성자: {{ review.writer }}</div>
+          <div v-if="!review.editing" class="content">
+            내용: {{ review.content }}
+          </div>
+          <span>작성일자 : {{ review.regDate }}</span>
+          <span>수정일자 : {{ review.modDate }}</span>
+        </div>
+        <div
+          v-if="review.userIdx === user.idx && !review.editing"
+          class="buttons"
+        >
+          <button class="edit-button" @click="startEdit(review)">수정</button>
+          <button class="delete-button" @click="deleteReview(review)">
+            삭제
+          </button>
         </div>
       </div>
     </div>
+    <div v-else>
+      <span>0개의 리뷰</span>
+    </div>
+
+    <v-dialog v-model="editDialog" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span>리뷰 수정</span>
+        </v-card-title>
+        <v-card-text>
+          <v-textarea
+            v-model="editedContent"
+            auto-grow
+            :counter="500"
+            label="리뷰 내용"
+          ></v-textarea>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="saveReview">저장</v-btn>
+          <v-btn text @click="cancelEdit">취소</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
   data() {
     return {
-      reviews: [
-        {
-          id: 1,
-          writer: "작성자1",
-          content: "굿~~~~~~~~~~~~~~~~~!",
-          replies: [
-            { id: 1, writer: "답글1", content: "답글입니다." },
-            { id: 2, writer: "답글2", content: "답글2입니다." },
-          ],
-        },
-        {
-          id: 2,
-          writer: "작성자2",
-          content: "별로에요",
-          replies: [],
-        },
-      ],
+      editDialog: false,
+      editedContent: "",
+      editingReview: null,
     };
+  },
+  computed: {
+    ...mapState(["video", "reviews", "user"]),
+    videoIdx() {
+      return this.video.idx;
+    },
+  },
+  methods: {
+    ...mapActions(["getReviews", "modifyReview", "deleteReview"]),
+    fetchData() {
+      this.getReviews(this.videoIdx);
+    },
+    deleteReview(review) {
+      this.$store.dispatch("deleteReview", review.idx);
+    },
+    startEdit(review) {
+      this.editingReview = review;
+      this.editedContent = review.content;
+      this.editDialog = true;
+    },
+    saveReview() {
+      if (this.editingReview) {
+        this.editingReview.content = this.editedContent;
+        this.editDialog = false;
+        this.modifyReview(this.editingReview);
+      }
+    },
+    cancelEdit() {
+      this.editDialog = false;
+      this.editedContent = "";
+      this.editingReview = null;
+    },
+  },
+  mounted() {
+    this.fetchData();
   },
 };
 </script>

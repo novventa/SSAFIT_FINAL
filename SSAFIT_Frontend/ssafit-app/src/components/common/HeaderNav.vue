@@ -7,13 +7,13 @@
 
     <v-navigation-drawer v-model="drawer" fixed temporary>
       <v-list>
-        <v-list-item @click="navigateTo('/login')">
+        <v-list-item @click="loginPage('user/login')">
           <v-list-item-icon>
             <v-icon>mdi-login</v-icon>
           </v-list-item-icon>
           <v-list-item-title>로그인</v-list-item-title>
         </v-list-item>
-        <v-list-item @click="navigateTo('/register')">
+        <v-list-item @click="signUpPage('user/create')">
           <v-list-item-icon>
             <v-icon>mdi-account-plus</v-icon>
           </v-list-item-icon>
@@ -25,12 +25,17 @@
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   data: () => ({ drawer: null }),
   methods: {
-    navigateTo(route) {
-      // Perform navigation to the specified route
-      // You can use Vue Router or any other navigation method of your choice
+    loginPage(route) {
+      router.push(route);
+      console.log(`Navigating to: ${route}`);
+    },
+    signUpPage(route) {
+      router.push(route);
       console.log(`Navigating to: ${route}`);
     },
   },
