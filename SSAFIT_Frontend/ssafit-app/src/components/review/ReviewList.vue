@@ -2,9 +2,9 @@
   <div>
     <div v-if="reviews.length > 0">
       <div class="review-count">
-        <span class="count">{{ reviews.length }} 개의 리뷰</span>
+        <span class="count">{{ nowReviews.length }} 개의 리뷰</span>
       </div>
-      <div v-for="review in reviews" :key="review.idx" class="review-item">
+      <div v-for="review in nowReviews" :key="review.idx" class="review-item">
         <div class="review-details">
           <div class="writer">작성자: {{ review.writer }}</div>
           <div v-if="!review.editing" class="content">
@@ -60,12 +60,21 @@ export default {
       editDialog: false,
       editedContent: "",
       editingReview: null,
+      nowReviews: '',
     };
   },
   computed: {
     ...mapState(["video", "reviews", "user"]),
     videoIdx() {
       return this.video.idx;
+    },
+    checkReviews() {
+      return this.reviews;
+    }
+  },
+  watch: {
+    checkReviews(value) {
+      this.nowReviews = value;
     },
   },
   methods: {
@@ -74,7 +83,7 @@ export default {
       this.getReviews(this.videoIdx);
     },
     deleteReview(review) {
-      this.$store.dispatch("deleteReview", review.idx);
+      this.$store.dispatch("deleteReview", review);
     },
     startEdit(review) {
       this.editingReview = review;

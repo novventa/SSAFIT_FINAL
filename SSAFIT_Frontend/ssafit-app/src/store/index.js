@@ -14,6 +14,8 @@ export default new Vuex.Store({
     videos: [],
     video: {},
     reviews: [],
+    likeList: [],
+    like: '',
   },
   getters: {
   },
@@ -39,12 +41,9 @@ export default new Vuex.Store({
     MODIFY_REVIEW(state, review) {
       state.review = review;
     },
-    ADD_LIKE(state) {
-      state.video.likeCnt++;
-    },
-    REMOVE_LIKE(state) {
-      state.video.likeCnt--;
-    },
+    GET_LIKE_LIST(state, list) {
+      state.likeList = list;
+    }
   },
   actions: {
     login({ commit }, user) {
@@ -87,8 +86,8 @@ export default new Vuex.Store({
         });
     },
     // payload : 비디오 객체가 들어온다
-    clickVideo({ commit }, video) {
-      const URL = `${REST_API}/api-video/details/${video.idx}`;
+    clickVideo({ commit}, idx) {
+      const URL = `${REST_API}/api-video/details/${idx}`;
       axios({
         url: URL,
         method: "GET",
@@ -111,24 +110,28 @@ export default new Vuex.Store({
       axios({
         url: URL,
         method: "GET",
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
       })
         .then((res) => {
-          console.log(res);
           commit("GET_REVIEWS", res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    addReview({ commit }, review, dispatch) {
+    addReview({ commit, dispatch }, review) {
       const URL = `${REST_API}/api-review/add`;
       axios({
         url: URL,
         method: "POST",
         params: review,
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
       })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           commit;
           dispatch("getReviews", review.videoIdx);
         })
@@ -142,6 +145,9 @@ export default new Vuex.Store({
         url: URL,
         method: "PUT",
         params: review,
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
       })
         .then((res) => {
           console.log(res);
@@ -151,44 +157,94 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    deleteReview({ commit }, reviewIdx) {
-      const URL = `${REST_API}/api-review/remove/${reviewIdx}`;
+    deleteReview({ commit, dispatch}, review) {
+      const URL = `${REST_API}/api-review/remove/${review.idx}`;
       axios({
         url: URL,
         method: "DELETE",
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
       })
         .then(() => {
+          commit;
+          dispatch("getReviews", review.videoIdx);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    addLike({ commit, dispatch}, likes) {
+      const URL = `${REST_API}/api-like/add`;
+      axios({
+        url: URL,
+        method: "POST",
+        params: likes,
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
+      })
+        .then(() => {
+          dispatch("getLikeList");
           commit;
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    addLike({ commit }, likes) {
-      const URL = `${REST_API}/api-like/add`;
-      axios({
-        url: URL,
-        method: "POST",
-        params: likes,
-      })
-        .then((res) => {
-          console.log(res);
-          commit("ADD_LIKE");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    removeLike({ commit }, likes) {
+    removeLike({ commit, dispatch}, likes) {
       const URL = `${REST_API}/api-like/remove`;
       axios({
         url: URL,
         method: "DELETE",
         params: likes,
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
+      })
+        .then(() => {
+          dispatch("getLikeList");
+          commit;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // checkLike({commit}, likes) {
+    //   const URL = `${REST_API}/api-like/list-video/details`;
+    //   axios({
+    //     url: URL,
+    //     method: "GET",
+    //     params: likes,
+    //     headers: {
+    //       "token": sessionStorage.getItem("access-token"),
+    //   },
+    //   })
+    //     .then((res) => {
+    //       if(res.data.idx) {
+    //         commit("CHECK_LIKE", true);
+    //       }
+    //       else {
+    //         commit("CHECK_LIKE", false);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
+    getLikeList(context) {
+      const URL = `${REST_API}/api-like/list-user/${context.state.user.idx}`;
+      axios({
+        url: URL,
+        method: "GET",
+        headers: {
+          "token": sessionStorage.getItem("access-token"),
+      },
       })
         .then((res) => {
-          console.log(res);
-          commit("REMOVE_LIKE");
+          console.log("here");
+          console.log(res.data);
+          context.commit("GET_LIKE_LIST", res.data);
         })
         .catch((err) => {
           console.log(err);

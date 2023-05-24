@@ -38,14 +38,12 @@ export default {
         console.error("리뷰 내용을 입력해주세요.");
         return;
       }
-
       const review = {
         videoIdx: this.video.idx,
         content: this.content,
         writer: this.user.nickname,
         userIdx: this.user.idx,
       };
-
       this.addReview(review)
         .then(() => {
           this.content = "";

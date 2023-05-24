@@ -1,11 +1,17 @@
 <template>
-  <div>
-    <v-calendar v-model="selectedDate" :events="events" color="primary">
-      <template #day-body="{ date }">
-        <div>{{ date }}</div>
-        <!-- 원하는 날짜 정보를 표시하는 추가적인 내용 -->
-      </template>
-    </v-calendar>
+<div class="pa-5">
+          <v-row>
+              <v-col cols="12" md="6" class="mb-4">
+                  <v-sheet height="500">
+                      <v-calendar
+                      v-model="selectedDate"
+                              ref="calendar"
+                              dark
+                              :events="events"
+                      ></v-calendar>
+                  </v-sheet>
+              </v-col>
+          </v-row>
   </div>
 </template>
 
@@ -13,21 +19,20 @@
 export default {
   data() {
     return {
-      selectedDate: null, // 선택된 날짜
-      events: [
-        // 이벤트 데이터
-        {
-          name: "Event 1",
-          start: new Date(), // 이벤트 시작 날짜 및 시간
-          end: new Date(), // 이벤트 종료 날짜 및 시간
-        },
-        // 추가적인 이벤트 데이터
-      ],
+      selectedDate: null,
+      events:[
+      {
+        name: 'Event 1',
+        content: 'hi',
+        start: new Date(2023, 5, 24),
+        end: new Date(2023, 5, 24),
+      },
+    ],
     };
   },
-};
+}
 </script>
 
 <style>
-/* 추가적인 스타일링 */
+
 </style>

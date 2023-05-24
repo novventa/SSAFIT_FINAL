@@ -42,6 +42,7 @@ export default {
             .then((res) => {
                 sessionStorage.setItem("access-token", res.data["access-token"]);
                 this.$store.dispatch("login", res.data["user"]);
+                this.$store.dispatch("getLikeList");
                 this.$router.push("/");
             })
             .catch((err) => {

@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     clickVideo() {
-      this.$store.dispatch("clickVideo", this.video);
+      this.$store.dispatch("clickVideo", this.video.idx);
       router.push({ name: "details", params: { idx: this.video.idx } });
     },
     getThumbnailUrl(videoId) {

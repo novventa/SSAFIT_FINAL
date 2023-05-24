@@ -13,81 +13,54 @@
     ></iframe>
     <div>
       <span>조회수 : {{ video.viewCnt }}</span>
-      <button @click="toggleLikeVideo" :class="{ active: isLiked }">
+      <button v-if="!isLiked" @click="toggleLikeVideo(1)">
         좋아요
       </button>
-      <span>{{ video.likeCnt }}</span>
+      <button v-else @click="toggleLikeVideo(0)">
+        좋아요 취소
+      </button>
+      <span>좋아요 수 : {{ video.likeCnt }}</span>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import { mapState } from "vuex";
 export default {
   name: "VideoDetail",
   data() {
     return {
       userIdx: "",
-      videoIdx: "",
-      isLiked: "", // 좋아요 버튼 상태 변수 추가
+      videoIdx: "",// 좋아요 버튼 상태 변수 추가
+      isLiked: false,
     };
   },
-  created() {
-    this.userLiked;
-    console.log(this.isLiked);
-  },
   computed: {
-    ...mapState(["video", "user"]),
+    ...mapState(["video", "user", "likeList"]),
     videoURL() {
       const videoId = this.video.videoId;
       return `https://www.youtube.com/embed/${videoId}`;
     },
   },
+
+ created() {
+   this.isLiked = Array.from(this.$store.state.likeList).some((obj) => obj.videoIdx === this.$store.state.video.idx);
+  },
   methods: {
-    toggleLikeVideo() {
+  toggleLikeVideo(val) {
       let likes = {
         userIdx: this.user.idx,
         videoIdx: this.video.idx,
         videoId: this.video.videoId,
       };
-      this.isLiked = !this.isLiked; // 버튼 상태 변경
-      if (this.isLiked) {
-        // this.video.likeCnt--;
-        console.log(likes);
-      }
-      // else {
-      //   this.video.likeCnt++;
-      // }
-      if (this.isLiked) {
+      if (val === 0) {
         this.$store.dispatch("removeLike", likes);
+        this.video.likeCnt--;
       } else {
         this.$store.dispatch("addLike", likes);
+        this.video.likeCnt++;
       }
-    },
-    userLiked() {
-      const REST_API = `http://localhost:9999`;
-      const URL = `${REST_API}/api-like/details`;
-      let likes = {
-        userIdx: this.userIdx,
-        videoIdx: this.video.idx,
-      };
-      axios({
-        url: URL,
-        method: "GET",
-        params: likes,
-      })
-        .then((res) => {
-          // console.log(res);
-          if (!res.data) {
-            this.isLiked = false;
-          } else {
-            this.isLiked = true;
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.isLiked = !this.isLiked;
     },
   },
 };
