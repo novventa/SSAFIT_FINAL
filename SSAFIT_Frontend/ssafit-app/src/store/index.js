@@ -23,12 +23,13 @@ export default new Vuex.Store({
     },
     SEARCH_VIDEO(state, videos) {
       state.videos = videos;
-      console.log(videos);
     },
     CLICK_VIDEO(state, video) {
       state.video = video;
-      console.log(video);
     },
+    CLEAR_USER(state) {
+      state.user = {};
+    }
   },
   actions: {
     login({ commit }, user) {
@@ -87,6 +88,9 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
+    clearUser({commit}) {
+      commit("CLEAR_USER");
+    }
   },
   modules: {
   },

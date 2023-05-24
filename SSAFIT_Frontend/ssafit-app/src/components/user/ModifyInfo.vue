@@ -8,10 +8,10 @@
             <label for="password">비밀번호 : </label>
             <input type="password" id="password" v-model="password"><br />
             <label for="nickname">별명 : </label>
-            <input type="text" id="nickname" v-model="nickname" :readonly="nicknameCheck">
+            <input type="text" id="nickname" v-model="nickname" :readonly="nicknameCheck" @keyup.enter="checkNickname">
             <button v-if="!nicknameCheck" @click="checkNickname">별명 중복 확인</button><br />
             <label for="email">이메일 : </label>
-            <input type="email" id="email" v-model="email" :readonly="emailCheck"/>
+            <input type="email" id="email" v-model="email" :readonly="emailCheck" @keyup.enter="checkEmail"/>
             <button v-if="!emailCheck" @click="checkEmail">이메일 중복 확인</button><br />
             <label for="file">프로필 사진 </label>
             <input type="file" id="file" @change="image" ref="profile" /><br />

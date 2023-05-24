@@ -4,15 +4,15 @@
         <fieldset>
             <legend>가입</legend>
             <label for="id">아이디 : </label>
-            <input type="text" id="id" v-model="id" :readonly="idCheck">
+            <input type="text" id="id" v-model="id" :readonly="idCheck" @keyup.enter="checkId">
             <button v-if="!idCheck" @click="checkId">아이디 중복 체크</button><br />
             <label for="password">비밀번호 : </label>
             <input type="password" id="password" v-model="password" /><br />
             <label for="nickname">별명 : </label>
-            <input type="text" id="nickname" v-model="nickname" :readonly="nicknameCheck" />
+            <input type="text" id="nickname" v-model="nickname" :readonly="nicknameCheck" @keyup.enter="checkNickname"/>
             <button v-if="!nicknameCheck" @click="checkNickname">별명 중복 체크</button><br />
             <label for="email">아메일 : </label>
-            <input type="email" id="email" v-model="email" :readonly="emailCheck" />
+            <input type="email" id="email" v-model="email" :readonly="emailCheck" @keyup.enter="checkEmail"/>
             <button v-if="!emailCheck" @click="checkEmail">이메일 중복 체크</button><br />
             <label for="file">프로필 사진 </label>
             <input type="file" id="file" @change="inputImage" ref="profile" /><br />
