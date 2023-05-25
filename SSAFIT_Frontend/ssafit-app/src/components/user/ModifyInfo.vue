@@ -168,6 +168,10 @@ export default {
       this.image = file;
     },
     checkNickname() {
+      if(this.nickname === '') {
+        alert("별명을 입력해주세요.");
+        return;
+      }
       const REST_API = `http://localhost:9999`;
       const API_URL = `${REST_API}/api-user/check/nickname/${this.nickname}${this.idx}`;
       axios({
@@ -186,6 +190,10 @@ export default {
       const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
       const REST_API = `http://localhost:9999`;
       const API_URL = `${REST_API}/api-user/check/email/${this.email}${this.idx}`;
+      if(this.email === '') {
+        alert("이메일을 입력해주세요.");
+        return;
+      }
       if (!emailPattern.test(this.email)) {
         alert("이메일 형식이 올바르지 않습니다.");
         return;

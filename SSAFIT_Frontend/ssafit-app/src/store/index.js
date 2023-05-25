@@ -23,7 +23,7 @@ export default new Vuex.Store({
   mutations: {
     LOGIN(state, payload) {
       state.user = payload;
-      router.go(0);
+      // router.go(0);
       router.push({name: "main"});
     },
     SEARCH_VIDEO(state, videos) {

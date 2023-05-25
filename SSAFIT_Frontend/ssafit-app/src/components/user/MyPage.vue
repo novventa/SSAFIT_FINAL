@@ -74,6 +74,15 @@
         </v-card>
       </v-col>
     </v-row>
+    <div>
+      <input type="text" v-model="search" placeholder="유저 검색" @keyup.enter="searchUser">
+      <button @click="searchUser">유저 검색</button>
+    </div>
+    <div v-if="this.searchUsers">
+      <div v-for="searchUser in searchUsers" :key="searchUser.idx">
+        {{ searchUser.nickname }}
+      </div>
+    </div>
     <v-dialog v-model="followDialog" max-width="800">
       <v-card>
         <v-card-title>
@@ -135,6 +144,8 @@ export default {
       followLikeList: "",
       followUser: "",
       dialog: false,
+      search: '',
+      searchUsers: '',
     };
   },
   computed: {
@@ -214,6 +225,27 @@ export default {
         this.followDialog = true;
       });
     },
+    searchUser() {
+      if(this.search === '') {
+        alert("닉네임을 입력해주세요.");
+        return;
+      }
+      const API_URL = `http://localhost:9999/api-follow/find`;
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          token: sessionStorage.getItem("access-token"),
+        },
+        params: {
+          yourNickname : this.nickname,
+        }
+      })
+      .then((res) => {
+        console.log(res.data);
+        this.searchUsers = res.data;
+      })
+    }
   },
 };
 </script>
