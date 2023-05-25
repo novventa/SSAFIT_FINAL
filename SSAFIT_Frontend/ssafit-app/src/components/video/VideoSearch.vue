@@ -76,6 +76,10 @@ export default {
   },
   methods: {
     search() {
+      if(this.keyword === '') {
+        alert("검색어를 입력해주세요.");
+        return;
+      }
       let keyword = {
         key: "title",
         word: this.keyword,

@@ -26,12 +26,6 @@
 
     <section>
       <v-row class="my-5" justify="center">
-        <v-col cols="12" sm="4" class="my-3">
-          <div class="text-center">
-            <h2 class="headline">설명1</h2>
-            <span class="subheading">내용1</span>
-          </div>
-        </v-col>
         <v-col cols="12">
           <v-container>
             <v-row justify="center">
@@ -45,7 +39,7 @@
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline text-center">운동 영상 찾기</div>
                   </v-card-title>
-                  <v-card-text>서비스 설명1</v-card-text>
+                  <v-card-text>필요한 운동 영상을 찾아서 다른 유저들과 정보를 공유하세요.</v-card-text>
                 </v-card>
               </v-col>
               <v-col cols="12" md="4">
@@ -56,9 +50,9 @@
                     > -->
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline">운동 메이트 찾기</div>
+                    <div class="headline">운동 영상 등록</div>
                   </v-card-title>
-                  <v-card-text>서비스 설명2</v-card-text>
+                  <v-card-text>원하는 운동 영상이 없다면 직접 등록할 수 있습니다.</v-card-text>
                 </v-card>
               </v-col>
               <v-col cols="12" md="4">
@@ -69,9 +63,9 @@
                     > -->
                   </v-card-text>
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-center">운동 루틴 관리</div>
+                    <div class="headline text-center">운동 메이트 찾기</div>
                   </v-card-title>
-                  <v-card-text>서비스 설명3</v-card-text>
+                  <v-card-text>다른 유저를 팔로우하여 관심있는 영상을 공유할 수 있습니다.</v-card-text>
                 </v-card>
               </v-col>
             </v-row>

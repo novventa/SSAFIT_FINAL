@@ -12,12 +12,12 @@
               <v-fieldset legend="아이디 찾기">
                 <v-row>
                   <v-col cols="12">
-                    <v-text-field v-model="email" label="이메일"></v-text-field>
+                    <v-text-field v-model="email" label="이메일" @keyup.enter="findId"></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
                       v-model="nickname"
-                      label="별명"
+                      label="별명" @keyup.enter="findId"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -44,6 +44,11 @@ export default {
   },
   methods: {
     findId() {
+      if(this.email === '' ||
+      this.nickname === '') {
+        alert("이메일과 별명을 모두 입력해주세요.");
+        return;
+      }
       let info = {
         email: this.email,
         nickname: this.nickname,

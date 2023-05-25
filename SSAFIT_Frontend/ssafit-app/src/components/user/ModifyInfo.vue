@@ -60,9 +60,7 @@
             </v-col>
             <v-col cols="12">
               <v-file-input
-                v-model="image"
                 label="프로필 사진"
-                ref="profile"
                 @change="inputImage"
               ></v-file-input>
             </v-col>
@@ -89,7 +87,7 @@ export default {
       password: "",
       nickname: "",
       email: "",
-      image: null,
+      image: '',
       emailCheck: false,
       nicknameCheck: false,
       emailError: false,
@@ -138,7 +136,9 @@ export default {
       file.append("email", user.email);
       file.append("image", user.image);
       if (this.image != null) {
-        file.append("file", this.image[0]);
+        file.append("file", this.image);
+      } else {
+        file.append("file", null);
       }
       axios({
         url: API_URL,
@@ -154,16 +154,18 @@ export default {
           },
         ],
       })
-        .then(() => {
+        .then((res) => {
+          console.log(res.data);
+          this.$store.commit('LOGIN', res.data);
+          this.$store.commit('LOGIN', res.data);
           this.$router.push("/");
-          this.$router.go(0);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    inputImage() {
-      this.image = this.$refs.profile.files;
+    inputImage(file) {
+      this.image = file;
     },
     checkNickname() {
       const REST_API = `http://localhost:9999`;

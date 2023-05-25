@@ -93,9 +93,8 @@
                       </v-col>
                       <v-col cols="12">
                         <v-file-input
-                          v-model="image"
                           label="프로필 사진"
-                          @change="inputImage"
+                          @change="changeImage"
                         ></v-file-input>
                       </v-col>
                       <v-col cols="12">
@@ -126,7 +125,7 @@ export default {
       password: "",
       nickname: "",
       email: "",
-      image: null,
+      image: '',
       idCheck: false,
       emailCheck: false,
       nicknameCheck: false,
@@ -158,6 +157,10 @@ export default {
         alert("닉네임 중복 체크를 해주세요.");
         return;
       }
+      if(this.passwordError) {
+        alert("비밀번호 형식이 맞지 않습니다.");
+        return;
+      }
       const REST_API = `http://localhost:9999`;
       const API_URL = `${REST_API}/api-user/add`;
       let user = {
@@ -166,7 +169,7 @@ export default {
         password: this.password,
         nickname: this.nickname,
         email: this.email,
-        image: "none",
+        image: 'none',
       };
       let file = new FormData();
       file.append("idx", user.idx);
@@ -175,12 +178,12 @@ export default {
       file.append("nickname", user.nickname);
       file.append("email", user.email);
       file.append("image", user.image);
+      console.log(this.image);
       if (this.image != null) {
-        file.append("file", this.image[0]);
+        file.append("file", this.image);
       } else {
         file.append("file", null);
       }
-      console.log(file);
       axios({
         url: API_URL,
         method: "POST",
@@ -203,8 +206,8 @@ export default {
           console.log(err);
         });
     },
-    inputImage() {
-      this.image = this.$refs.profile.files;
+    changeImage(file) {
+      this.image = file;
     },
     checkId() {
       const REST_API = `http://localhost:9999`;

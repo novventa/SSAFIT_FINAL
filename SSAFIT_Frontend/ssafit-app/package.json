@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "croppie": "^2.6.5",
     "dotenv": "^16.0.3",
+    "text-encoding": "^0.7.0",
     "vue": "^2.6.14",
     "vue-router": "^3.6.5",
     "vuetify": "^2.6.0",

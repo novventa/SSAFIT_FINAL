@@ -101,10 +101,9 @@ export default {
         .then((res) => {
           sessionStorage.setItem("access-token", res.data["access-token"]);
           this.$store.dispatch("login", res.data["user"]);
-          this.$router.push("/main");
         })
         .catch((err) => {
-          console.log(err);
+          alert(err.response.data.msg);
         });
     },
     forgotPassword() {

@@ -14,8 +14,8 @@ CREATE TABLE `user`(
 CREATE TABLE `video`(
 	`idx` INT AUTO_INCREMENT PRIMARY KEY,
     `videoId` VARCHAR(40) NOT NULL UNIQUE,
-    `title` VARCHAR(50) NOT NULL,
-    `channelName` VARCHAR(40) NOT NULL,
+    `title` TEXT NOT NULL,
+    `channelName` TEXT NOT NULL,
     `part` VARCHAR(20) NOT NULL,
     `viewCnt` INT DEFAULT 0,
     `likeCnt` INT DEFAULT 0

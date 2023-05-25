@@ -1,5 +1,8 @@
 package com.ssafit.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +36,11 @@ public class VideoController {
 
 	@PostMapping("add")
 	public ResponseEntity<?> videoAdd(Video video) throws CustomException {
+		try {
+			video.setChannelName(URLDecoder.decode(video.getChannelName(), StandardCharsets.UTF_8.toString()));
+			video.setTitle(URLDecoder.decode(video.getTitle(), StandardCharsets.UTF_8.toString()));
+		} catch (UnsupportedEncodingException e) {
+		}
 		int result = videoService.addVideo(video);
 		
 		if (result == 0) {

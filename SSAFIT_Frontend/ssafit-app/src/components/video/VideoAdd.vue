@@ -10,6 +10,7 @@
         label="Youtube 영상의 주소를 입력해주세요"
         outlined
         class="search-input"
+        @keyup.enter="searchVideo"
       ></v-text-field>
       <v-btn class="search-button" color="orange" @click="searchVideo"
         >검색</v-btn
@@ -60,7 +61,10 @@ export default {
     searchVideo() {
       const URL = "https://www.googleapis.com/youtube/v3/search";
       const KEY = process.env.VUE_APP_API_KEY;
-
+      if(this.searchQuery === '') {
+        alert("영상의 주소를 입력해주세요.");
+        return;
+      }
       axios({
         url: URL,
         method: "GET",
@@ -86,9 +90,10 @@ export default {
       let video = {
         videoId: this.searchResult.id.videoId,
         part: this.part,
-        title: this.searchResult.snippet.title,
-        channelName: this.searchResult.snippet.channelTitle,
+        title: encodeURIComponent(this.searchResult.snippet.title),
+        channelName: encodeURIComponent(this.searchResult.snippet.channelTitle),
       };
+      console.log(video);
       axios({
         url: URL,
         method: "POST",

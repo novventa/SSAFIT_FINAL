@@ -53,7 +53,6 @@ public class UserController {
 	public ResponseEntity<?> userAdd(@RequestParam int idx, @RequestParam String id, @RequestParam String password,
 			@RequestParam String email, @RequestParam String nickname, @RequestParam String image,
 			 MultipartFile file) throws CustomException{
-		
 		User user = new User(idx, id, password, nickname, email, image);
 		
 		if (file != null && !file.isEmpty() && file.getContentType().startsWith("image")) {
@@ -110,8 +109,8 @@ public class UserController {
 	@GetMapping("searchId")
 	public ResponseEntity<?> idFind(User user) throws CustomException {
 		String id = userService.findId(user);
-		if (id == null) {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		if (id == null || id.length() == 0) {
+			throw new CustomException(ErrorCode.FAIL_CERTIFICATION);
 		}
 		return new ResponseEntity<String>(id, HttpStatus.OK);
 	}
@@ -223,7 +222,7 @@ public class UserController {
 		else {
 			userService.modifyUser(user);
 		}
-		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
 }

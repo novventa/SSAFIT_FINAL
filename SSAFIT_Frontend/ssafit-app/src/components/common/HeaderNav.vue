@@ -8,10 +8,10 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <div v-show="Object.keys(user).length !== 0" class="profile-info">
+      <div v-if="Object.keys(user).length !== 0" class="profile-info">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <div v-show="user.image === 'none'">
+            <div v-if="user.image === 'none'">
               <v-avatar v-bind="attrs" v-on="on" size="36">
                 <img
                   :src="require(`@/assets/upload/none.png`)"
@@ -19,7 +19,7 @@
                 />
               </v-avatar>
             </div>
-            <div v-show="user.image !== 'none'">
+            <div v-else>
               <v-avatar v-bind="attrs" v-on="on" size="36">
                 <img
                   :src="require(`@/assets/upload/${id}/${image}`)"

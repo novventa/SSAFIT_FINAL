@@ -23,12 +23,15 @@ export default new Vuex.Store({
   mutations: {
     LOGIN(state, payload) {
       state.user = payload;
+      router.go(0);
+      router.push({name: "main"});
     },
     SEARCH_VIDEO(state, videos) {
       state.videos = videos;
     },
     CLICK_VIDEO(state, video) {
       state.video = video;
+      router.push({ name: "details", params: { idx: video.idx }});
     },
     CLEAR_USER(state) {
       state.user = {};
@@ -59,6 +62,7 @@ export default new Vuex.Store({
       };
       dispatch("searchVideo", keyword);
       commit("LOGIN", user);
+      commit("LOGIN", user);
     },
     findId({ commit }, user) {
       const API_URL = `${REST_API}/api-user/searchId`;
@@ -73,7 +77,7 @@ export default new Vuex.Store({
           commit;
         })
         .catch((err) => {
-          console.log(err);
+          alert(err.response.data.msg);
         })
     },
     searchParts({ commit }, parts) {

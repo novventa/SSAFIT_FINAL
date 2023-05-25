@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import router from "@/router";
+// import router from "@/router";
 
 export default {
   name: "VideoItem",
@@ -29,7 +29,9 @@ export default {
   methods: {
     clickVideo() {
       this.$store.dispatch("clickVideo", this.video.idx);
-      router.push({ name: "details", params: { idx: this.video.idx } });
+      // .then(() => {
+      //   router.push({ name: "details", params: { idx: this.video.idx } });
+      // });
     },
     getThumbnailUrl(videoId) {
       return `https://img.youtube.com/vi/${videoId}/0.jpg`;
