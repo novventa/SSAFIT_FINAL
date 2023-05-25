@@ -45,15 +45,20 @@
               <h3>팔로우 목록: {{ followList.length }}명</h3>
             </div>
             <v-list>
-              <v-list-item
-                v-for="follow in followList"
-                :key="follow.yourIdx"
-                @click="getFollow(follow)"
-              >
+              <v-list-item v-for="follow in followList" :key="follow.yourIdx">
                 <v-list-item-content>
-                  <v-list-item-title
-                    >{{ follow.yourNickname }} 님</v-list-item-title
-                  >
+                  <v-list-item-title>
+                    <span style="cursor: pointer" @click="getFollow(follow)"
+                      >{{ follow.yourNickname }} 님</span
+                    >
+                    <v-btn
+                      class="follow-Btn"
+                      text
+                      color="red"
+                      @click="cancelFollow(follow)"
+                      >팔로우 취소</v-btn
+                    >
+                  </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -79,20 +84,6 @@
         </v-card>
       </v-col>
     </v-row>
-    <div>
-      <input
-        type="text"
-        v-model="search"
-        placeholder="유저 검색"
-        @keyup.enter="searchUser"
-      />
-      <button @click="searchUser">유저 검색</button>
-    </div>
-    <div v-if="this.searchUsers">
-      <div v-for="searchUser in searchUsers" :key="searchUser.idx">
-        {{ searchUser.nickname }}
-      </div>
-    </div>
     <v-dialog v-model="followDialog" max-width="800">
       <v-card>
         <v-card-title>
@@ -154,8 +145,6 @@ export default {
       followLikeList: "",
       followUser: "",
       dialog: false,
-      search: "",
-      searchUsers: "",
     };
   },
   computed: {
@@ -235,24 +224,14 @@ export default {
         this.followDialog = true;
       });
     },
-    searchUser() {
-      if (this.search === "") {
-        alert("닉네임을 입력해주세요.");
-        return;
-      }
-      const API_URL = `http://localhost:9999/api-follow/find`;
-      axios({
-        url: API_URL,
-        method: "GET",
-        headers: {
-          token: sessionStorage.getItem("access-token"),
-        },
-        params: {
-          yourNickname: this.nickname,
-        },
-      }).then((res) => {
-        console.log(res.data);
-        this.searchUsers = res.data;
+    cancelFollow(follow) {
+      this.$store.dispatch("removeFollow", follow.idx).then(() => {
+        const index = this.followList.findIndex(
+          (item) => item.idx === follow.idx
+        );
+        if (index !== -1) {
+          this.followList.splice(index, 1);
+        }
       });
     },
   },
@@ -275,6 +254,7 @@ export default {
 
 .profile-image {
   margin: 20px auto;
+  display: block;
 }
 
 .list-card {

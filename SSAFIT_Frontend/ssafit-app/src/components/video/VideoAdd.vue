@@ -22,6 +22,7 @@
       <img
         :src="searchResult.snippet.thumbnails.high.url"
         alt="Video Thumbnail"
+        class="responsive-image"
       />
       <h3>{{ searchResult.snippet.title }}</h3>
       <br />
@@ -93,7 +94,6 @@ export default {
         title: encodeURIComponent(this.searchResult.snippet.title),
         channelName: encodeURIComponent(this.searchResult.snippet.channelTitle),
       };
-      console.log(video);
       axios({
         url: URL,
         method: "POST",
@@ -154,5 +154,12 @@ export default {
 }
 .warning {
   margin-bottom: 10px;
+}
+.responsive-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

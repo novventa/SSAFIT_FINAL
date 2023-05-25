@@ -13,6 +13,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { mapActions } from "vuex";
 import VideoItem from "./VideoItem.vue";
 
 export default {
@@ -22,6 +23,11 @@ export default {
   name: "VideoList",
   computed: {
     ...mapState(["videos"]),
+    ...mapActions(["getUsers", "getFollowList"]),
+  },
+  created() {
+    this.getUsers;
+    this.getFollowList;
   },
 };
 </script>

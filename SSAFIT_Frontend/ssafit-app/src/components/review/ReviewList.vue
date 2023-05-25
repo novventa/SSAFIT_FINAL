@@ -20,16 +20,7 @@
                   />
                 </template>
                 <v-list>
-                  <!-- 수정해야 됨 -->
-                  <v-list-item
-                    v-if="
-                      !Array.from(
-                        followList.some(
-                          (obj) => obj.yourNickname === review.writer
-                        )
-                      )
-                    "
-                  >
+                  <v-list-item v-if="!isFollow(review)">
                     <v-list-item-title>
                       <v-btn text color="orange" @click="addFollow(review)"
                         >팔로우하기</v-btn
@@ -84,6 +75,7 @@
               <v-icon>mdi-trash-can</v-icon>
             </v-btn>
           </div>
+          <hr />
         </div>
       </div>
       <div v-else>
@@ -141,13 +133,32 @@ export default {
       editingReview: null,
       deleteConfirmDialog: false,
       deletingReview: null,
+      followNicknames: [],
     };
   },
   computed: {
     ...mapState(["video", "reviews", "user", "users", "followList"]),
+    getFollowList() {
+      return this.followList;
+    },
     videoIdx() {
       return this.video.idx;
     },
+  },
+  watch: {
+    getFollowList(value) {
+      this.followNicknames = [];
+      Array.from(value).forEach((data) => {
+        this.followNicknames.push(data.yourNickname);
+      });
+      // !Array.from(value.some((obj) => obj.yourNickname === review.writer));
+    },
+  },
+  created() {
+    this.$store.dispatch("getFollowList");
+  },
+  mounted() {
+    this.fetchData();
   },
   methods: {
     ...mapActions(["getReviews", "modifyReview", "deleteReview", "addFollows"]),
@@ -186,34 +197,40 @@ export default {
       this.editedContent = "";
       this.editingReview = null;
     },
-  },
-  mounted() {
-    this.fetchData();
-  },
-  getUserProfilePicture(userIdx) {
-    let user = this.users.find((user) => user.idx === userIdx);
-    if (user && user.image !== "none") {
-      return require(`@/assets/upload/${user.id}/${user.image}`);
-    }
-    return require(`@/assets/upload/none.png`);
-  },
-  addFollow(rev) {
-    // console.log(review);
-    let fo = {
-      myIdx: this.user.idx,
-      yourIdx: rev.userIdx,
-      yourNickname: rev.writer,
-    };
-    console.log(fo);
-    this.addFollows(fo);
-  },
-  cancelFollow(review) {
-    // console.log(this.followList);
-    let idx = Array.from(this.followList).find(
-      (obj) => obj.yourNickname === review.writer && this.user.idx === obj.myIdx
-    );
-    idx = idx.idx;
-    this.$store.dispatch("removeFollow", idx);
+    getUserProfilePicture(userIdx) {
+      let user = this.users.find((user) => user.idx === userIdx);
+      if (user && user.image !== "none") {
+        return require(`@/assets/upload/${user.id}/${user.image}`);
+      }
+      return require(`@/assets/upload/none.png`);
+    },
+    addFollow(rev) {
+      // console.log(review);
+      let fo = {
+        myIdx: this.user.idx,
+        yourIdx: rev.userIdx,
+        yourNickname: rev.writer,
+      };
+      this.addFollows(fo);
+    },
+    cancelFollow(review) {
+      // console.log(this.followList);
+      let idx = Array.from(this.followList).find(
+        (obj) =>
+          obj.yourNickname === review.writer && this.user.idx === obj.myIdx
+      );
+      idx = idx.idx;
+      this.$store.dispatch("removeFollow", idx);
+    },
+    isFollow(rev) {
+      let flag = Array.from(this.followNicknames).find(
+        (obj) => obj === rev.writer
+      );
+      if (flag) {
+        return true;
+      }
+      return false;
+    },
   },
 };
 </script>

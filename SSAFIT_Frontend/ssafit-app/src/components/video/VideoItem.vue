@@ -1,16 +1,14 @@
 <template>
   <v-col cols="12" md="4">
     <v-card @click="clickVideo" class="video-item">
-      <v-img
-        :src="getThumbnailUrl(video.videoId)"
-        width="561"
-        height="315"
-        class="video-image"
-      ></v-img>
+      <v-img :src="getThumbnailUrl(video.videoId)" width="561" height="315" class="video-image"></v-img>
       <div class="title-overlay">
         <span class="video-title">{{ video.title }}</span>
       </div>
-      <v-card-title>{{ video.part }}</v-card-title>
+      <v-card-title>{{ video.part }}
+        <v-spacer></v-spacer>
+        {{ video.channelName }}
+      </v-card-title>
     </v-card>
   </v-col>
 </template>
@@ -85,3 +83,4 @@ export default {
   text-align: center;
 }
 </style>
+

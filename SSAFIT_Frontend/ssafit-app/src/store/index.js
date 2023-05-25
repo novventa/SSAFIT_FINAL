@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
-import createPersistedState from 'vuex-persistedstate'
-import router from '@/router'
+import Vue from "vue";
+import Vuex from "vuex";
+import axios from "axios";
+import createPersistedState from "vuex-persistedstate";
+import router from "@/router";
 
 Vue.use(Vuex);
 
@@ -17,15 +17,14 @@ export default new Vuex.Store({
     reviews: [],
     results: [],
     likeList: [],
-    like: '',
+    like: "",
     followList: [],
   },
-  getters: {
-  },
+  getters: {},
   mutations: {
     LOGIN(state, payload) {
       state.user = payload;
-      router.push({name: "main"});
+      router.push({ name: "main" });
     },
     GET_USERS(state, list) {
       state.users = list;
@@ -35,7 +34,7 @@ export default new Vuex.Store({
     },
     CLICK_VIDEO(state, video) {
       state.video = video;
-      router.push({ name: "details", params: { idx: video.idx }});
+      router.push({ name: "details", params: { idx: video.idx } });
     },
     CLEAR_USER(state) {
       state.user = {};
@@ -54,7 +53,7 @@ export default new Vuex.Store({
     },
     GET_LIKE_LIST(state, list) {
       state.likeList = list;
-    }
+    },
   },
   actions: {
     login({ commit, dispatch }, user) {
@@ -66,7 +65,6 @@ export default new Vuex.Store({
       };
       dispatch("searchVideo", keyword);
       commit("LOGIN", user);
-      commit("LOGIN", user);
     },
     getUsers({ commit }) {
       const URL = `${REST_API}/api-user/list`;
@@ -77,12 +75,12 @@ export default new Vuex.Store({
           token: sessionStorage.getItem("access-token"),
         },
       })
-      .then((res) => {
-        commit("GET_USERS", res.data);
-      })
+        .then((res) => {
+          commit("GET_USERS", res.data);
+        })
         .catch((err) => {
           console.log(err);
-      });
+        });
     },
     findId({ commit }, user) {
       const API_URL = `${REST_API}/api-user/searchId`;
@@ -98,7 +96,7 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           alert(err.response.data.msg);
-        })
+        });
     },
     searchParts({ commit }, parts) {
       const URL = `${REST_API}/api-video/list-part`;
@@ -127,8 +125,8 @@ export default new Vuex.Store({
         method: "GET",
         params: payload,
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then((res) => {
           console.log(res.data);
@@ -138,14 +136,14 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    clickVideo({ commit}, idx) {
+    clickVideo({ commit }, idx) {
       const URL = `${REST_API}/api-video/details/${idx}`;
       axios({
         url: URL,
         method: "GET",
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then((res) => {
           commit("CLICK_VIDEO", res.data);
@@ -157,17 +155,17 @@ export default new Vuex.Store({
     clearVideo({ commit }) {
       commit("CLEAR_VIDEO");
     },
-    clearUser({commit}) {
+    clearUser({ commit }) {
       commit("CLEAR_USER");
     },
-     getReviews({ commit }, videoIdx) {
+    getReviews({ commit }, videoIdx) {
       const URL = `${REST_API}/api-review/list/${videoIdx}`;
       axios({
         url: URL,
         method: "GET",
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then((res) => {
           commit("GET_REVIEWS", res.data);
@@ -183,8 +181,8 @@ export default new Vuex.Store({
         method: "POST",
         params: review,
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then(() => {
           commit;
@@ -201,8 +199,8 @@ export default new Vuex.Store({
         method: "PUT",
         params: review,
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then((res) => {
           console.log(res);
@@ -212,14 +210,14 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    deleteReview({ commit, dispatch}, review) {
+    deleteReview({ commit, dispatch }, review) {
       const URL = `${REST_API}/api-review/remove/${review.idx}`;
       axios({
         url: URL,
         method: "DELETE",
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then(() => {
           commit;
@@ -229,15 +227,15 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    addLike({ commit, dispatch}, likes) {
+    addLike({ commit, dispatch }, likes) {
       const URL = `${REST_API}/api-like/add`;
       axios({
         url: URL,
         method: "POST",
         params: likes,
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then(() => {
           dispatch("getLikeList");
@@ -247,15 +245,15 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    removeLike({ commit, dispatch}, likes) {
+    removeLike({ commit, dispatch }, likes) {
       const URL = `${REST_API}/api-like/remove`;
       axios({
         url: URL,
         method: "DELETE",
         params: likes,
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then(() => {
           dispatch("getLikeList");
@@ -271,8 +269,8 @@ export default new Vuex.Store({
         url: URL,
         method: "GET",
         headers: {
-          "token": sessionStorage.getItem("access-token"),
-      },
+          token: sessionStorage.getItem("access-token"),
+        },
       })
         .then((res) => {
           console.log("here");
@@ -283,7 +281,7 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-     addFollows({ commit, dispatch }, follow) {
+    addFollows({ commit, dispatch }, follow) {
       const URL = `${REST_API}/api-follow/add`;
       console.log(follow);
       commit;
@@ -322,21 +320,22 @@ export default new Vuex.Store({
     },
     getFollowList(context) {
       const API_URL = `http://localhost:9999/api-follow/list/${context.state.user.idx}`;
-      console.log(context.state.user.idx);
       axios({
         url: API_URL,
         method: "GET",
         headers: {
           token: sessionStorage.getItem("access-token"),
         },
-      }).then((res) => {
-        context.state.followList = res.data;
-      });
+      })
+        .then((res) => {
+          console.log(res.data);
+          context.state.followList = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
-  modules: {
-  },
-  plugins: [
-    createPersistedState(),
-  ]
-})
+  modules: {},
+  plugins: [createPersistedState()],
+});

@@ -1,5 +1,6 @@
 <template>
-  <v-main>
+  <v-main class="pt-2 pt-sm-2 pt-xs-2 pt-md-0 pt-lg-0 pt-xl-0">
+    <div class="header-image"></div>
     <v-container>
       <div class="header">
         <h2>지금 뜨는 영상</h2>
@@ -31,12 +32,20 @@ export default {
   data() {
     return {
       sortBy: "views", // Default sort option
+      prevScrollPos: window.pageYOffset,
+      headerImageVisible: true,
     };
+  },
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
   },
   computed: {
     checkVideos() {
       return this.videos;
     },
+  },
+  beforeDestroy() {
+    window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
     toggleSortBy() {
@@ -62,6 +71,15 @@ export default {
         this.$store.dispatch("searchVideo", keyword);
       }
     },
+    handleScroll() {
+      const currentScrollPos = window.pageYOffset;
+      if (this.prevScrollPos > currentScrollPos) {
+        this.headerImageVisible = true;
+      } else {
+        this.headerImageVisible = false;
+      }
+      this.prevScrollPos = currentScrollPos;
+    },
   },
   watch: {
     checkVideos(value) {
@@ -72,14 +90,36 @@ export default {
 </script>
 
 <style scoped>
+.header-image {
+  width: 100%;
+  height: 500px;
+  background-image: url("@/assets/img/image.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.header-image.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
 .header {
   text-align: left;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .header h2 {
   font-size: 24px;
   color: black;
+}
+
+.description {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
 }
 
 .toggle-btn {

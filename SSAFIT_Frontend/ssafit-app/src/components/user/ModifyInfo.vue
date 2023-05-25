@@ -15,6 +15,8 @@
                 v-model="password"
                 label="비밀번호"
                 type="password"
+                required
+                @input="validatePassword"
               ></v-text-field>
               <p class="error-message" v-if="password !== '' && passwordError">
                 비밀번호는 8~16자의 영문 대소문자, 숫자, 특수문자를 포함하여
@@ -118,6 +120,10 @@ export default {
         alert("닉네임 중복 체크를 해주세요.");
         return;
       }
+      if(this.passwordError) {
+        alert("비밀번호 형식이 맞지 않습니다.");
+        return;
+      }
       const REST_API = `http://localhost:9999`;
       const API_URL = `${REST_API}/api-user/modify`;
       let user = {
@@ -157,8 +163,6 @@ export default {
         .then((res) => {
           console.log(res.data);
           this.$store.commit("LOGIN", res.data);
-          this.$store.commit("LOGIN", res.data);
-          this.$router.push("/");
         })
         .catch((err) => {
           console.log(err);

@@ -71,16 +71,23 @@ export default {
 </script>
 
 <style scoped>
-.video-detail {
-  margin: 20px;
-}
-
 .video-card {
   padding: 16px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.video-responsive {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio (9 / 16 = 0.5625) */
+  height: 0;
 }
 
-.video-responsive {
-  margin-bottom: 16px;
+.video-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .video-info {
@@ -95,6 +102,7 @@ export default {
 
 .count {
   margin-left: 4px;
+  font-weight: bold;
 }
 
 .like-button {
