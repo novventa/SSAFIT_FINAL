@@ -44,14 +44,19 @@
             <div>
               <h3>팔로우 목록: {{ followList.length }}명</h3>
             </div>
-            <div
-              v-for="follow in followList"
-              :key="follow.yourIdx"
-              class="follow-item"
-              @click="getFollow(follow)"
-            >
-              {{ follow.yourNickname }} 님
-            </div>
+            <v-list>
+              <v-list-item
+                v-for="follow in followList"
+                :key="follow.yourIdx"
+                @click="getFollow(follow)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title
+                    >{{ follow.yourNickname }} 님</v-list-item-title
+                  >
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
           </v-card-text>
         </v-card>
         <v-card class="list-card">
@@ -75,7 +80,12 @@
       </v-col>
     </v-row>
     <div>
-      <input type="text" v-model="search" placeholder="유저 검색" @keyup.enter="searchUser">
+      <input
+        type="text"
+        v-model="search"
+        placeholder="유저 검색"
+        @keyup.enter="searchUser"
+      />
       <button @click="searchUser">유저 검색</button>
     </div>
     <div v-if="this.searchUsers">
@@ -144,8 +154,8 @@ export default {
       followLikeList: "",
       followUser: "",
       dialog: false,
-      search: '',
-      searchUsers: '',
+      search: "",
+      searchUsers: "",
     };
   },
   computed: {
@@ -226,7 +236,7 @@ export default {
       });
     },
     searchUser() {
-      if(this.search === '') {
+      if (this.search === "") {
         alert("닉네임을 입력해주세요.");
         return;
       }
@@ -238,14 +248,13 @@ export default {
           token: sessionStorage.getItem("access-token"),
         },
         params: {
-          yourNickname : this.nickname,
-        }
-      })
-      .then((res) => {
+          yourNickname: this.nickname,
+        },
+      }).then((res) => {
         console.log(res.data);
         this.searchUsers = res.data;
-      })
-    }
+      });
+    },
   },
 };
 </script>
@@ -272,9 +281,25 @@ export default {
   margin-bottom: 20px;
 }
 
-.follow-item,
-.like-item {
-  margin-bottom: 10px;
+.follow-list {
+  margin-bottom: 20px;
+}
+
+.follow-list-item {
+  cursor: pointer;
+}
+.video-responsive {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio (9 / 16 = 0.5625) */
+  height: 0;
+}
+
+.video-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .follow-like-item {

@@ -8,7 +8,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <div v-if="Object.keys(user).length !== 0" class="profile-info">
+      <div v-show="Object.keys(user).length !== 0" class="profile-info">
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <div v-if="user.image === 'none'">
@@ -60,7 +60,7 @@
           </v-list-item-icon>
           <v-list-item-title>회원가입</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="user.id" @click="[orderBy(), mainPage('/main')]">
+        <v-list-item v-if="user.id" @click="mainPage('/main')">
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -77,12 +77,6 @@
             <v-icon>mdi-plus</v-icon>
           </v-list-item-icon>
           <v-list-item-title>영상 등록하기</v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="user.id" @click="signUpPage('/user/create')">
-          <v-list-item-icon>
-            <v-icon>mdi-calendar</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>일정보기</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -112,27 +106,39 @@ export default {
   },
   methods: {
     mainPage(route) {
-      router.push(route);
+      if (router.currentRoute.path !== "/main") {
+        router.push(route);
+      }
       console.log(`Navigating to: ${route}`);
     },
     loginPage(route) {
-      router.push(route);
+      if (router.currentRoute.path !== "/login") {
+        router.push(route);
+      }
       console.log(`Navigating to: ${route}`);
     },
     signUpPage(route) {
-      router.push(route);
+      if (router.currentRoute.path !== "/signUp") {
+        router.push(route);
+      }
       console.log(`Navigating to: ${route}`);
     },
     searchPage(route) {
-      router.push(route);
+      if (router.currentRoute.path !== "/search") {
+        router.push(route);
+      }
       console.log(`Navigating to: ${route}`);
     },
     addPage(route) {
-      router.push(route);
+      if (router.currentRoute.path !== "/add") {
+        router.push(route);
+      }
       console.log(`Navigating to: ${route}`);
     },
     myPage(route) {
-      router.push(route);
+      if (router.currentRoute.path !== "/myPage") {
+        router.push(route);
+      }
       console.log(`Navigating to: ${route}`);
     },
     logout() {
@@ -142,7 +148,7 @@ export default {
       router.go(0);
     },
     goMain() {
-      if (this.user.id) {
+      if (router.currentRoute.path !== "/main" && this.user.id) {
         router.push("/main");
       }
       if (router.currentRoute.path !== "/" && !this.user.id) {

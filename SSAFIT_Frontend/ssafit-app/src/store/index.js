@@ -11,20 +11,24 @@ const REST_API = `http://localhost:9999`;
 export default new Vuex.Store({
   state: {
     user: {},
+    users: [],
     videos: [],
     video: {},
     reviews: [],
     results: [],
     likeList: [],
     like: '',
+    followList: [],
   },
   getters: {
   },
   mutations: {
     LOGIN(state, payload) {
       state.user = payload;
-      // router.go(0);
       router.push({name: "main"});
+    },
+    GET_USERS(state, list) {
+      state.users = list;
     },
     SEARCH_VIDEO(state, videos) {
       state.videos = videos;
@@ -64,6 +68,22 @@ export default new Vuex.Store({
       commit("LOGIN", user);
       commit("LOGIN", user);
     },
+    getUsers({ commit }) {
+      const URL = `${REST_API}/api-user/list`;
+      axios({
+        url: URL,
+        method: "GET",
+        headers: {
+          token: sessionStorage.getItem("access-token"),
+        },
+      })
+      .then((res) => {
+        commit("GET_USERS", res.data);
+      })
+        .catch((err) => {
+          console.log(err);
+      });
+    },
     findId({ commit }, user) {
       const API_URL = `${REST_API}/api-user/searchId`;
       axios({
@@ -101,8 +121,6 @@ export default new Vuex.Store({
         });
     },
     searchVideo({ commit }, payload) {
-      console.log(payload);
-
       const URL = `${REST_API}/api-video/list`;
       axios({
         url: URL,
@@ -264,6 +282,56 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err);
         });
+    },
+     addFollows({ commit, dispatch }, follow) {
+      const URL = `${REST_API}/api-follow/add`;
+      console.log(follow);
+      commit;
+      axios({
+        url: URL,
+        method: "POST",
+        params: follow,
+        headers: {
+          token: sessionStorage.getItem("access-token"),
+        },
+      })
+        .then(() => {
+          dispatch("getFollowList");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    removeFollow({ commit, dispatch }, idx) {
+      const URL = `${REST_API}/api-follow/remove/${idx}`;
+      commit;
+      axios({
+        url: URL,
+        method: "DELETE",
+        headers: {
+          token: sessionStorage.getItem("access-token"),
+        },
+      })
+        .then(() => {
+          dispatch("getFollowList");
+          console.log("here");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getFollowList(context) {
+      const API_URL = `http://localhost:9999/api-follow/list/${context.state.user.idx}`;
+      console.log(context.state.user.idx);
+      axios({
+        url: API_URL,
+        method: "GET",
+        headers: {
+          token: sessionStorage.getItem("access-token"),
+        },
+      }).then((res) => {
+        context.state.followList = res.data;
+      });
     },
   },
   modules: {

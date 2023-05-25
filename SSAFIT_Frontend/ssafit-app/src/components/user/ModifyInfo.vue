@@ -87,7 +87,7 @@ export default {
       password: "",
       nickname: "",
       email: "",
-      image: '',
+      image: "",
       emailCheck: false,
       nicknameCheck: false,
       emailError: false,
@@ -156,8 +156,8 @@ export default {
       })
         .then((res) => {
           console.log(res.data);
-          this.$store.commit('LOGIN', res.data);
-          this.$store.commit('LOGIN', res.data);
+          this.$store.commit("LOGIN", res.data);
+          this.$store.commit("LOGIN", res.data);
           this.$router.push("/");
         })
         .catch((err) => {
@@ -168,7 +168,7 @@ export default {
       this.image = file;
     },
     checkNickname() {
-      if(this.nickname === '') {
+      if (this.nickname === "") {
         alert("별명을 입력해주세요.");
         return;
       }
@@ -190,7 +190,7 @@ export default {
       const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
       const REST_API = `http://localhost:9999`;
       const API_URL = `${REST_API}/api-user/check/email/${this.email}${this.idx}`;
-      if(this.email === '') {
+      if (this.email === "") {
         alert("이메일을 입력해주세요.");
         return;
       }

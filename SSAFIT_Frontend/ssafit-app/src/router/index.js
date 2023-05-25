@@ -12,7 +12,6 @@ import FindId from "../components/user/FindId.vue"
 import ResetPassword from "../components/user/ResetPassword.vue"
 import ModifyInfo from "../components/user/ModifyInfo.vue"
 import MyPage from "../components/user/MyPage.vue"
-import CalendarMain from "../components/calendar/CalendarMain.vue"
 import VideoAdd from "../components/video/VideoAdd.vue"
 
 Vue.use(VueRouter);
@@ -42,11 +41,6 @@ const routes = [
     path: "/details/:idx",
     name: "details",
     component: VideoDetailView,
-  },
-  {
-    path: "/calendar",
-    name: "calendar",
-    component: CalendarMain,
   },
   {
     path: "/user",

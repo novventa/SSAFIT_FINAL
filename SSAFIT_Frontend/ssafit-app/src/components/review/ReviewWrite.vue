@@ -31,7 +31,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
-      content: '',
+      content: "",
     };
   },
   computed: {
@@ -66,7 +66,8 @@ export default {
 
 <style scoped>
 .review-form {
-  margin: 20px;
+  margin: 0 auto;
+  max-width: 1300px;
 }
 
 .v-row:not(:last-child) {
