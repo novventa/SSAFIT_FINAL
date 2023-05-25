@@ -54,7 +54,10 @@
       <td>Back-End 전반</td>
     </tr>
     <tr>
-      <td>Back-End (Rest API 설계, SQL/Spring 디버깅, 이미지 업로드, 매물 조회 게시판 카테고리/키워드 검색 등 필요 API 추가, DB 테이블 수정 등)</td>
+      <td>Backend & Database 설계 & 구현
+User & Follow & Like 서비스 구현
+목업 & 시연영상 제작
+</td>
     </tr>
     <tr>
       <td rowspan="2">신택수</td>
@@ -62,7 +65,10 @@
       <td>Front-End 전반</td>
     </tr>
     <tr>
-      <td>Front-End (메인 페이지 검색창 수정 및 매물 조회 게시판 디자인)</td>
+      <td>Frontend 설계 & 구현
+Video & Review 서비스 구현
+API 명세서 & ERD 제작
+</td>
     </tr>
   </tbody>
 </table>
