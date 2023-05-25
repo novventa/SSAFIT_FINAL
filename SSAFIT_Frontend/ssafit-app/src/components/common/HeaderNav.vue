@@ -3,8 +3,8 @@
     <v-app-bar app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title @click="goMain"
-        >SSAFIT
-        <!-- <img :src="require('@/assets/logo.png')" width="140" /> -->
+        >
+        <img :src="require('@/assets/logo.png')" width="150" style="margin-top: 5px" />
       </v-toolbar-title>
       <v-spacer></v-spacer>
 
