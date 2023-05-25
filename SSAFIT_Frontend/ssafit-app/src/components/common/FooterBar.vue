@@ -19,6 +19,12 @@
         문의하시기 바랍니다.
       </v-card-text>
 
+      <a style="text-decoration: none" href="개인정보 처리방침.html"
+        >개인정보 처리방침</a
+      >
+      <br />
+      <a style="text-decoration: none" href="이용약관.html">이용약관</a>
+
       <v-divider></v-divider>
 
       <v-card-text class="white--text">

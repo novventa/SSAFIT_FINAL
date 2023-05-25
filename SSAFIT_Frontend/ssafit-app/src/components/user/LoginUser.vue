@@ -79,6 +79,9 @@ export default {
       forgotPasswordDialog: false,
     };
   },
+  created() {
+    this.loadingVideo;
+  },
   methods: {
     login() {
       if (this.id === "" || this.password === "") {
@@ -112,6 +115,16 @@ export default {
     },
     resetPassword() {
       router.push("/user/resetPassword");
+    },
+    loadingVideo() {
+      let keyword = {
+        key: "none",
+        word: "",
+        orderBy: "viewCnt",
+        orderByDir: "DESC",
+      };
+      console.log("Aasdasd");
+      this.$store.dispatch("searchVideo", keyword);
     },
   },
 };

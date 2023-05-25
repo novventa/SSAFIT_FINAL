@@ -9,6 +9,9 @@
                 <h3 class="text-center">회원 가입</h3>
               </v-card-title>
               <v-card-text>
+                <v-card-actions>
+                  <p>이미 회원이신가요? <a href="/user/login">로그인하기</a></p>
+                </v-card-actions>
                 <v-form @submit.prevent="createUser">
                   <v-fieldset legend="가입">
                     <v-row>

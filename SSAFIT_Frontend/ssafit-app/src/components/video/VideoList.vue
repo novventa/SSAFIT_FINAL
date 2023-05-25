@@ -2,7 +2,7 @@
   <v-card class="video-list">
     <v-row>
       <video-item
-        v-for="video in videos"
+        v-for="video in videos.slice(0, 12)"
         :key="video.videoId"
         :video="video"
         class="video-item"

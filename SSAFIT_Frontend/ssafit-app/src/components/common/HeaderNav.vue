@@ -60,7 +60,7 @@
           </v-list-item-icon>
           <v-list-item-title>회원가입</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="user.id" @click="mainPage('/main')">
+        <v-list-item v-if="user.id" @click="[orderBy(), mainPage('/main')]">
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -70,7 +70,13 @@
           <v-list-item-icon>
             <v-icon>mdi-magnify</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>검색하기</v-list-item-title>
+          <v-list-item-title>영상 검색하기</v-list-item-title>
+        </v-list-item>
+        <v-list-item v-if="user.id" @click="addPage('/add')">
+          <v-list-item-icon>
+            <v-icon>mdi-plus</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>영상 등록하기</v-list-item-title>
         </v-list-item>
         <v-list-item v-if="user.id" @click="signUpPage('/user/create')">
           <v-list-item-icon>
@@ -118,6 +124,10 @@ export default {
       console.log(`Navigating to: ${route}`);
     },
     searchPage(route) {
+      router.push(route);
+      console.log(`Navigating to: ${route}`);
+    },
+    addPage(route) {
       router.push(route);
       console.log(`Navigating to: ${route}`);
     },

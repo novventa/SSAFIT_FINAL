@@ -50,7 +50,14 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login({ commit }, user) {
+    login({ commit, dispatch }, user) {
+      let keyword = {
+        key: "none",
+        word: "",
+        orderBy: "viewCnt",
+        orderByDir: "DESC",
+      };
+      dispatch("searchVideo", keyword);
       commit("LOGIN", user);
     },
     findId({ commit }, user) {
