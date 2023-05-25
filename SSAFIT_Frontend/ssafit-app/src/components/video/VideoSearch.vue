@@ -91,9 +91,6 @@ export default {
       } else {
         this.parts.push(part);
       }
-      // if (this.parts.length === 0) {
-      //   this.$store.dispatch("searchParts", []);
-      // }
       this.$store.dispatch("searchParts", this.parts);
     },
     isPartSelected(part) {

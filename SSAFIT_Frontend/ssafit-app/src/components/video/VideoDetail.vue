@@ -48,7 +48,7 @@ export default {
       return `https://www.youtube.com/embed/${videoId}`;
     },
     isLiked() {
-      return this.likeList.some((obj) => obj.videoIdx === this.video.idx);
+      return Array.from(this.likeList).some((obj) => obj.videoIdx === this.video.idx);
     },
   },
   methods: {

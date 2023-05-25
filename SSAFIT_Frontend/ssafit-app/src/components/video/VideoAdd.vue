@@ -30,7 +30,7 @@ export default {
     methods: {
         searchVideo() {
             const URL = "https://www.googleapis.com/youtube/v3/search";
-            const API_KEY = process.env.[API_KEY];
+            const API_KEY = process.env.VUE_APP_MY_API_KEY;
             axios({
                 url: URL,
                 method: "GET",
@@ -43,7 +43,6 @@ export default {
                 },
             })
                 .then((res) => {
-                    console.log(res);
                     this.searchResult = res.data.items[0];
                 })
                 .catch((err) =>

@@ -25,8 +25,8 @@
 	<!-- 리뷰 등록 -->
 	<insert id="insertReview" parameterType="Review" keyProperty="idx"
 		useGeneratedKeys="true">
-		INSERT INTO review(videoIdx,content,userIdx,parent,writer)
-		VALUES (#{videoIdx}, #{content}, #{userIdx}, #{parent}, #{writer})
+		INSERT INTO review(videoIdx,content,userIdx,writer)
+		VALUES (#{videoIdx}, #{content}, #{userIdx},#{writer})
 	</insert>
 
 	<!-- 리뷰 수정 -->

@@ -12,8 +12,7 @@
               내용 : {{ review.content }}
             </div>
             <div class="date-wrapper">
-              <div class="date">작성일자 : {{ review.regDate }}</div>
-              <!-- <div class="date">수정일자 : {{ review.modDate }}</div> -->
+              <div class="date">작성일자 : {{ review.regDate.split(" ")[0] + " " + review.regDate.split(" ")[1].split(":")[0] + ":" + review.regDate.split(" ")[1].split(":")[1]}}</div>
             </div>
           </div>
 
@@ -91,7 +90,7 @@ export default {
       this.getReviews(this.videoIdx);
     },
     deleteReview(review) {
-      this.$store.dispatch("deleteReview", review.idx);
+      this.$store.dispatch("deleteReview", review);
     },
     startEdit(review) {
       this.editingReview = review;

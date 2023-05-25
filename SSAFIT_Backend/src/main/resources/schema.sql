@@ -27,7 +27,6 @@ CREATE TABLE `review`(
     `content` TEXT NOT NULL,
     `userIdx` INT NOT NULL,
     `writer` VARCHAR(20) NOT NULL,
-    `parent` INT DEFAULT 0,
     `regDate` DATETIME NOT NULL DEFAULT now(),
     `modDate` DATETIME NOT NULL DEFAULT now(),
     FOREIGN KEY(`videoIdx`) REFERENCES `video`(`idx`) ON DELETE CASCADE,

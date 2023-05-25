@@ -9,9 +9,8 @@ public class Review {
 	private String content;
 	private int userIdx;
 	private String writer;
-	private int parent = 0;
-	private LocalDateTime regDate;
-	private LocalDateTime modDate;
+	private String regDate;
+	private String modDate;
 	
 	public Review() {
 	
@@ -57,29 +56,20 @@ public class Review {
 		this.writer = writer;
 	}
 
-	public int getParent() {
-		return parent;
-	}
-
-	public void setParent(int parent) {
-		this.parent = parent;
-	}
-
-	public LocalDateTime getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(LocalDateTime regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 
-	public LocalDateTime getModDate() {
+	public String getModDate() {
 		return modDate;
 	}
 
-	public void setModDate(LocalDateTime modDate) {
+	public void setModDate(String modDate) {
 		this.modDate = modDate;
 	}
-
 
 }

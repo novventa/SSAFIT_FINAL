@@ -71,7 +71,6 @@ export default new Vuex.Store({
     },
     searchParts({ commit }, parts) {
       const URL = `${REST_API}/api-video/list-part`;
-      console.log(parts);
       axios({
         url: URL,
         method: "GET",
