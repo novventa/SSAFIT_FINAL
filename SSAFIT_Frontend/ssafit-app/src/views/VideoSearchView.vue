@@ -1,16 +1,20 @@
 <template>
-  <div>
-    <video-list></video-list>
+  <div class="container">
     <video-search></video-search>
+    <video-search-list></video-search-list>
   </div>
 </template>
 
 <script>
-import VideoList from "../components/video/VideoList.vue";
+import VideoSearchList from "../components/video/VideoSearchList.vue";
 import VideoSearch from "../components/video/VideoSearch.vue";
 export default {
-  components: { VideoList, VideoSearch },
+  components: { VideoSearchList, VideoSearch },
 };
 </script>
 
-<style></style>
+<style>
+.container {
+  margin-bottom: 25px;
+}
+</style>

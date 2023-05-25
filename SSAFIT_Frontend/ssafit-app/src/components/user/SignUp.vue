@@ -1,45 +1,115 @@
 <template>
-  <div>
-    <h3>회원 가입</h3>
-    <fieldset>
-      <legend>가입</legend>
-      <label for="id">아이디 : </label>
-      <input
-        type="text"
-        id="id"
-        v-model="id"
-        :readonly="idCheck"
-        @keyup.enter="checkId"
-      />
-      <button v-if="!idCheck" @click="checkId">아이디 중복 체크</button><br />
-      <label for="password">비밀번호 : </label>
-      <input type="password" id="password" v-model="password" /><br />
-      <label for="nickname">별명 : </label>
-      <input
-        type="text"
-        id="nickname"
-        v-model="nickname"
-        :readonly="nicknameCheck"
-        @keyup.enter="checkNickname"
-      />
-      <button v-if="!nicknameCheck" @click="checkNickname">
-        별명 중복 체크</button
-      ><br />
-      <label for="email">아메일 : </label>
-      <input
-        type="email"
-        id="email"
-        v-model="email"
-        :readonly="emailCheck"
-        @keyup.enter="checkEmail"
-      />
-      <button v-if="!emailCheck" @click="checkEmail">이메일 중복 체크</button
-      ><br />
-      <label for="file">프로필 사진 </label>
-      <input type="file" id="file" @change="inputImage" ref="profile" /><br />
-      <button @click="createUser">가입하기</button>
-    </fieldset>
-  </div>
+  <v-app>
+    <v-main>
+      <v-container fluid>
+        <v-row justify="center">
+          <v-col cols="12" sm="8" md="6">
+            <v-card class="signup-card">
+              <v-card-title>
+                <h3 class="text-center">회원 가입</h3>
+              </v-card-title>
+              <v-card-text>
+                <v-form @submit.prevent="createUser">
+                  <v-fieldset legend="가입">
+                    <v-row>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="id"
+                          :readonly="idCheck"
+                          label="아이디"
+                          required
+                          @input="validateId"
+                          @keyup.enter="checkId"
+                        ></v-text-field>
+                        <p class="error-message" v-if="id !== '' && idError">
+                          아이디는 6~16자의 영문 대소문자와 숫자로만
+                          입력해주세요.
+                        </p>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-btn v-if="!idCheck" color="orange" @click="checkId">
+                          중복 체크
+                        </v-btn>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="password"
+                          label="비밀번호"
+                          type="password"
+                          required
+                          @input="validatePassword"
+                        ></v-text-field>
+                        <p
+                          class="error-message"
+                          v-if="password !== '' && passwordError"
+                        >
+                          비밀번호는 8~16자의 영문 대소문자, 숫자, 특수문자를
+                          포함하여 입력해주세요.
+                        </p>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="nickname"
+                          :readonly="nicknameCheck"
+                          label="별명"
+                          required
+                          @keyup.enter="checkNickname"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-btn
+                          v-if="!nicknameCheck"
+                          color="orange"
+                          @click="checkNickname"
+                        >
+                          중복 체크
+                        </v-btn>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="email"
+                          :readonly="emailCheck"
+                          label="이메일"
+                          type="email"
+                          required
+                          @input="validateEmail"
+                          @keyup.enter="checkEmail"
+                        ></v-text-field>
+                        <div v-if="emailError" class="error-message">
+                          이메일 형식이 올바르지 않습니다.
+                        </div>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-btn
+                          v-if="!emailCheck"
+                          color="orange"
+                          @click="checkEmail"
+                        >
+                          중복 체크
+                        </v-btn>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-file-input
+                          v-model="image"
+                          label="프로필 사진"
+                          @change="inputImage"
+                        ></v-file-input>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-btn color="orange" @click="createUser">
+                          가입하기
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-fieldset>
+                </v-form>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -53,10 +123,13 @@ export default {
       password: "",
       nickname: "",
       email: "",
-      image: "",
+      image: null,
       idCheck: false,
       emailCheck: false,
       nicknameCheck: false,
+      emailError: false,
+      passwordError: false,
+      idError: false,
     };
   },
   methods: {
@@ -119,7 +192,9 @@ export default {
         ],
       })
         .then(() => {
+          alert("회원가입이 완료되었습니다.");
           this.$router.push("login");
+          this.$router.go(0);
         })
         .catch((err) => {
           console.log(err);
@@ -131,6 +206,11 @@ export default {
     checkId() {
       const REST_API = `http://localhost:9999`;
       const API_URL = `${REST_API}/api-user/check/id/${this.id}`;
+      const idPattern = /^[a-zA-Z0-9]{6,12}$/; // 6~12자의 영문 대소문자와 숫자
+      if (!idPattern.test(this.id)) {
+        alert("아이디는 6~12자의 영문 대소문자와 숫자로 입력해주세요.");
+        return;
+      }
       axios({
         url: API_URL,
         method: "GET",
@@ -143,9 +223,18 @@ export default {
           alert(err.response.data.msg);
         });
     },
+    validateId() {
+      const idPattern = /^[a-zA-Z0-9]{6,12}$/; // 6~12자의 영문 대소문자와 숫자
+      this.idError = !idPattern.test(this.id);
+    },
     checkEmail() {
+      const emailPattern = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/; // 이메일 형식
       const REST_API = `http://localhost:9999`;
       const API_URL = `${REST_API}/api-user/check/email/${this.email}`;
+      if (!emailPattern.test(this.email)) {
+        alert("이메일 형식이 올바르지 않습니다.");
+        return;
+      }
       axios({
         url: API_URL,
         method: "GET",
@@ -173,8 +262,25 @@ export default {
           alert(err.response.data.msg);
         });
     },
+    validatePassword() {
+      const passwordPattern =
+        /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,16}$/;
+      this.passwordError = !passwordPattern.test(this.password);
+    },
+    validateEmail() {
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      this.emailError = !emailPattern.test(this.email);
+    },
   },
 };
 </script>
 
-<style></style>
+<style>
+.signup-card {
+  background-color: orange;
+  color: white;
+}
+.error-message {
+  color: red;
+}
+</style>

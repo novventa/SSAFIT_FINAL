@@ -1,31 +1,37 @@
 <template>
-  <div>
+  <v-container class="review-form">
     <h2>리뷰 작성</h2>
-    <form @submit.prevent="submitReview">
-      <div>
-        <label for="writer">작성자 : {{ user.nickname }}</label>
-      </div>
-      <div>
-        <label for="content">내용:</label>
-        <textarea id="content" v-model="content" required></textarea>
-      </div>
-      <button type="submit">작성하기</button>
-    </form>
-  </div>
+    <v-form @submit.prevent="submitReview">
+      <v-row>
+        <v-col cols="12">
+          <v-text-field
+            label="작성자"
+            :value="user.nickname"
+            readonly
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-textarea v-model="content" label="내용" required></v-textarea>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <v-btn color="orange" type="submit">작성하기</v-btn>
+        </v-col>
+      </v-row>
+    </v-form>
+  </v-container>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   data() {
     return {
-      videoIdx: "",
-      content: "",
-      userIdx: "",
-      writer: "",
-      parent: "",
+      content: '',
     };
   },
   computed: {
@@ -38,12 +44,14 @@ export default {
         console.error("리뷰 내용을 입력해주세요.");
         return;
       }
+
       const review = {
         videoIdx: this.video.idx,
         content: this.content,
         writer: this.user.nickname,
         userIdx: this.user.idx,
       };
+
       this.addReview(review)
         .then(() => {
           this.content = "";
@@ -57,5 +65,15 @@ export default {
 </script>
 
 <style scoped>
-/* Your component styles */
+.review-form {
+  margin: 20px;
+}
+
+.v-row:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.v-btn {
+  color: white;
+}
 </style>

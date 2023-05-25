@@ -14,6 +14,7 @@ export default new Vuex.Store({
     videos: [],
     video: {},
     reviews: [],
+    results: [],
     likeList: [],
     like: '',
   },
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     CLEAR_USER(state) {
       state.user = {};
+    },
+    CLEAR_VIDEO(state) {
+      state.videos = [];
     },
     GET_REVIEWS(state, reviews) {
       state.reviews = reviews;
@@ -65,6 +69,27 @@ export default new Vuex.Store({
           console.log(err);
         })
     },
+    searchParts({ commit }, parts) {
+      const URL = `${REST_API}/api-video/list-part`;
+      console.log(parts);
+      axios({
+        url: URL,
+        method: "GET",
+        params: {
+          parts: parts.join(","),
+        },
+        headers: {
+          token: sessionStorage.getItem("access-token"),
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          commit("SEARCH_VIDEO", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     searchVideo({ commit }, payload) {
       console.log(payload);
 
@@ -85,7 +110,6 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    // payload : 비디오 객체가 들어온다
     clickVideo({ commit}, idx) {
       const URL = `${REST_API}/api-video/details/${idx}`;
       axios({
@@ -101,6 +125,9 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err);
         });
+    },
+    clearVideo({ commit }) {
+      commit("CLEAR_VIDEO");
     },
     clearUser({commit}) {
       commit("CLEAR_USER");
@@ -210,28 +237,6 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    // checkLike({commit}, likes) {
-    //   const URL = `${REST_API}/api-like/list-video/details`;
-    //   axios({
-    //     url: URL,
-    //     method: "GET",
-    //     params: likes,
-    //     headers: {
-    //       "token": sessionStorage.getItem("access-token"),
-    //   },
-    //   })
-    //     .then((res) => {
-    //       if(res.data.idx) {
-    //         commit("CHECK_LIKE", true);
-    //       }
-    //       else {
-    //         commit("CHECK_LIKE", false);
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
     getLikeList(context) {
       const URL = `${REST_API}/api-like/list-user/${context.state.user.idx}`;
       axios({

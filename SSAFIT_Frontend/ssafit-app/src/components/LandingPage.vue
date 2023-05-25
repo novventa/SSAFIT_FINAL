@@ -1,5 +1,5 @@
 <template>
-  <v-main>
+  <div>
     <section>
       <v-parallax src="@/assets/img/Main.jpg" height="600">
         <v-row align="center" justify="center" class="white--text">
@@ -17,7 +17,7 @@
               당신이 필요한 모든 운동 정보
             </div>
           </v-col>
-          <v-btn class="orange darken-1 mt-5" dark large>
+          <v-btn class="orange darken-1 mt-5" dark large @click="register">
             서비스 사용하기
           </v-btn>
         </v-row>
@@ -79,20 +79,26 @@
         </v-col>
       </v-row>
     </section>
-  </v-main>
+  </div>
 </template>
 
 <script>
+import router from "@/router";
+
 export default {
   name: "App",
   data: function () {
     return {};
   },
-
   computed: {
     imgHeight: function () {
       var offset = 320;
       return this.pageHeight - offset;
+    },
+  },
+  methods: {
+    register() {
+      router.push("/user/create");
     },
   },
 };

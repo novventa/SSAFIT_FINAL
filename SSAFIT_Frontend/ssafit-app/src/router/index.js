@@ -13,7 +13,7 @@ import ResetPassword from "../components/user/ResetPassword.vue"
 import ModifyInfo from "../components/user/ModifyInfo.vue"
 import MyPage from "../components/user/MyPage.vue"
 import CalendarMain from "../components/calendar/CalendarMain.vue"
-
+import VideoAdd from "../components/video/VideoAdd.vue"
 
 Vue.use(VueRouter);
 
@@ -32,6 +32,11 @@ const routes = [
     path: "/search",
     name: "search",
     component: VideoSearchView,
+  },
+  {
+    path: "/add",
+    name: "add",
+    component: VideoAdd,
   },
   {
     path: "/details/:idx",

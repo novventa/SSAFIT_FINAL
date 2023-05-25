@@ -1,11 +1,10 @@
 <template>
-  <div>
-    <video-detail></video-detail>
-    <review-list></review-list>
-    <review-write></review-write>
+  <div class="container">
+    <video-detail class="component-margin"></video-detail>
+    <review-list class="component-margin"></review-list>
+    <review-write class="component-margin"></review-write>
   </div>
 </template>
-
 <script>
 import ReviewList from "../components/review/ReviewList.vue";
 import ReviewWrite from "../components/review/ReviewWrite.vue";
@@ -15,4 +14,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.component-margin {
+  margin-bottom: 20px;
+}
+</style>

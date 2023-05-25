@@ -1,73 +1,115 @@
 <template>
-  <div v-if="video">
-    <h2>영상 보기</h2>
-    <h2>{{ video.title }}</h2>
-    <iframe
-      width="1120"
-      height="630"
-      :src="videoURL"
-      title="YouTube video player"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen
-    ></iframe>
-    <div>
-      <span>조회수 : {{ video.viewCnt }}</span>
-      <button v-if="!isLiked" @click="toggleLikeVideo(1)">
-        좋아요
-      </button>
-      <button v-else @click="toggleLikeVideo(0)">
-        좋아요 취소
-      </button>
-      <span>좋아요 수 : {{ video.likeCnt }}</span>
-    </div>
-  </div>
+  <v-container class="video-detail">
+    <v-card v-if="video" class="video-card">
+      <h2>{{ video.title }}</h2>
+      <v-responsive class="video-responsive">
+        <iframe
+          :src="videoURL"
+          width="1120"
+          height="630"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      </v-responsive>
+      <v-row class="video-info">
+        <v-col cols="6" class="view-count">
+          <span
+            >조회수: <span class="count">{{ video.viewCnt }}</span></span
+          >
+        </v-col>
+        <v-col cols="6" class="like-button">
+          <v-btn
+            :color="isLiked ? 'blue' : 'white'"
+            @click="toggleLikeVideo"
+            right
+          >
+            <v-icon left>{{
+              isLiked ? "mdi-thumb-up" : "mdi-thumb-up-outline"
+            }}</v-icon>
+            {{ isLiked ? "좋아요" : "좋아요" }} {{ video.likeCnt }}
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
 import { mapState } from "vuex";
+
 export default {
   name: "VideoDetail",
-  data() {
-    return {
-      userIdx: "",
-      videoIdx: "",// 좋아요 버튼 상태 변수 추가
-      isLiked: false,
-    };
-  },
   computed: {
     ...mapState(["video", "user", "likeList"]),
     videoURL() {
       const videoId = this.video.videoId;
       return `https://www.youtube.com/embed/${videoId}`;
     },
-  },
-
- created() {
-   this.isLiked = Array.from(this.$store.state.likeList).some((obj) => obj.videoIdx === this.$store.state.video.idx);
+    isLiked() {
+      return this.likeList.some((obj) => obj.videoIdx === this.video.idx);
+    },
   },
   methods: {
-  toggleLikeVideo(val) {
-      let likes = {
+    toggleLikeVideo() {
+      const likes = {
         userIdx: this.user.idx,
         videoIdx: this.video.idx,
         videoId: this.video.videoId,
       };
-      if (val === 0) {
+      if (this.isLiked) {
         this.$store.dispatch("removeLike", likes);
         this.video.likeCnt--;
       } else {
         this.$store.dispatch("addLike", likes);
         this.video.likeCnt++;
       }
-      this.isLiked = !this.isLiked;
     },
   },
 };
 </script>
 
-<style>
-.active {
-  background-color: lightblue; /* 토글 상태일 때 버튼 스타일 변경 */
+<style scoped>
+.video-detail {
+  margin: 20px;
+}
+
+.video-card {
+  padding: 16px;
+}
+
+.video-responsive {
+  margin-bottom: 16px;
+}
+
+.video-info {
+  margin-top: 16px;
+}
+
+.view-count {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.count {
+  margin-left: 4px;
+}
+
+.like-button {
+  text-align: right;
+}
+
+span {
+  margin-right: 8px;
+}
+
+.v-btn {
+  margin-left: 8px;
+}
+
+.v-btn .v-icon {
+  margin-right: 4px;
 }
 </style>

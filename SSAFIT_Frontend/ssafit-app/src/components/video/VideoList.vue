@@ -1,15 +1,14 @@
 <template>
-  <div>
-    <ul class="video-list">
+  <v-card class="video-list">
+    <v-row>
       <video-item
         v-for="video in videos"
         :key="video.videoId"
         :video="video"
-        class="each-list"
-      >
-      </video-item>
-    </ul>
-  </div>
+        class="video-item"
+      ></video-item>
+    </v-row>
+  </v-card>
 </template>
 
 <script>
@@ -20,7 +19,7 @@ export default {
   components: {
     VideoItem,
   },
-  name: "VideoSearchList",
+  name: "VideoList",
   computed: {
     ...mapState(["videos"]),
   },
@@ -29,10 +28,11 @@ export default {
 
 <style scoped>
 .video-list {
-  text-align: left;
+  margin-top: 20px;
 }
-.each-list {
+
+.video-item {
   cursor: pointer;
-  margin: 40px;
+  margin-bottom: 20px;
 }
 </style>

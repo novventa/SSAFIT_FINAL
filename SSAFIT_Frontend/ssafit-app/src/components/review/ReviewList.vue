@@ -1,32 +1,49 @@
 <template>
-  <div>
-    <div v-if="reviews.length > 0">
-      <div class="review-count">
-        <span class="count">{{ nowReviews.length }} 개의 리뷰</span>
-      </div>
-      <div v-for="review in nowReviews" :key="review.idx" class="review-item">
-        <div class="review-details">
-          <div class="writer">작성자: {{ review.writer }}</div>
-          <div v-if="!review.editing" class="content">
-            내용: {{ review.content }}
+  <v-container class="review-page">
+    <v-card>
+      <div v-if="reviews.length > 0">
+        <div class="review-count">
+          <span class="count">{{ reviews.length }} 개의 리뷰</span>
+        </div>
+        <div v-for="review in reviews" :key="review.idx" class="review-item">
+          <div class="review-details">
+            <div class="writer">작성자 : {{ review.writer }}</div>
+            <div class="content" v-if="!review.editing">
+              내용 : {{ review.content }}
+            </div>
+            <div class="date-wrapper">
+              <div class="date">작성일자 : {{ review.regDate }}</div>
+              <!-- <div class="date">수정일자 : {{ review.modDate }}</div> -->
+            </div>
           </div>
-          <span>작성일자 : {{ review.regDate }}</span>
-          <span>수정일자 : {{ review.modDate }}</span>
-        </div>
-        <div
-          v-if="review.userIdx === user.idx && !review.editing"
-          class="buttons"
-        >
-          <button class="edit-button" @click="startEdit(review)">수정</button>
-          <button class="delete-button" @click="deleteReview(review)">
-            삭제
-          </button>
+
+          <div
+            v-if="review.userIdx === user.idx && !review.editing"
+            class="buttons"
+          >
+            <v-btn
+              class="edit-button"
+              color="primary"
+              @click="startEdit(review)"
+              icon
+            >
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn
+              class="delete-button"
+              color="red"
+              @click="deleteReview(review)"
+              icon
+            >
+              <v-icon>mdi-trash-can</v-icon>
+            </v-btn>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      <span>0개의 리뷰</span>
-    </div>
+      <div v-else>
+        <span>0개의 리뷰</span>
+      </div>
+    </v-card>
 
     <v-dialog v-model="editDialog" max-width="500px">
       <v-card>
@@ -43,12 +60,12 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="saveReview">저장</v-btn>
+          <v-btn text color="orange" @click="saveReview">저장</v-btn>
           <v-btn text @click="cancelEdit">취소</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -60,21 +77,12 @@ export default {
       editDialog: false,
       editedContent: "",
       editingReview: null,
-      nowReviews: '',
     };
   },
   computed: {
     ...mapState(["video", "reviews", "user"]),
     videoIdx() {
       return this.video.idx;
-    },
-    checkReviews() {
-      return this.reviews;
-    }
-  },
-  watch: {
-    checkReviews(value) {
-      this.nowReviews = value;
     },
   },
   methods: {
@@ -83,7 +91,7 @@ export default {
       this.getReviews(this.videoIdx);
     },
     deleteReview(review) {
-      this.$store.dispatch("deleteReview", review);
+      this.$store.dispatch("deleteReview", review.idx);
     },
     startEdit(review) {
       this.editingReview = review;
@@ -110,6 +118,10 @@ export default {
 </script>
 
 <style scoped>
+.review-page {
+  margin: 20px;
+}
+
 .review-count {
   font-size: 18px;
   font-weight: bold;
@@ -121,10 +133,17 @@ export default {
 }
 
 .review-details {
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
-.author {
+.date-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.writer {
   font-weight: bold;
 }
 
@@ -132,21 +151,24 @@ export default {
   margin-top: 5px;
 }
 
-.replies {
-  margin-top: 10px;
-  padding-left: 20px;
-  border-left: 2px solid #ccc;
-}
-
-.reply {
-  margin-bottom: 10px;
-}
-
-.reply-author {
-  font-weight: bold;
-}
-
-.reply-content {
+.date {
   margin-top: 5px;
+  margin-right: 10px;
+  color: #888;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.edit-button,
+.delete-button {
+  margin: 10px;
+}
+
+.v-btn .v-icon {
+  margin: 4px;
 }
 </style>
